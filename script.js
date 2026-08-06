@@ -136,36 +136,36 @@ function setupShowcase() {
   const sv = (el) => el.dataset.seg.split(",").map(Number);
 
   function render(p) {
-    // harness self-draws, then fades to make way for the winding
-    const hOut = ease(seg(p, 0.56, 0.66));
-    harnessG.style.opacity = 1 - hOut;
-    wires.forEach((w) => { const [a, b] = sv(w);
-      w.style.strokeDashoffset = w.dataset.len * (1 - ease(seg(p, a, b))); });
-    nodes.forEach((n) => { const [a, b] = sv(n); const d = ease(seg(p, a, b));
-      n.style.opacity = d; n.style.transform = `scale(${0.82 + 0.18 * d})`; });
-    flows.forEach((f) => { f.style.opacity = 0.9 * ease(seg(p, 0.46, 0.58)); });
-    ticks.forEach((g) => { const [a, b] = sv(g); g.style.opacity = ease(seg(p, a, b)); });
-
-    // winding builds up turn by turn
-    windingG.style.opacity = ease(seg(p, 0.60, 0.70));
-    leads.forEach((l) => { l.style.opacity = ease(seg(p, 0.62, 0.72)); });
-    const wound = ease(seg(p, 0.66, 0.96));
+    // Winding is division 01: it builds first, then clears for the harness.
+    const windingIn = ease(seg(p, 0.14, 0.22));
+    const windingOut = ease(seg(p, 0.55, 0.64));
+    windingG.style.opacity = windingIn * (1 - windingOut);
+    leads.forEach((l) => { l.style.opacity = ease(seg(p, 0.16, 0.24)) * (1 - windingOut); });
+    const wound = ease(seg(p, 0.18, 0.48));
     const lit = wound * NRING;
-    rings.forEach((r, i) => { r.style.opacity = clamp(lit - i, 0, 1); });
+    rings.forEach((r, i) => { r.style.opacity = clamp(lit - i, 0, 1) * (1 - windingOut); });
     if (turnsN) turnsN.textContent = Math.round(wound * 54);
-
-    // feeder marker tracks the active turn, then steps aside when done
     if (feeder) {
       feeder.setAttribute("transform", `translate(${398 + (802 - 398) * wound},0)`);
-      feeder.style.opacity = ease(seg(p, 0.66, 0.70)) * (1 - ease(seg(p, 0.94, 0.97)));
+      feeder.style.opacity = ease(seg(p, 0.18, 0.22)) * (1 - ease(seg(p, 0.46, 0.50))) * (1 - windingOut);
     }
+
+    // Wiring harness is division 02 and self-draws second.
+    const hp = seg(p, 0.58, 0.98);
+    harnessG.style.opacity = ease(seg(p, 0.58, 0.66));
+    wires.forEach((w) => { const [a, b] = sv(w);
+      w.style.strokeDashoffset = w.dataset.len * (1 - ease(seg(hp, a, b))); });
+    nodes.forEach((n) => { const [a, b] = sv(n); const d = ease(seg(hp, a, b));
+      n.style.opacity = d; n.style.transform = `scale(${0.82 + 0.18 * d})`; });
+    flows.forEach((f) => { f.style.opacity = 0.9 * ease(seg(hp, 0.46, 0.58)); });
+    ticks.forEach((g) => { const [a, b] = sv(g); g.style.opacity = ease(seg(hp, a, b)); });
     if (grid)  grid.style.backgroundPosition = `0 ${-p * 46}px, ${-p * 46}px 0`;
 
     // overlay copy
     if (pHero) pHero.style.opacity = 1 - ease(seg(p, 0.08, 0.20));
-    const mh = ease(seg(p, 0.34, 0.46)) * (1 - ease(seg(p, 0.56, 0.64)));
+    const mh = ease(seg(p, 0.74, 0.84));
     if (pHarn) { pHarn.style.opacity = mh; pHarn.style.transform = `translateY(${10 - 10 * mh}px)`; }
-    const mw = ease(seg(p, 0.72, 0.82));
+    const mw = ease(seg(p, 0.28, 0.38)) * (1 - ease(seg(p, 0.55, 0.63)));
     if (pWind) { pWind.style.opacity = mw; pWind.style.transform = `translateY(${10 - 10 * mw}px)`; }
     if (cue) cue.style.opacity = 1 - ease(seg(p, 0.02, 0.12));
     if (progFill) progFill.style.height = `${p * 100}%`;

@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Supplar — Precision Winding &amp; Wiring Harness Manufacturing</title>
+    <meta
+      name="description"
+      content="Supplar manufactures custom wound electrical components and wiring harness assemblies for OEM and industrial buyers across India."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="logo-mark.png" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="page-progress" aria-hidden="true"></div>
+
+    <!-- ─── HEADER ──────────────────────────────────────────────────────────── -->
+    <header class="site-header" id="site-header">
+      <div class="container header-row">
+        <a class="brand" href="#top" aria-label="Supplar — home">
+          <img class="brand-mark" src="logo-mark.png" alt="" aria-hidden="true" width="44" height="44" />
+          <span class="brand-name">SUPPLAR</span>
+        </a>
+
+        <nav class="site-nav" id="site-nav" aria-label="Primary">
+          <a href="#winding">Winding</a>
+          <a href="#harness">Wiring Harness</a>
+          <a href="#process">Process</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <div class="header-actions">
+          <a class="button button-solid button-sm" href="#contact">Send Enquiry</a>
+          <button
+            class="menu-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="site-nav"
+            aria-label="Toggle menu"
+          >
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="top">
+
+      <!-- one continuous copper wire routed down the whole page (JS-driven) -->
+      <div class="wirepath" id="wirepath" aria-hidden="true">
+        <div class="wp-track"></div>
+        <div class="wp-fill"></div>
+        <div class="wp-dot"></div>
+      </div>
+
+      <!-- ─── PINNED HERO SHOWCASE (harness → winding scroll animation) ──────── -->
+      <section class="showcase" id="showcase">
+        <div class="showcase-sticky">
+
+          <!-- Blueprint grid backdrop -->
+          <div class="hx-grid" aria-hidden="true"></div>
+
+          <!-- Scroll-driven engineering animation: harness → winding -->
+          <div class="hx-art" aria-hidden="true">
+            <svg id="hx-svg" viewBox="0 0 1200 560" fill="none">
+              <defs>
+                <linearGradient id="hx-core" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#43434a"/><stop offset="0.5" stop-color="#9a9aa2"/>
+                  <stop offset="1" stop-color="#3a3a40"/>
+                </linearGradient>
+              </defs>
+
+              <!-- ACT 1+2 : HARNESS -->
+              <g id="hx-harness-scene">
+                <g>
+                  <path class="hx-ghost" style="stroke-width:5" d="M214,286 C 420,272 600,300 1078,286"/>
+                  <path class="hx-ghost" style="stroke-width:3" d="M388,283 C388,210 388,190 388,132"/>
+                  <path class="hx-ghost" style="stroke-width:3" d="M556,290 C556,366 556,392 556,452"/>
+                  <path class="hx-ghost" style="stroke-width:3" d="M728,284 C728,210 728,190 728,132"/>
+                  <path class="hx-ghost" style="stroke-width:3" d="M880,288 C880,366 880,392 880,452"/>
+                </g>
+                <g class="hx-node hx-ecu" data-seg="0.24,0.34"><rect x="66" y="232" width="150" height="112" rx="11"/><text class="t" x="141" y="293">ECU</text></g>
+                <path class="hx-wire hx-trunk"  data-seg="0.05,0.34" d="M214,286 C 420,272 600,300 1078,286"/>
+                <path class="hx-wire hx-branch" data-seg="0.14,0.40" d="M388,283 C388,210 388,190 388,132"/>
+                <path class="hx-wire hx-branch" data-seg="0.18,0.44" d="M556,290 C556,366 556,392 556,452"/>
+                <path class="hx-wire hx-branch" data-seg="0.22,0.48" d="M728,284 C728,210 728,190 728,132"/>
+                <path class="hx-wire hx-branch" data-seg="0.26,0.52" d="M880,288 C880,366 880,392 880,452"/>
+                <path class="hx-flow hx-trunk"  d="M214,286 C 420,272 600,300 1078,286"/>
+                <path class="hx-flow hx-branch" d="M388,283 C388,210 388,190 388,132"/>
+                <path class="hx-flow hx-branch" d="M556,290 C556,366 556,392 556,452"/>
+                <path class="hx-flow hx-branch" d="M728,284 C728,210 728,190 728,132"/>
+                <path class="hx-flow hx-branch" d="M880,288 C880,366 880,392 880,452"/>
+                <g class="hx-node" data-seg="0.34,0.44"><rect x="346" y="78" width="84" height="52" rx="9"/><circle class="pin" cx="374" cy="104" r="3.4"/><circle class="pin" cx="388" cy="104" r="3.4"/><circle class="pin" cx="402" cy="104" r="3.4"/></g>
+                <g class="hx-node" data-seg="0.38,0.48"><rect x="514" y="452" width="84" height="52" rx="9"/><circle class="pin" cx="542" cy="478" r="3.4"/><circle class="pin" cx="556" cy="478" r="3.4"/><circle class="pin" cx="570" cy="478" r="3.4"/></g>
+                <g class="hx-node" data-seg="0.42,0.52"><rect x="686" y="78" width="84" height="52" rx="9"/><circle class="pin" cx="714" cy="104" r="3.4"/><circle class="pin" cx="728" cy="104" r="3.4"/><circle class="pin" cx="742" cy="104" r="3.4"/></g>
+                <g class="hx-node" data-seg="0.46,0.56"><rect x="838" y="452" width="84" height="52" rx="9"/><circle class="pin" cx="866" cy="478" r="3.4"/><circle class="pin" cx="880" cy="478" r="3.4"/><circle class="pin" cx="894" cy="478" r="3.4"/></g>
+                <g class="hx-node" data-seg="0.30,0.40"><rect x="1056" y="258" width="60" height="58" rx="9"/><circle class="pin" cx="1086" cy="278" r="3.6"/><circle class="pin" cx="1086" cy="296" r="3.6"/></g>
+
+                <!-- continuity check ticks (appear as current reaches each connector) -->
+                <g class="hx-tick" data-seg="0.46,0.50" transform="translate(444,70)"><circle r="9"/><path d="M-3.5,0.5 L-1,3 L4,-3"/></g>
+                <g class="hx-tick" data-seg="0.48,0.52" transform="translate(612,446)"><circle r="9"/><path d="M-3.5,0.5 L-1,3 L4,-3"/></g>
+                <g class="hx-tick" data-seg="0.50,0.54" transform="translate(786,70)"><circle r="9"/><path d="M-3.5,0.5 L-1,3 L4,-3"/></g>
+                <g class="hx-tick" data-seg="0.52,0.56" transform="translate(936,446)"><circle r="9"/><path d="M-3.5,0.5 L-1,3 L4,-3"/></g>
+                <g class="hx-tick" data-seg="0.54,0.58" transform="translate(1130,250)"><circle r="9"/><path d="M-3.5,0.5 L-1,3 L4,-3"/></g>
+              </g>
+
+              <!-- ACT 3 : WINDING -->
+              <g id="hx-winding-scene">
+                <path class="hx-lead" d="M392,280 C320,300 300,360 300,420"/>
+                <path class="hx-lead" d="M808,280 C880,300 900,360 900,420"/>
+                <rect x="382" y="222" width="436" height="116" rx="22" fill="url(#hx-core)"/>
+                <g id="hx-rings"></g>
+                <path class="hx-feed" id="hx-feeder" d="M-7,200 h14 l-7,11 z"/>
+                <text class="hx-turns" text-anchor="middle">
+                  <tspan class="n" id="hx-turns-n" x="600" y="150">0</tspan>
+                  <tspan class="k" x="600" y="178">TURNS WOUND</tspan>
+                </text>
+              </g>
+            </svg>
+          </div>
+
+          <!-- Overlay copy -->
+          <div class="hx-hero" id="hx-hero">
+            <p class="eyebrow">Supplar · Two divisions, one supplier</p>
+            <h1 class="hero-title">Every circuit,<br /><span class="hx-u">routed</span> &amp; <span class="hx-u">wound</span>.</h1>
+            <p class="hero-lead">
+              Wiring harness assemblies and precision-wound components —
+              engineered, built and tested to your drawing.
+            </p>
+            <div class="hero-cue" aria-hidden="true">
+              <span>Scroll</span><span class="cue-line"></span>
+            </div>
+          </div>
+
+          <div class="hx-card" id="hx-card-harness">
+            <span class="hx-idx">02 — Wiring Harness</span>
+            <h2>Engineered cable architecture.</h2>
+          </div>
+
+          <div class="hx-card hx-left" id="hx-card-winding">
+            <span class="hx-idx">01 — Winding</span>
+            <h2>Copper, turn by turn.</h2>
+            <a class="button button-solid button-sm" href="#winding">See what we build</a>
+          </div>
+
+          <!-- Stage progress -->
+          <div class="stage-progress" aria-hidden="true">
+            <div class="stage-progress-fill" id="stage-progress-fill"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── INTRO STATEMENT ─────────────────────────────────────────────────── -->
+      <section class="section intro-section">
+        <div class="container intro-grid">
+          <p class="intro-statement reveal">
+            The copper <em>inside</em> motors, panels and vehicles.
+          </p>
+          <div class="stat-row reveal">
+            <div class="stat">
+              <strong>2</strong>
+              <span>Manufacturing divisions</span>
+            </div>
+            <div class="stat">
+              <strong>100%</strong>
+              <span>Electrically tested</span>
+            </div>
+            <div class="stat">
+              <strong>Sample → Volume</strong>
+              <span>Flexible programs</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── WINDING (visual) ────────────────────────────────────────────────── -->
+      <section class="section cat-section" id="winding">
+        <div class="container">
+          <div class="cat-header reveal">
+            <span class="cat-num">01</span>
+            <div>
+              <p class="eyebrow">Winding Division</p>
+              <h2>Copper, wound to spec.</h2>
+            </div>
+          </div>
+
+          <!-- live product visuals — chips below switch between them -->
+          <div class="visual-stage reveal">
+            <!-- STATOR: copper phases firing, rotor turning -->
+            <svg class="vis active" id="vis-stators" viewBox="0 0 420 420" fill="none" aria-hidden="true">
+              <circle cx="210" cy="210" r="193" class="st-yoke"/>
+              <g id="stator-g"></g>
+              <g class="st-rotor">
+                <circle cx="210" cy="210" r="94" class="st-rotor-body"/>
+                <circle class="st-hole" cx="210" cy="159" r="11"/>
+                <circle class="st-hole" cx="261" cy="210" r="11"/>
+                <circle class="st-hole" cx="210" cy="261" r="11"/>
+                <circle class="st-hole" cx="159" cy="210" r="11"/>
+                <circle cx="210" cy="210" r="17" class="st-shaft"/>
+                <rect class="st-key" x="205" y="187" width="10" height="9" rx="2"/>
+              </g>
+            </svg>
+
+            <!-- TRANSFORMER: EI core, winding pulsing on the centre limb -->
+            <svg class="vis" id="vis-transformers" viewBox="0 0 420 420" fill="none" aria-hidden="true">
+              <defs><linearGradient id="steel" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#74777a"/><stop offset=".45" stop-color="#303236"/><stop offset="1" stop-color="#111215"/></linearGradient><linearGradient id="copper3d"><stop stop-color="#7e3514"/><stop offset=".3" stop-color="#f1a15d"/><stop offset=".6" stop-color="#a74920"/><stop offset="1" stop-color="#f5b16e"/></linearGradient><filter id="machine-shadow"><feDropShadow dy="10" stdDeviation="9" flood-opacity=".2"/></filter></defs>
+              <g filter="url(#machine-shadow)"><rect class="tx-foot" x="72" y="321" width="276" height="22" rx="6"/><path class="tx-core" d="M91 83h238v42H231v39h-42v-39H91z"/><path class="tx-core" d="M91 136h42v150h56v-58h42v58h56V136h42v192H91z"/><g class="tx-lams"><path d="M102 93h216M102 103h216M102 113h216"/><path d="M102 147v128M318 147v128"/></g><rect class="tx-bobbin" x="158" y="151" width="104" height="91" rx="8"/><rect class="tx-flange" x="146" y="143" width="18" height="107" rx="5"/><rect class="tx-flange" x="256" y="143" width="18" height="107" rx="5"/><g class="tx-coil" id="tx-coil"></g><path class="tx-lead" d="M165 237C143 264 132 275 112 276M255 237c22 26 34 39 53 40"/><circle class="tx-bolt" cx="111" cy="332" r="5"/><circle class="tx-bolt" cx="309" cy="332" r="5"/></g>
+            </svg>
+
+            <!-- SOLENOID: wound bobbin, plunger stroking in and out -->
+            <svg class="vis" id="vis-solenoids" viewBox="0 0 420 420" fill="none" aria-hidden="true">
+              <defs><linearGradient id="sol-steel" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#f0f0ed"/><stop offset=".35" stop-color="#999b9c"/><stop offset=".7" stop-color="#4a4c50"/><stop offset="1" stop-color="#c7c8c5"/></linearGradient></defs><g filter="url(#machine-shadow)"><path class="sol-bracket" d="M65 136h41v31H91v86h15v31H65z"/><rect class="sol-shell" x="97" y="139" width="226" height="142" rx="18"/><rect class="sol-bobbin" x="117" y="157" width="176" height="106" rx="8"/><rect class="sol-flange" x="106" y="148" width="22" height="124" rx="6"/><rect class="sol-flange" x="286" y="148" width="22" height="124" rx="6"/><g class="sol-coil" id="sol-coil"></g><rect class="sol-guide" x="302" y="185" width="35" height="50" rx="6"/><g class="sol-moving"><rect class="sol-plunger" x="307" y="193" width="103" height="34" rx="17"/><circle class="sol-end" cx="401" cy="210" r="23"/></g><path class="sol-lead" d="M133 262v37h-25M278 262v37h25"/></g>
+            </svg>
+
+            <!-- PUMP: wound motor head over a spinning impeller -->
+            <svg class="vis" id="vis-pumps" viewBox="0 0 420 420" fill="none" aria-hidden="true">
+              <g filter="url(#machine-shadow)"><path class="pw-motor" d="M133 64q0-19 19-19h116q19 0 19 19v96H133z"/><path class="pw-cap" d="M148 45q62-26 124 0z"/><g class="pw-fins"><path d="M151 61v82M171 55v88M191 52v91M229 52v91M249 55v88M269 61v82"/></g><g class="pw-coil" id="pw-coil"></g><rect class="pw-neck" x="183" y="153" width="54" height="42" rx="8"/><path class="pw-volute" d="M214 179c-63 0-114 49-114 110 0 48 35 86 81 96 40 9 88-8 110-44 14-23 18-49 12-72l55-2v-52h-82c-18-23-38-36-62-36z"/><circle class="pw-chamber" cx="210" cy="286" r="71"/><g class="pw-imp" id="pw-imp"></g><circle class="pw-hub-ring" cx="210" cy="286" r="17"/><path class="pw-base" d="M139 380h143l17 18H121z"/></g>
+            </svg>
+          </div>
+
+          <ul class="chip-row reveal" id="winding-chips">
+            <li class="active" data-vis="vis-stators" role="button" tabindex="0">Stators</li>
+            <li data-vis="vis-transformers" role="button" tabindex="0">Transformers</li>
+            <li data-vis="vis-solenoids" role="button" tabindex="0">Solenoids</li>
+            <li data-vis="vis-pumps" role="button" tabindex="0">Pump windings</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ─── HARNESS (visual) ────────────────────────────────────────────────── -->
+      <section class="section cat-section" id="harness">
+        <div class="container">
+          <div class="cat-header reveal">
+            <span class="cat-num">02</span>
+            <div>
+              <p class="eyebrow">Wiring Harness</p>
+              <h2>Routed. Crimped. Tested.</h2>
+            </div>
+          </div>
+
+          <!-- live harness: current always flowing, connector LEDs blinking -->
+          <div class="visual-stage reveal">
+            <svg class="amb-svg" id="harness-visual" viewBox="0 0 900 300" fill="none" aria-hidden="true">
+              <path class="amb-wire t" d="M60,150 C 260,140 420,160 812,150"/>
+              <path class="amb-wire b" d="M300,148 C300,90 300,80 300,62"/>
+              <path class="amb-wire b" d="M520,152 C520,210 520,220 520,238"/>
+              <path class="amb-wire b" d="M700,149 C700,90 700,80 700,62"/>
+              <path class="amb-flow t" d="M60,150 C 260,140 420,160 812,150"/>
+              <path class="amb-flow b" d="M300,148 C300,90 300,80 300,62"/>
+              <path class="amb-flow b" d="M520,152 C520,210 520,220 520,238"/>
+              <path class="amb-flow b" d="M700,149 C700,90 700,80 700,62"/>
+              <g class="amb-node"><rect x="20" y="122" width="40" height="56" rx="8"/><circle class="amb-led" style="animation-delay:0s"    cx="40" cy="114" r="4"/></g>
+              <g class="amb-node"><rect x="270" y="10" width="60" height="52" rx="8"/><circle class="amb-led" style="animation-delay:.5s"  cx="300" cy="74" r="4"/></g>
+              <g class="amb-node"><rect x="490" y="238" width="60" height="52" rx="8"/><circle class="amb-led" style="animation-delay:1s"  cx="520" cy="226" r="4"/></g>
+              <g class="amb-node"><rect x="670" y="10" width="60" height="52" rx="8"/><circle class="amb-led" style="animation-delay:1.5s" cx="700" cy="74" r="4"/></g>
+              <g class="amb-node"><rect x="812" y="122" width="48" height="56" rx="8"/><circle class="amb-led" style="animation-delay:2s"  cx="836" cy="114" r="4"/></g>
+            </svg>
+          </div>
+
+          <ul class="chip-row reveal" id="harness-chips">
+            <li class="active" data-harness="automotive" role="button" tabindex="0">Automotive</li>
+            <li data-harness="industrial" role="button" tabindex="0">Industrial control</li>
+            <li data-harness="connector" role="button" tabindex="0">Connector assembly</li>
+            <li data-harness="continuity" role="button" tabindex="0">Continuity tested</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ─── TESTING (dark interlude) ────────────────────────────────────────── -->
+      <section class="section lab-section" id="lab">
+        <div class="container lab-inner">
+          <p class="eyebrow lab-eyebrow reveal">Testing</p>
+          <h2 class="lab-title reveal">Every unit leaves tested.</h2>
+          <div class="lab-wire-wrap reveal">
+            <svg class="lab-wire" viewBox="0 0 900 90" fill="none" aria-hidden="true">
+              <path class="lw-track" d="M10,45 H842"/>
+              <path class="lw-flow"  d="M10,45 H842"/>
+              <g class="lw-tick"><circle cx="866" cy="45" r="16"/><path d="M859,45.5 l4.5,4.5 l9,-9"/></g>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── PROCESS (visual line) ───────────────────────────────────────────── -->
+      <section class="section" id="process">
+        <div class="container">
+          <div class="section-heading reveal">
+            <p class="eyebrow">Our Process</p>
+            <h2>Requirement to dispatch.</h2>
+          </div>
+
+          <div class="pline-wrap reveal">
+            <svg class="pline" viewBox="0 0 1000 150" fill="none" aria-hidden="true">
+              <path class="pl-track" d="M40,60 H960"/>
+              <path class="pl-flow"  d="M40,60 H960"/>
+              <g class="pl-node" style="--d:0s">
+                <circle cx="80" cy="60" r="27"/>
+                <g class="pl-ic"><circle cx="76" cy="56" r="8"/><path d="M82,62 L90,70"/></g>
+                <text x="80" y="122">Review</text>
+              </g>
+              <g class="pl-node" style="--d:.35s">
+                <circle cx="300" cy="60" r="27"/>
+                <g class="pl-ic"><rect x="290" y="50" width="20" height="14" rx="2"/><path d="M294,46 h12"/></g>
+                <text x="300" y="122">Sample</text>
+              </g>
+              <g class="pl-node" style="--d:.7s">
+                <circle cx="520" cy="60" r="27"/>
+                <g class="pl-ic"><path d="M510,66 c0,-8 4,-12 10,-12 c6,0 10,4 10,12"/><path d="M510,66 h20"/></g>
+                <text x="520" y="122">Build</text>
+              </g>
+              <g class="pl-node" style="--d:1.05s">
+                <circle cx="740" cy="60" r="27"/>
+                <g class="pl-ic"><path d="M731,60 l6,6 l12,-12"/></g>
+                <text x="740" y="122">Test</text>
+              </g>
+              <g class="pl-node" style="--d:1.4s">
+                <circle cx="920" cy="60" r="27"/>
+                <g class="pl-ic"><path d="M912,60 h16 M921,53 l7,7 l-7,7"/></g>
+                <text x="920" y="122">Dispatch</text>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── INDUSTRIES ──────────────────────────────────────────────────────── -->
+      <section class="section section-soft">
+        <div class="container industries-grid">
+          <div class="reveal">
+            <p class="eyebrow">Industries served</p>
+            <h2>Already inside your end product.</h2>
+          </div>
+          <ul class="industry-tags reveal">
+            <li>Automotive OEMs</li>
+            <li>Two-wheeler &amp; EV</li>
+            <li>Appliance manufacturers</li>
+            <li>Motors &amp; pumps</li>
+            <li>Industrial controls</li>
+            <li>Transformer programs</li>
+            <li>Control panel builders</li>
+            <li>OEM machine builders</li>
+            <li>Electrical sub-assemblies</li>
+            <li>HVAC systems</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ─── CONTACT ─────────────────────────────────────────────────────────── -->
+      <section class="section contact-section" id="contact">
+        <div class="container contact-grid">
+          <div class="contact-copy reveal">
+            <p class="eyebrow">Business Enquiry</p>
+            <h2>Start the conversation with our team.</h2>
+            <p class="section-sub">
+              A new winding program, a harness requirement, or a combined
+              enquiry for both — send the details and we'll respond with a
+              specific proposal.
+            </p>
+            <div class="contact-details">
+              <a data-email-link href="mailto:info@supplar.in">info@supplar.in</a>
+              <a data-phone-link href="tel:+917070909061">7070 9090 61</a>
+              <p data-location>Pune, Maharashtra, India</p>
+            </div>
+          </div>
+
+          <form class="enquiry-form reveal" id="enquiry-form">
+            <div class="field-row">
+              <label>Name<input type="text" name="name" placeholder="Your name" required /></label>
+              <label>Company<input type="text" name="company" placeholder="Company name" required /></label>
+            </div>
+            <div class="field-row">
+              <label>Email<input type="email" name="email" placeholder="work@email.com" required /></label>
+              <label>Phone<input type="tel" name="phone" placeholder="+91…" /></label>
+            </div>
+            <label>Category
+              <select name="category" required>
+                <option value="Winding">Winding</option>
+                <option value="Wiring Harness">Wiring Harness</option>
+                <option value="Both Divisions">Both Divisions</option>
+              </select>
+            </label>
+            <label>Requirement
+              <textarea name="requirement" rows="4" placeholder="Briefly describe the requirement, application and volumes" required></textarea>
+            </label>
+            <button class="button button-solid button-block" type="submit">Start an Enquiry</button>
+            <p class="form-note" id="form-note">A drafted enquiry email will open with your details.</p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- ─── FOOTER ──────────────────────────────────────────────────────────── -->
+    <footer class="site-footer">
+      <div class="container footer-row">
+        <div class="footer-brand">
+          <span class="brand-name" data-company>SUPPLAR</span>
+          <p>Winding and wiring harness manufacturing for OEM and industrial buyers.</p>
+        </div>
+        <nav class="footer-nav" aria-label="Footer">
+          <a href="#winding">Winding</a>
+          <a href="#harness">Wiring Harness</a>
+          <a href="#process">Process</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <a class="footer-email" data-email-link href="mailto:info@supplar.in">info@supplar.in</a>
+      </div>
+      <div class="container footer-base">
+        <span>© <span id="year"></span> Supplar. All rights reserved.</span>
+        <span>Pune, Maharashtra, India</span>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

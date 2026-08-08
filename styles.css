@@ -464,7 +464,10 @@ main { position: relative; }
     var(--bg-stage) 0%, rgba(255,255,255,0.92) 34%, rgba(255,255,255,0.55) 52%, rgba(255,255,255,0) 68%);
 }
 .phase-hero .eyebrow { margin-bottom: 18px; }
-.hero-title { max-width: 16ch; }
+/* hero eyebrow + title each read on a single line (desktop) */
+.hx-hero .eyebrow { white-space: nowrap; }
+.hero-title { max-width: none; white-space: nowrap;
+  font-size: clamp(2.3rem, 4.7vw, 3.7rem); }
 .hero-lead { margin-top: 22px; max-width: 44ch; font-size: 1.12rem; color: var(--ink-soft); }
 .hero-cue {
   margin-top: 46px; display: inline-flex; align-items: center; gap: 14px;
@@ -795,7 +798,8 @@ main { position: relative; }
   .hero-brand-lockup { margin-bottom: 15px; padding: 7px 11px 7px 7px; }
   .hero-brand-lockup img { width: 38px; height: 38px; }
   .hero-brand-lockup small { font-size: .55rem; }
-  .hx-hero .hero-title { max-width: 12ch; }
+  .hx-hero .hero-title { max-width: 12ch; white-space: normal; }
+  .hx-hero .eyebrow { white-space: normal; }
   .hx-art { width: 155%; left: 50%; top: 57%; transform: translate(-50%, -50%); }
   .hx-card { left: 16px; right: 16px; bottom: 6vh; width: auto; max-width: none; }
   .hx-card.hx-left { left: 16px; right: 16px; }

@@ -55,6 +55,26 @@ function setupMobileNav() {
   nav.querySelectorAll("a").forEach((a) => a.addEventListener("click", close));
 }
 
+/* ─── NAV DROPDOWN (Capabilities) ─────────────────────────────────────────── */
+function setupDropdowns() {
+  document.querySelectorAll(".has-dropdown").forEach((dd) => {
+    const btn = dd.querySelector(".dropdown-toggle");
+    if (!btn) return;
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const open = dd.classList.toggle("is-open");
+      btn.setAttribute("aria-expanded", String(open));
+    });
+  });
+  document.addEventListener("click", () => {
+    document.querySelectorAll(".has-dropdown.is-open").forEach((dd) => {
+      dd.classList.remove("is-open");
+      const b = dd.querySelector(".dropdown-toggle");
+      if (b) b.setAttribute("aria-expanded", "false");
+    });
+  });
+}
+
 /* ─── REVEAL ON SCROLL ────────────────────────────────────────────────────── */
 function setupReveals() {
   const nodes = document.querySelectorAll(".reveal");
@@ -452,6 +472,7 @@ function setupDebugScroll() {
 applySiteConfig();
 setupHeader();
 setupMobileNav();
+setupDropdowns();
 setupProductCards();
 setupReveals();
 setupPageProgress();

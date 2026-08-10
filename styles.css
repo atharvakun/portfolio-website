@@ -726,8 +726,8 @@ main { position: relative; }
 .footer-wordmark span {
   display: block; width: 100%;
   font-family: var(--font-display); font-weight: 700;
-  font-size: clamp(2.8rem, 16.5vw, 16rem); line-height: 0.82;
-  letter-spacing: 0.02em; white-space: nowrap; text-align: center;
+  font-size: clamp(2.8rem, 15vw, 14rem); line-height: 0.82;
+  letter-spacing: 0; white-space: nowrap; text-align: center;
   color: transparent;
   background: linear-gradient(180deg, var(--ink) 40%, var(--line-strong) 130%);
   -webkit-background-clip: text; background-clip: text;

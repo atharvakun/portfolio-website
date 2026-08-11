@@ -1088,28 +1088,27 @@ main { position: relative; }
 @media (prefers-reduced-motion: reduce) { .hb-flow { animation: none; } }
 
 /* ============================================================================
-   CARD HOVER ACCENT — a copper edge wipes in, content lifts (minimal)
+   3D PARALLAX TILT CARDS — rotate toward the cursor on mouse move
    ========================================================================= */
-.value, .tile, .team-member, .chain-step, .aside-cell { position: relative; }
-
-.card::after, .value::after, .tile::after, .team-member::after,
-.chain-step::after, .aside-cell::after {
-  content: ""; position: absolute; inset: 0 0 auto 0; height: 2px; z-index: 2;
-  background: linear-gradient(90deg, var(--copper), #e08a3c);
-  transform: scaleX(0); transform-origin: left; pointer-events: none;
-  transition: transform 0.5s var(--ease);
+/* spaced, individually-bordered cards so they can tilt without clipping */
+.card-grid, .value-grid, .tile-grid, .team-grid {
+  gap: clamp(12px, 1.4vw, 18px);
+  background: none; border: 0; border-radius: 0; overflow: visible;
 }
-.card:hover::after, .value:hover::after, .tile:hover::after,
-.team-member:hover::after, .chain-step:hover::after, .aside-cell:hover::after {
-  transform: scaleX(1);
+.card, .value, .tile, .team-member {
+  border: 1px solid var(--line); border-radius: var(--radius); will-change: transform;
+  transform: perspective(950px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) scale(var(--sc, 1));
+  transition: box-shadow 0.4s var(--ease), border-color 0.3s var(--ease);
+}
+.card { overflow: visible; }
+/* smooth ease-back once the pointer leaves */
+.card.tilt-return, .value.tilt-return, .tile.tilt-return, .team-member.tilt-return {
+  transition: transform 0.6s var(--ease), box-shadow 0.4s var(--ease);
+}
+.card:hover, .value:hover, .tile:hover, .team-member:hover {
+  box-shadow: 0 26px 52px rgba(17, 17, 19, 0.14); border-color: var(--line-strong);
 }
 
-/* grid cards can't lift out (clipped grid) — they get a soft bg + inset ring;
-   the aside stat cells didn't have a hover state, so give them one too */
-.aside-cell { transition: background 0.3s var(--ease); }
-.aside-cell:hover { background: var(--bg-soft); }
-
-@media (prefers-reduced-motion: reduce) {
-  .card::after, .value::after, .tile::after, .team-member::after,
-  .chain-step::after, .aside-cell::after { transition: none; }
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .card, .value, .tile, .team-member { transform: none; }
 }

@@ -75,6 +75,41 @@ function setupDropdowns() {
   });
 }
 
+/* ─── 3D PARALLAX TILT CARDS ──────────────────────────────────────────────── */
+function setupCardTilt() {
+  if (!window.matchMedia) return;
+  if (window.matchMedia("(hover: none)").matches ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const MAX = 7; // max tilt in degrees
+  document.querySelectorAll(".card, .value, .tile, .team-member").forEach((card) => {
+    let raf = 0, d = null;
+    const apply = () => {
+      raf = 0; if (!d) return;
+      card.style.setProperty("--rx", `${d.rx}deg`);
+      card.style.setProperty("--ry", `${d.ry}deg`);
+      card.style.setProperty("--sc", "1.02");
+      card.style.setProperty("--mx", `${d.mx}px`);
+      card.style.setProperty("--my", `${d.my}px`);
+    };
+    card.addEventListener("pointermove", (e) => {
+      if (e.pointerType === "touch") return;
+      const r = card.getBoundingClientRect();
+      const nx = (e.clientX - r.left) / r.width - 0.5;
+      const ny = (e.clientY - r.top) / r.height - 0.5;
+      d = { rx: (-ny * MAX).toFixed(2), ry: (nx * MAX).toFixed(2), mx: e.clientX - r.left, my: e.clientY - r.top };
+      card.classList.remove("tilt-return");
+      if (!raf) raf = requestAnimationFrame(apply);
+    });
+    card.addEventListener("pointerleave", () => {
+      card.classList.add("tilt-return");
+      card.style.setProperty("--rx", "0deg");
+      card.style.setProperty("--ry", "0deg");
+      card.style.setProperty("--sc", "1");
+      setTimeout(() => card.classList.remove("tilt-return"), 650);
+    });
+  });
+}
+
 /* ─── REVEAL ON SCROLL ────────────────────────────────────────────────────── */
 function setupReveals() {
   const nodes = document.querySelectorAll(".reveal");
@@ -479,6 +514,7 @@ setupHeader();
 setupMobileNav();
 setupDropdowns();
 setupProductCards();
+setupCardTilt();
 setupReveals();
 setupPageProgress();
 setupShowcase();

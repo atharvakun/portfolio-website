@@ -1047,3 +1047,30 @@ main { position: relative; }
 @media (max-width: 460px) {
   .value-grid { grid-template-columns: 1fr; }
 }
+
+/* ── harness assembly board (formboard) ──────────────────────────────────── */
+.formboard-wrap { margin-top: 8px; }
+.formboard { width: 100%; height: auto; display: block; }
+.fb-board { fill: #f7f7f5; stroke: var(--line-strong); stroke-width: 2; }
+.fb-grid line { stroke: var(--line); stroke-width: 1; }
+.fb-bolt { fill: #fff; stroke: var(--line-strong); stroke-width: 2.4; }
+.fb-bolt-in { fill: var(--line-strong); }
+.fb-wire { fill: none; stroke: var(--ink); stroke-linecap: round; stroke-linejoin: round; }
+.fb-wire.trunk { stroke-width: 8; }
+.fb-wire.branch { stroke-width: 5; stroke: #33343a; }
+.fb-flow { fill: none; stroke: var(--copper); stroke-linecap: round; stroke-dasharray: 2 16;
+  animation: hx-dashflow 1.05s linear infinite; filter: drop-shadow(0 0 5px rgba(194,112,44,.55)); }
+.fb-flow.trunk { stroke-width: 6; }
+.fb-flow.branch { stroke-width: 4; }
+.fb-fork { fill: none; stroke: #9a9aa0; stroke-width: 3.6; stroke-linecap: round; stroke-linejoin: round; }
+.fb-fork-base { fill: #d7d7d2; }
+.fb-tape { stroke: #cfcec9; stroke-width: 13; stroke-linecap: round; }
+.fb-node { fill: #fff; stroke: var(--ink); stroke-width: 2.4; }
+.fb-conn { fill: #23242a; stroke: #0d0e10; stroke-width: 2; }
+.fb-conn-cap { fill: #34363c; }
+.fb-pin { fill: var(--copper); }
+.fb-label { fill: var(--ink-faint); font-family: var(--font-display); font-weight: 600;
+  font-size: 13px; letter-spacing: .18em; }
+.fb-clabel { fill: var(--ink-faint); font-family: var(--font-display); font-weight: 600;
+  font-size: 11px; letter-spacing: .1em; text-anchor: middle; }
+@media (prefers-reduced-motion: reduce) { .fb-flow { animation: none; } }

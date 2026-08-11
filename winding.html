@@ -15,7 +15,7 @@
       rel="stylesheet"
     />
     <link rel="icon" type="image/png" href="logo-mark.png" />
-    <link rel="stylesheet" href="styles.css?v=20260810g" />
+    <link rel="stylesheet" href="styles.css?v=20260810h" />
   </head>
   <body>
     <div id="page-progress" aria-hidden="true"></div>
@@ -111,12 +111,16 @@
             <svg class="vis" id="vis-solenoids" viewBox="0 0 420 420" fill="none" aria-hidden="true">
               <defs><linearGradient id="sol-steel" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#f0f0ed"/><stop offset=".35" stop-color="#999b9c"/><stop offset=".7" stop-color="#4a4c50"/><stop offset="1" stop-color="#c7c8c5"/></linearGradient></defs><g filter="url(#machine-shadow)"><path class="sol-bracket" d="M65 136h41v31H91v86h15v31H65z"/><rect class="sol-shell" x="97" y="139" width="226" height="142" rx="18"/><rect class="sol-bobbin" x="117" y="157" width="176" height="106" rx="8"/><rect class="sol-flange" x="106" y="148" width="22" height="124" rx="6"/><rect class="sol-flange" x="286" y="148" width="22" height="124" rx="6"/><g class="sol-coil" id="sol-coil"></g><path class="sol-lead" d="M133 262v37h-25M278 262v37h25"/></g>
             </svg>
+            <svg class="vis" id="vis-pumps" viewBox="0 0 420 420" fill="none" aria-hidden="true">
+              <g filter="url(#machine-shadow)"><path class="pw-motor" d="M133 64q0-19 19-19h116q19 0 19 19v96H133z"/><path class="pw-cap" d="M148 45q62-26 124 0z"/><g class="pw-fins"><path d="M151 61v82M171 55v88M191 52v91M229 52v91M249 55v88M269 61v82"/></g><g class="pw-coil" id="pw-coil"></g><rect class="pw-neck" x="183" y="153" width="54" height="42" rx="8"/><path class="pw-volute" d="M214 179c-63 0-114 49-114 110 0 48 35 86 81 96 40 9 88-8 110-44 14-23 18-49 12-72l55-2v-52h-82c-18-23-38-36-62-36z"/><circle class="pw-chamber" cx="210" cy="286" r="71"/><g class="pw-imp" id="pw-imp"></g><circle class="pw-hub-ring" cx="210" cy="286" r="17"/><path class="pw-base" d="M139 380h143l17 18H121z"/></g>
+            </svg>
           </div>
 
           <ul class="chip-row reveal" id="winding-chips">
             <li class="active" data-vis="vis-pickup" role="button" tabindex="0">Pick-up coils</li>
             <li data-vis="vis-solenoids" role="button" tabindex="0">Solenoid coils</li>
             <li data-vis="vis-transformers" role="button" tabindex="0">Transformers</li>
+            <li data-vis="vis-pumps" role="button" tabindex="0">Pump windings</li>
           </ul>
         </div>
       </section>
@@ -235,6 +239,6 @@
       </div>
     </footer>
 
-    <script src="script.js?v=20260810g"></script>
+    <script src="script.js?v=20260810h"></script>
   </body>
 </html>

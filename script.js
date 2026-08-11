@@ -313,6 +313,23 @@ function setupStator() {
     const x = 126 + k * 9.7;
     sol.appendChild(el("path", { d: `M${x} 162 Q${x + 4} 210 ${x} 258` }));
   }
+  // pump: winding turns across the motor head
+  const pw = document.getElementById("pw-coil");
+  if (pw) for (let k = 0; k < 6; k++) {
+    const y = 73 + k * 12;
+    pw.appendChild(el("path", { d: `M177 ${y} Q210 ${y + 6} 243 ${y}` }));
+  }
+  // pump: impeller blades (spun by CSS)
+  const imp = document.getElementById("pw-imp");
+  if (imp) {
+    for (let i = 0; i < 5; i++) {
+      imp.appendChild(el("path", {
+        d: "M210 286 C209 257 223 234 244 226 C251 251 239 274 216 289 Z",
+        transform: `rotate(${i * 72} 210 286)`,
+      }));
+    }
+    imp.appendChild(el("circle", { cx: 210, cy: 286, r: 11 }));
+  }
 }
 
 /* ─── WINDING CHIPS: switch the product visual ────────────────────────────── */

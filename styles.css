@@ -1086,3 +1086,30 @@ main { position: relative; }
 .hb-label { fill: var(--ink-faint); font-family: var(--font-display); font-weight: 600;
   font-size: 13px; letter-spacing: .04em; }
 @media (prefers-reduced-motion: reduce) { .hb-flow { animation: none; } }
+
+/* ============================================================================
+   CARD HOVER ACCENT — a copper edge wipes in, content lifts (minimal)
+   ========================================================================= */
+.value, .tile, .team-member, .chain-step, .aside-cell { position: relative; }
+
+.card::after, .value::after, .tile::after, .team-member::after,
+.chain-step::after, .aside-cell::after {
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 2px; z-index: 2;
+  background: linear-gradient(90deg, var(--copper), #e08a3c);
+  transform: scaleX(0); transform-origin: left; pointer-events: none;
+  transition: transform 0.5s var(--ease);
+}
+.card:hover::after, .value:hover::after, .tile:hover::after,
+.team-member:hover::after, .chain-step:hover::after, .aside-cell:hover::after {
+  transform: scaleX(1);
+}
+
+/* grid cards can't lift out (clipped grid) — they get a soft bg + inset ring;
+   the aside stat cells didn't have a hover state, so give them one too */
+.aside-cell { transition: background 0.3s var(--ease); }
+.aside-cell:hover { background: var(--bg-soft); }
+
+@media (prefers-reduced-motion: reduce) {
+  .card::after, .value::after, .tile::after, .team-member::after,
+  .chain-step::after, .aside-cell::after { transition: none; }
+}

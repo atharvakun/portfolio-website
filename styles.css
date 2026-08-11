@@ -261,6 +261,18 @@ main { position: relative; }
 @media (prefers-reduced-motion: reduce) {
   .sol-moving, .pw-imp { animation: none; }
 }
+
+/* pick-up / pulsar coil */
+.pk-core { fill: #8f9194; stroke: #1a1b1e; stroke-width: 3; }
+.pk-bracket { fill: #303236; stroke: #111214; stroke-width: 3; }
+.pk-hole { fill: var(--bg-stage); stroke: #111214; stroke-width: 3; }
+.pk-flange { fill: #4b4d51; stroke: #18191c; stroke-width: 3; }
+.pk-bobbin { fill: #191a1d; }
+.pk-coil path { stroke: #d9783f; stroke-width: 6; stroke-linecap: round; fill: none; }
+.pk-coil { opacity: 0.85; animation: st-pulse 2.3s ease-in-out infinite; }
+.pk-lead { stroke: #a74c24; stroke-width: 5; stroke-linecap: round; fill: none; }
+.pk-conn { fill: #1f2023; stroke: #090a0b; stroke-width: 3; }
+.pk-pin { fill: var(--copper); }
 .st-yoke { stroke: #1c1c1f; stroke-width: 20; }
 .st-tooth { fill: #26262a; }
 .st-coil line { stroke: var(--copper); stroke-width: 5.5; stroke-linecap: round; }

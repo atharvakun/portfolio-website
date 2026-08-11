@@ -284,62 +284,34 @@ function setupEnquiryForm() {
   });
 }
 
-/* ─── LIVE STATOR (winding section visual) ────────────────────────────────── */
+/* ─── LIVE COIL VISUALS (winding section) ─────────────────────────────────── */
+/* Supplar makes the wound coils — not the end machines they go into — so these
+   visuals show the coil components (pick-up / pulsar, solenoid, transformer). */
 function setupStator() {
-  const g = document.getElementById("stator-g");
-  if (!g) return;
   const NS = "http://www.w3.org/2000/svg";
-  const N = 9;
   const el = (tag, attrs) => {
     const n = document.createElementNS(NS, tag);
     for (const k in attrs) n.setAttribute(k, attrs[k]);
     return n;
   };
-  for (let i = 0; i < N; i++) {
-    const grp = el("g", { transform: `rotate(${i * (360 / N)} 210 210)` });
-    // tooth neck: attached to the yoke's inner edge, pointing inward
-    grp.appendChild(el("rect", { class: "st-tooth", x: 197, y: 26, width: 26, height: 72, rx: 3 }));
-    // pole shoe: the wider T-tip near the rotor (air gap below it)
-    grp.appendChild(el("rect", { class: "st-tooth", x: 184, y: 92, width: 52, height: 14, rx: 7 }));
-    // winding: individual wire turns stacked along the neck
-    const coil = el("g", { class: "st-coil" });
-    for (let k = 0; k < 7; k++) {
-      const y = 40 + k * 7.2;
-      coil.appendChild(el("line", { x1: 190, y1: y, x2: 230, y2: y }));
-    }
-    coil.style.animationDelay = `${(i * 2.2) / N}s`;
-    grp.appendChild(coil);
-    g.appendChild(grp);
-  }
 
+  // pick-up / pulsar coil: fine turns across the bobbin
+  const pk = document.getElementById("pk-coil");
+  if (pk) for (let k = 0; k < 15; k++) {
+    const x = 138 + k * 10;
+    pk.appendChild(el("path", { d: `M${x} 158 Q${x + 4} 210 ${x} 262` }));
+  }
   // transformer: winding turns across the centre limb
   const tx = document.getElementById("tx-coil");
   if (tx) for (let k = 0; k < 11; k++) {
     const y = 158 + k * 7.2;
     tx.appendChild(el("path", { d: `M163 ${y} Q210 ${y + 4} 257 ${y}` }));
   }
-  // solenoid: turns along the bobbin
+  // solenoid coil: turns along the bobbin
   const sol = document.getElementById("sol-coil");
   if (sol) for (let k = 0; k < 17; k++) {
     const x = 126 + k * 9.7;
     sol.appendChild(el("path", { d: `M${x} 162 Q${x + 4} 210 ${x} 258` }));
-  }
-  // pump: turns across the motor head
-  const pw = document.getElementById("pw-coil");
-  if (pw) for (let k = 0; k < 6; k++) {
-    const y = 73 + k * 12;
-    pw.appendChild(el("path", { d: `M177 ${y} Q210 ${y + 6} 243 ${y}` }));
-  }
-  // pump: impeller blades (spun by CSS)
-  const imp = document.getElementById("pw-imp");
-  if (imp) {
-    for (let i = 0; i < 5; i++) {
-      imp.appendChild(el("path", {
-        d: "M210 286 C209 257 223 234 244 226 C251 251 239 274 216 289 Z",
-        transform: `rotate(${i * 72} 210 286)`,
-      }));
-    }
-    imp.appendChild(el("circle", { cx: 210, cy: 286, r: 11 }));
   }
 }
 

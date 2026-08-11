@@ -15,7 +15,7 @@
       rel="stylesheet"
     />
     <link rel="icon" type="image/png" href="logo-mark.png" />
-    <link rel="stylesheet" href="styles.css?v=20260810h" />
+    <link rel="stylesheet" href="styles.css?v=20260810i" />
   </head>
   <body>
     <div id="page-progress" aria-hidden="true"></div>
@@ -104,6 +104,23 @@
               <circle class="pk-pin" cx="158" cy="346" r="4"/>
               <circle class="pk-pin" cx="182" cy="346" r="4"/>
             </svg>
+            <svg class="vis" id="vis-relays" viewBox="0 0 420 420" fill="none" aria-hidden="true">
+              <!-- L-shaped iron yoke frame -->
+              <path class="pk-bracket" d="M112 72 h30 v244 h148 v28 h-178 z"/>
+              <!-- iron core + top pole face -->
+              <rect class="pk-core" x="196" y="74" width="30" height="240" rx="4"/>
+              <rect class="pk-core" x="158" y="60" width="104" height="16" rx="4"/>
+              <!-- bobbin flanges + body -->
+              <rect class="pk-flange" x="150" y="100" width="120" height="18" rx="5"/>
+              <rect class="pk-flange" x="150" y="252" width="120" height="18" rx="5"/>
+              <rect class="pk-bobbin" x="162" y="114" width="96" height="140" rx="6"/>
+              <!-- copper windings (JS-built) -->
+              <g class="pk-coil" id="rl-coil"></g>
+              <!-- coil terminal pins -->
+              <path class="pk-lead" d="M186 270 v44 M234 270 v44"/>
+              <circle class="pk-pin" cx="186" cy="320" r="5"/>
+              <circle class="pk-pin" cx="234" cy="320" r="5"/>
+            </svg>
             <svg class="vis" id="vis-transformers" viewBox="0 0 420 420" fill="none" aria-hidden="true">
               <defs><linearGradient id="steel" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#74777a"/><stop offset=".45" stop-color="#303236"/><stop offset="1" stop-color="#111215"/></linearGradient><linearGradient id="copper3d"><stop stop-color="#7e3514"/><stop offset=".3" stop-color="#f1a15d"/><stop offset=".6" stop-color="#a74920"/><stop offset="1" stop-color="#f5b16e"/></linearGradient><filter id="machine-shadow"><feDropShadow dy="10" stdDeviation="9" flood-opacity=".2"/></filter></defs>
               <g filter="url(#machine-shadow)"><rect class="tx-foot" x="72" y="321" width="276" height="22" rx="6"/><path class="tx-core" d="M91 83h238v42H231v39h-42v-39H91z"/><path class="tx-core" d="M91 136h42v150h56v-58h42v58h56V136h42v192H91z"/><g class="tx-lams"><path d="M102 93h216M102 103h216M102 113h216"/><path d="M102 147v128M318 147v128"/></g><rect class="tx-bobbin" x="158" y="151" width="104" height="91" rx="8"/><rect class="tx-flange" x="146" y="143" width="18" height="107" rx="5"/><rect class="tx-flange" x="256" y="143" width="18" height="107" rx="5"/><g class="tx-coil" id="tx-coil"></g><path class="tx-lead" d="M165 237C143 264 132 275 112 276M255 237c22 26 34 39 53 40"/><circle class="tx-bolt" cx="111" cy="332" r="5"/><circle class="tx-bolt" cx="309" cy="332" r="5"/></g>
@@ -118,6 +135,7 @@
 
           <ul class="chip-row reveal" id="winding-chips">
             <li class="active" data-vis="vis-pickup" role="button" tabindex="0">Pick-up coils</li>
+            <li data-vis="vis-relays" role="button" tabindex="0">Relay coils</li>
             <li data-vis="vis-solenoids" role="button" tabindex="0">Solenoid coils</li>
             <li data-vis="vis-transformers" role="button" tabindex="0">Transformers</li>
             <li data-vis="vis-pumps" role="button" tabindex="0">Pump windings</li>
@@ -194,7 +212,7 @@
             <li>Solenoid Coils</li>
             <li>Rotor Coils</li>
             <li>Contactor Coils</li>
-            <li>Ferrite-Core Transformers</li>
+            <li>Ferrite-Core Transformers Coils</li>
             <li>Ignition Coils</li>
             <li>Speedometer &amp; Fuel Gauge Coils</li>
             <li>Pick-Up Coils</li>
@@ -239,6 +257,6 @@
       </div>
     </footer>
 
-    <script src="script.js?v=20260810h"></script>
+    <script src="script.js?v=20260810i"></script>
   </body>
 </html>

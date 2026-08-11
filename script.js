@@ -301,6 +301,12 @@ function setupStator() {
     const x = 138 + k * 10;
     pk.appendChild(el("path", { d: `M${x} 158 Q${x + 4} 210 ${x} 262` }));
   }
+  // relay coil: horizontal turns across the vertical bobbin
+  const rl = document.getElementById("rl-coil");
+  if (rl) for (let k = 0; k < 16; k++) {
+    const y = 120 + k * 8.4;
+    rl.appendChild(el("path", { d: `M162 ${y} Q210 ${y - 2.5} 258 ${y}` }));
+  }
   // transformer: winding turns across the centre limb
   const tx = document.getElementById("tx-coil");
   if (tx) for (let k = 0; k < 11; k++) {

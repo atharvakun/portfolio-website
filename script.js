@@ -126,6 +126,7 @@ function setupShowcase() {
   const grid   = document.querySelector(".hx-grid");
   const harnessG = document.getElementById("hx-harness-scene");
   const windingG = document.getElementById("hx-winding-scene");
+  const anatomyG = document.getElementById("hx-anatomy-scene");
   const turnsN   = document.getElementById("hx-turns-n");
   const progFill = document.getElementById("stage-progress-fill");
   const pHero = document.getElementById("hx-hero");
@@ -156,23 +157,23 @@ function setupShowcase() {
   const sv = (el) => el.dataset.seg.split(",").map(Number);
 
   function render(p) {
-    // Winding is division 01: it builds first, then clears for the harness.
-    const windingIn = ease(seg(p, 0.14, 0.22));
-    const windingOut = ease(seg(p, 0.55, 0.64));
+    // ACT 1 — Winding (division 01): builds first, then clears for the harness.
+    const windingIn = ease(seg(p, 0.12, 0.20));
+    const windingOut = ease(seg(p, 0.38, 0.46));
     windingG.style.opacity = windingIn * (1 - windingOut);
-    leads.forEach((l) => { l.style.opacity = ease(seg(p, 0.16, 0.24)) * (1 - windingOut); });
-    const wound = ease(seg(p, 0.18, 0.48));
+    leads.forEach((l) => { l.style.opacity = ease(seg(p, 0.14, 0.22)) * (1 - windingOut); });
+    const wound = ease(seg(p, 0.16, 0.40));
     const lit = wound * NRING;
     rings.forEach((r, i) => { r.style.opacity = clamp(lit - i, 0, 1) * (1 - windingOut); });
     if (turnsN) turnsN.textContent = Math.round(wound * 54);
     if (feeder) {
       feeder.setAttribute("transform", `translate(${398 + (802 - 398) * wound},0)`);
-      feeder.style.opacity = ease(seg(p, 0.18, 0.22)) * (1 - ease(seg(p, 0.46, 0.50))) * (1 - windingOut);
+      feeder.style.opacity = ease(seg(p, 0.16, 0.20)) * (1 - ease(seg(p, 0.38, 0.42))) * (1 - windingOut);
     }
 
-    // Wiring harness is division 02 and self-draws second.
-    const hp = seg(p, 0.58, 0.98);
-    harnessG.style.opacity = ease(seg(p, 0.58, 0.66));
+    // ACT 2 — Wiring harness (division 02): self-draws second (schematic).
+    const hp = seg(p, 0.44, 0.66);
+    harnessG.style.opacity = ease(seg(p, 0.44, 0.51)) * (1 - ease(seg(p, 0.66, 0.72)));
     wires.forEach((w) => { const [a, b] = sv(w);
       w.style.strokeDashoffset = w.dataset.len * (1 - ease(seg(hp, a, b))); });
     nodes.forEach((n) => { const [a, b] = sv(n); const d = ease(seg(hp, a, b));
@@ -181,13 +182,22 @@ function setupShowcase() {
     ticks.forEach((g) => { const [a, b] = sv(g); g.style.opacity = ease(seg(hp, a, b)); });
     if (grid)  grid.style.backgroundPosition = `0 ${-p * 46}px, ${-p * 46}px 0`;
 
+    // ACT 3 — Anatomy: the schematic gives way to a detailed, labelled harness.
+    if (anatomyG) {
+      const aIn = ease(seg(p, 0.73, 0.83));
+      const aRise = ease(seg(p, 0.73, 0.91));
+      anatomyG.style.opacity = aIn;
+      anatomyG.setAttribute("transform", `translate(170, ${22 + 46 * (1 - aRise)}) scale(0.86)`);
+    }
+
     // overlay copy
-    if (pHero) pHero.style.opacity = 1 - ease(seg(p, 0.08, 0.20));
-    const mh = ease(seg(p, 0.74, 0.84));
+    if (pHero) pHero.style.opacity = 1 - ease(seg(p, 0.06, 0.16));
+    // harness card carries through the harness + anatomy acts
+    const mh = ease(seg(p, 0.50, 0.58)) * (1 - ease(seg(p, 0.90, 0.96)));
     if (pHarn) { pHarn.style.opacity = mh; pHarn.style.transform = `translateY(${10 - 10 * mh}px)`; }
-    const mw = ease(seg(p, 0.28, 0.38)) * (1 - ease(seg(p, 0.55, 0.63)));
+    const mw = ease(seg(p, 0.22, 0.30)) * (1 - ease(seg(p, 0.38, 0.45)));
     if (pWind) { pWind.style.opacity = mw; pWind.style.transform = `translateY(${10 - 10 * mw}px)`; }
-    if (cue) cue.style.opacity = 1 - ease(seg(p, 0.02, 0.12));
+    if (cue) cue.style.opacity = 1 - ease(seg(p, 0.02, 0.10));
     if (progFill) progFill.style.height = `${p * 100}%`;
   }
 

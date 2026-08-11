@@ -15,7 +15,7 @@
       rel="stylesheet"
     />
     <link rel="icon" type="image/png" href="logo-mark.png" />
-    <link rel="stylesheet" href="styles.css?v=20260810e" />
+    <link rel="stylesheet" href="styles.css?v=20260810f" />
   </head>
   <body>
     <div id="page-progress" aria-hidden="true"></div>
@@ -131,6 +131,87 @@
                   <tspan class="n" id="hx-turns-n" x="600" y="150">0</tspan>
                   <tspan class="k" x="600" y="178">TURNS WOUND</tspan>
                 </text>
+              </g>
+              <!-- ACT 4 : ANATOMY (detailed harness, scroll-revealed) -->
+              <g id="hx-anatomy-scene" opacity="0" transform="translate(170,22) scale(0.86)">
+<!-- MAIN TRUNK -->
+              <path class="hb-wire hb-trunk" d="M150,318 C 280,310 360,316 440,322 C 540,329 610,330 690,330 L 798,330"/>
+              <path class="hb-core" d="M156,318 C 280,311 360,317 440,323 C 540,330 610,331 690,331 L 792,331"/>
+              <!-- left loose wires -->
+              <path class="hb-wire hb-branch" d="M150,318 C 118,315 104,299 82,297"/>
+              <path class="hb-wire hb-branch" d="M150,322 C 118,325 104,347 82,351"/>
+              <!-- branches up to housing -->
+              <path class="hb-wire hb-branch" d="M352,320 C 352,252 366,206 372,182"/>
+              <path class="hb-wire hb-branch" d="M404,323 C 404,252 402,206 402,182"/>
+              <path class="hb-wire hb-branch" d="M452,326 C 452,252 440,206 432,182"/>
+              <!-- branch down to ring terminals -->
+              <path class="hb-wire hb-branch" d="M470,328 C 470,398 486,440 486,468"/>
+              <path class="hb-wire hb-branch" d="M486,468 C 486,494 468,504 452,514"/>
+              <path class="hb-wire hb-branch" d="M486,468 C 486,494 504,504 520,514"/>
+
+              <!-- copper current -->
+              <path class="hb-flow" d="M150,318 C 280,310 360,316 440,322 C 540,329 610,330 690,330 L 798,330"/>
+              <path class="hb-flow" d="M470,328 C 470,398 486,440 486,468"/>
+
+              <!-- wrapped wires: sheath + spiral hatch -->
+              <path class="hb-wire" style="stroke:#dcdcd8;stroke-width:24" d="M690,330 H790"/>
+              <g class="hb-wrap">
+                <line x1="694" y1="317" x2="703" y2="343"/><line x1="705" y1="317" x2="714" y2="343"/>
+                <line x1="716" y1="317" x2="725" y2="343"/><line x1="727" y1="317" x2="736" y2="343"/>
+                <line x1="738" y1="317" x2="747" y2="343"/><line x1="749" y1="317" x2="758" y2="343"/>
+                <line x1="760" y1="317" x2="769" y2="343"/><line x1="771" y1="317" x2="780" y2="343"/>
+              </g>
+
+              <!-- cable ties -->
+              <g><rect class="hb-tie" x="244" y="303" width="12" height="30" rx="5"/><path class="hb-tie" d="M255,331 q8,3 4,12"/></g>
+              <g><rect class="hb-tie" x="560" y="315" width="12" height="30" rx="5"/><path class="hb-tie" d="M571,343 q8,3 4,12"/></g>
+              <g><rect class="hb-tie" x="471" y="404" width="30" height="12" rx="5"/><path class="hb-tie" d="M499,415 q3,8 12,4"/></g>
+
+              <!-- branching point -->
+              <circle class="hb-node" cx="470" cy="328" r="6"/>
+
+              <!-- connector housing (top) -->
+              <rect class="hb-boot" x="356" y="168" width="94" height="20" rx="6"/>
+              <rect class="hb-housing" x="342" y="104" width="120" height="68" rx="10"/>
+              <rect class="hb-face" x="342" y="92" width="120" height="26" rx="9"/>
+              <rect class="hb-housing-2" x="392" y="80" width="20" height="14" rx="3"/>
+              <g class="hb-pin"><circle cx="366" cy="105" r="3.4"/><circle cx="390" cy="105" r="3.4"/><circle cx="414" cy="105" r="3.4"/><circle cx="438" cy="105" r="3.4"/></g>
+
+              <!-- assembly connector (right) -->
+              <rect class="hb-boot" x="790" y="320" width="20" height="22" rx="5"/>
+              <rect class="hb-housing" x="806" y="300" width="80" height="60" rx="9"/>
+              <rect class="hb-housing-2" x="806" y="300" width="16" height="60" rx="9"/>
+              <g class="hb-pin"><circle cx="890" cy="316" r="3.2"/><circle cx="890" cy="330" r="3.2"/><circle cx="890" cy="344" r="3.2"/></g>
+
+              <!-- loose terminals -->
+              <rect class="hb-blade" x="62" y="290" width="16" height="14" rx="3"/><rect class="hb-blade" x="40" y="293" width="24" height="8" rx="1.5"/>
+              <rect class="hb-blade" x="62" y="344" width="16" height="14" rx="3"/><rect class="hb-blade" x="40" y="347" width="24" height="8" rx="1.5"/>
+
+              <!-- ring terminals -->
+              <g><path class="hb-lug" d="M452,514 l-8,7"/><circle class="hb-ring" cx="440" cy="528" r="11"/><circle class="hb-ring-h" cx="440" cy="528" r="4.5"/></g>
+              <g><path class="hb-lug" d="M520,514 l8,7"/><circle class="hb-ring" cx="532" cy="528" r="11"/><circle class="hb-ring-h" cx="532" cy="528" r="4.5"/></g>
+
+              <!-- labels + leaders -->
+              <g class="hb-leader">
+                <path d="M402,80 V64 H470"/>
+                <path d="M366,250 V214"/>
+                <path d="M250,301 V274 H222"/>
+                <path d="M740,315 V300 H712"/>
+                <path d="M848,298 V272 H812"/>
+                <path d="M330,333 V420 H302"/>
+                <path d="M474,336 V426 H520"/>
+                <path d="M532,540 V556 H556"/>
+                <path d="M50,296 H30 V250"/>
+              </g>
+              <text class="hb-label" x="476" y="60">Connector housing</text>
+              <text class="hb-label" x="366" y="256" text-anchor="middle">Branches</text>
+              <text class="hb-label" x="150" y="278">Cable ties</text>
+              <text class="hb-label" x="640" y="296">Wrapped wires</text>
+              <text class="hb-label" x="720" y="268">Assembly connector</text>
+              <text class="hb-label" x="228" y="425" text-anchor="end">Main trunk</text>
+              <text class="hb-label" x="524" y="430">Branching point</text>
+              <text class="hb-label" x="560" y="561">Ring terminal</text>
+              <text class="hb-label" x="18" y="245">Loose terminal</text>
               </g>
             </svg>
           </div>
@@ -268,102 +349,6 @@
         </div>
       </section>
 
-      <!-- ─── HARNESS BOARD ───────────────────────────────────────────────────── -->
-      <section class="section section-soft" id="harness-board">
-        <div class="container">
-          <div class="section-heading reveal">
-            <p class="eyebrow">Wiring Harness</p>
-            <h2>Anatomy of a harness.</h2>
-            <p class="section-sub">
-              Connector housings, branches, cable ties and terminals — every harness is
-              routed, bundled and tested to your drawing.
-            </p>
-          </div>
-          <div class="formboard-wrap reveal">
-            <svg class="formboard" viewBox="0 0 1000 600" role="img" aria-label="Annotated wiring harness with connector housings, branches, cable ties, main trunk, wrapped wires, ring and loose terminals">
-              <!-- MAIN TRUNK -->
-              <path class="hb-wire hb-trunk" d="M150,318 C 280,310 360,316 440,322 C 540,329 610,330 690,330 L 798,330"/>
-              <path class="hb-core" d="M156,318 C 280,311 360,317 440,323 C 540,330 610,331 690,331 L 792,331"/>
-              <!-- left loose wires -->
-              <path class="hb-wire hb-branch" d="M150,318 C 118,315 104,299 82,297"/>
-              <path class="hb-wire hb-branch" d="M150,322 C 118,325 104,347 82,351"/>
-              <!-- branches up to housing -->
-              <path class="hb-wire hb-branch" d="M352,320 C 352,252 366,206 372,182"/>
-              <path class="hb-wire hb-branch" d="M404,323 C 404,252 402,206 402,182"/>
-              <path class="hb-wire hb-branch" d="M452,326 C 452,252 440,206 432,182"/>
-              <!-- branch down to ring terminals -->
-              <path class="hb-wire hb-branch" d="M470,328 C 470,398 486,440 486,468"/>
-              <path class="hb-wire hb-branch" d="M486,468 C 486,494 468,504 452,514"/>
-              <path class="hb-wire hb-branch" d="M486,468 C 486,494 504,504 520,514"/>
-
-              <!-- copper current -->
-              <path class="hb-flow" d="M150,318 C 280,310 360,316 440,322 C 540,329 610,330 690,330 L 798,330"/>
-              <path class="hb-flow" d="M470,328 C 470,398 486,440 486,468"/>
-
-              <!-- wrapped wires: sheath + spiral hatch -->
-              <path class="hb-wire" style="stroke:#dcdcd8;stroke-width:24" d="M690,330 H790"/>
-              <g class="hb-wrap">
-                <line x1="694" y1="317" x2="703" y2="343"/><line x1="705" y1="317" x2="714" y2="343"/>
-                <line x1="716" y1="317" x2="725" y2="343"/><line x1="727" y1="317" x2="736" y2="343"/>
-                <line x1="738" y1="317" x2="747" y2="343"/><line x1="749" y1="317" x2="758" y2="343"/>
-                <line x1="760" y1="317" x2="769" y2="343"/><line x1="771" y1="317" x2="780" y2="343"/>
-              </g>
-
-              <!-- cable ties -->
-              <g><rect class="hb-tie" x="244" y="303" width="12" height="30" rx="5"/><path class="hb-tie" d="M255,331 q8,3 4,12"/></g>
-              <g><rect class="hb-tie" x="560" y="315" width="12" height="30" rx="5"/><path class="hb-tie" d="M571,343 q8,3 4,12"/></g>
-              <g><rect class="hb-tie" x="471" y="404" width="30" height="12" rx="5"/><path class="hb-tie" d="M499,415 q3,8 12,4"/></g>
-
-              <!-- branching point -->
-              <circle class="hb-node" cx="470" cy="328" r="6"/>
-
-              <!-- connector housing (top) -->
-              <rect class="hb-boot" x="356" y="168" width="94" height="20" rx="6"/>
-              <rect class="hb-housing" x="342" y="104" width="120" height="68" rx="10"/>
-              <rect class="hb-face" x="342" y="92" width="120" height="26" rx="9"/>
-              <rect class="hb-housing-2" x="392" y="80" width="20" height="14" rx="3"/>
-              <g class="hb-pin"><circle cx="366" cy="105" r="3.4"/><circle cx="390" cy="105" r="3.4"/><circle cx="414" cy="105" r="3.4"/><circle cx="438" cy="105" r="3.4"/></g>
-
-              <!-- assembly connector (right) -->
-              <rect class="hb-boot" x="790" y="320" width="20" height="22" rx="5"/>
-              <rect class="hb-housing" x="806" y="300" width="80" height="60" rx="9"/>
-              <rect class="hb-housing-2" x="806" y="300" width="16" height="60" rx="9"/>
-              <g class="hb-pin"><circle cx="890" cy="316" r="3.2"/><circle cx="890" cy="330" r="3.2"/><circle cx="890" cy="344" r="3.2"/></g>
-
-              <!-- loose terminals -->
-              <rect class="hb-blade" x="62" y="290" width="16" height="14" rx="3"/><rect class="hb-blade" x="40" y="293" width="24" height="8" rx="1.5"/>
-              <rect class="hb-blade" x="62" y="344" width="16" height="14" rx="3"/><rect class="hb-blade" x="40" y="347" width="24" height="8" rx="1.5"/>
-
-              <!-- ring terminals -->
-              <g><path class="hb-lug" d="M452,514 l-8,7"/><circle class="hb-ring" cx="440" cy="528" r="11"/><circle class="hb-ring-h" cx="440" cy="528" r="4.5"/></g>
-              <g><path class="hb-lug" d="M520,514 l8,7"/><circle class="hb-ring" cx="532" cy="528" r="11"/><circle class="hb-ring-h" cx="532" cy="528" r="4.5"/></g>
-
-              <!-- labels + leaders -->
-              <g class="hb-leader">
-                <path d="M402,80 V64 H470"/>
-                <path d="M366,250 V214"/>
-                <path d="M250,301 V274 H222"/>
-                <path d="M740,315 V300 H712"/>
-                <path d="M848,298 V272 H812"/>
-                <path d="M330,333 V420 H302"/>
-                <path d="M474,336 V426 H520"/>
-                <path d="M532,540 V556 H556"/>
-                <path d="M50,296 H30 V250"/>
-              </g>
-              <text class="hb-label" x="476" y="60">Connector housing</text>
-              <text class="hb-label" x="366" y="256" text-anchor="middle">Branches</text>
-              <text class="hb-label" x="150" y="278">Cable ties</text>
-              <text class="hb-label" x="640" y="296">Wrapped wires</text>
-              <text class="hb-label" x="720" y="268">Assembly connector</text>
-              <text class="hb-label" x="228" y="425" text-anchor="end">Main trunk</text>
-              <text class="hb-label" x="524" y="430">Branching point</text>
-              <text class="hb-label" x="560" y="561">Ring terminal</text>
-              <text class="hb-label" x="18" y="245">Loose terminal</text>
-            </svg>
-          </div>
-        </div>
-      </section>
-
       <!-- ─── WHY SUPPLAR (differentiators) ───────────────────────────────────── -->
       <section class="section" id="why">
         <div class="container">
@@ -470,6 +455,6 @@
       </div>
     </footer>
 
-    <script src="script.js?v=20260810e"></script>
+    <script src="script.js?v=20260810f"></script>
   </body>
 </html>

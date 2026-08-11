@@ -171,7 +171,7 @@ h3 { font-size: clamp(1.05rem, 1.6vw, 1.3rem); letter-spacing: -0.01em; }
 /* ============================================================================
    PINNED BIKE SHOWCASE
    ========================================================================= */
-.showcase { position: relative; height: 520vh; background: var(--bg-stage); }
+.showcase { position: relative; height: 700vh; background: var(--bg-stage); }
 :root { --copper: #c2702c; }   /* current / copper accent */
 
 /* ── one copper wire routed down the page ────────────────────────────────── */
@@ -785,7 +785,7 @@ main { position: relative; }
   .menu-toggle.is-open span:nth-child(2) { opacity: 0; }
   .menu-toggle.is-open span:nth-child(3) { transform: translateY(-6.6px) rotate(-45deg); }
 
-  .showcase { height: 380vh; }
+  .showcase { height: 500vh; }
   .showcase-sticky { min-height: 100svh; height: 100svh; }
   .phase-hero { align-items: flex-start; }
   .phase-hero .container { padding-top: 13vh; }

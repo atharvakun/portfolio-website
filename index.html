@@ -15,7 +15,7 @@
       rel="stylesheet"
     />
     <link rel="icon" type="image/png" href="logo-mark.png" />
-    <link rel="stylesheet" href="styles.css?v=20260810d" />
+    <link rel="stylesheet" href="styles.css?v=20260810e" />
   </head>
   <body>
     <div id="page-progress" aria-hidden="true"></div>
@@ -273,91 +273,92 @@
         <div class="container">
           <div class="section-heading reveal">
             <p class="eyebrow">Wiring Harness</p>
-            <h2>Engineered on a formboard.</h2>
+            <h2>Anatomy of a harness.</h2>
             <p class="section-sub">
-              Every harness is laid out on an assembly board — connectors located, branches
-              routed and bundled fork by fork, then continuity-tested before it leaves.
+              Connector housings, branches, cable ties and terminals — every harness is
+              routed, bundled and tested to your drawing.
             </p>
           </div>
           <div class="formboard-wrap reveal">
-            <svg class="formboard" viewBox="0 0 1000 560" role="img" aria-label="Wiring harness assembly formboard with connectors, branch breakouts and holding forks">
-              <defs>
-                <g id="fbfork">
-                  <rect class="fb-fork-base" x="-18" y="11" width="36" height="8" rx="3"/>
-                  <path class="fb-fork" d="M-14,-16 V11 H14 V-16"/>
-                </g>
-              </defs>
-
-              <!-- board -->
-              <rect class="fb-board" x="16" y="16" width="968" height="528" rx="18"/>
-              <g class="fb-grid">
-                <line x1="96" y1="24" x2="96" y2="536"/><line x1="176" y1="24" x2="176" y2="536"/>
-                <line x1="256" y1="24" x2="256" y2="536"/><line x1="336" y1="24" x2="336" y2="536"/>
-                <line x1="416" y1="24" x2="416" y2="536"/><line x1="496" y1="24" x2="496" y2="536"/>
-                <line x1="576" y1="24" x2="576" y2="536"/><line x1="656" y1="24" x2="656" y2="536"/>
-                <line x1="736" y1="24" x2="736" y2="536"/><line x1="816" y1="24" x2="816" y2="536"/>
-                <line x1="896" y1="24" x2="896" y2="536"/>
-                <line x1="24" y1="96" x2="976" y2="96"/><line x1="24" y1="176" x2="976" y2="176"/>
-                <line x1="24" y1="256" x2="976" y2="256"/><line x1="24" y1="336" x2="976" y2="336"/>
-                <line x1="24" y1="416" x2="976" y2="416"/>
-              </g>
-              <g class="fb-bolts">
-                <circle class="fb-bolt" cx="52" cy="52" r="9"/><circle class="fb-bolt-in" cx="52" cy="52" r="3.4"/>
-                <circle class="fb-bolt" cx="948" cy="52" r="9"/><circle class="fb-bolt-in" cx="948" cy="52" r="3.4"/>
-                <circle class="fb-bolt" cx="52" cy="508" r="9"/><circle class="fb-bolt-in" cx="52" cy="508" r="3.4"/>
-                <circle class="fb-bolt" cx="948" cy="508" r="9"/><circle class="fb-bolt-in" cx="948" cy="508" r="3.4"/>
-              </g>
-
-              <!-- tape bands -->
-              <line class="fb-tape" x1="270" y1="290" x2="270" y2="314"/>
-              <line class="fb-tape" x1="545" y1="290" x2="545" y2="314"/>
-              <line class="fb-tape" x1="805" y1="290" x2="805" y2="314"/>
-
-              <!-- wires -->
-              <path class="fb-wire trunk"  d="M166,302 H872"/>
-              <path class="fb-wire branch" d="M300,302 V150"/>
-              <path class="fb-wire branch" d="M470,302 V452"/>
-              <path class="fb-wire branch" d="M620,302 V150"/>
-              <path class="fb-wire branch" d="M760,302 V452"/>
+            <svg class="formboard" viewBox="0 0 1000 600" role="img" aria-label="Annotated wiring harness with connector housings, branches, cable ties, main trunk, wrapped wires, ring and loose terminals">
+              <!-- MAIN TRUNK -->
+              <path class="hb-wire hb-trunk" d="M150,318 C 280,310 360,316 440,322 C 540,329 610,330 690,330 L 798,330"/>
+              <path class="hb-core" d="M156,318 C 280,311 360,317 440,323 C 540,330 610,331 690,331 L 792,331"/>
+              <!-- left loose wires -->
+              <path class="hb-wire hb-branch" d="M150,318 C 118,315 104,299 82,297"/>
+              <path class="hb-wire hb-branch" d="M150,322 C 118,325 104,347 82,351"/>
+              <!-- branches up to housing -->
+              <path class="hb-wire hb-branch" d="M352,320 C 352,252 366,206 372,182"/>
+              <path class="hb-wire hb-branch" d="M404,323 C 404,252 402,206 402,182"/>
+              <path class="hb-wire hb-branch" d="M452,326 C 452,252 440,206 432,182"/>
+              <!-- branch down to ring terminals -->
+              <path class="hb-wire hb-branch" d="M470,328 C 470,398 486,440 486,468"/>
+              <path class="hb-wire hb-branch" d="M486,468 C 486,494 468,504 452,514"/>
+              <path class="hb-wire hb-branch" d="M486,468 C 486,494 504,504 520,514"/>
 
               <!-- copper current -->
-              <path class="fb-flow trunk"  d="M166,302 H872"/>
-              <path class="fb-flow branch" d="M300,302 V150"/>
-              <path class="fb-flow branch" d="M470,302 V452"/>
-              <path class="fb-flow branch" d="M620,302 V150"/>
-              <path class="fb-flow branch" d="M760,302 V452"/>
+              <path class="hb-flow" d="M150,318 C 280,310 360,316 440,322 C 540,329 610,330 690,330 L 798,330"/>
+              <path class="hb-flow" d="M470,328 C 470,398 486,440 486,468"/>
 
-              <!-- holding forks -->
-              <use href="#fbfork" transform="translate(210,302)"/>
-              <use href="#fbfork" transform="translate(385,302)"/>
-              <use href="#fbfork" transform="translate(690,302)"/>
-              <use href="#fbfork" transform="translate(840,302)"/>
-              <use href="#fbfork" transform="translate(300,226) rotate(90)"/>
-              <use href="#fbfork" transform="translate(470,378) rotate(90)"/>
-              <use href="#fbfork" transform="translate(620,226) rotate(90)"/>
-              <use href="#fbfork" transform="translate(760,378) rotate(90)"/>
+              <!-- wrapped wires: sheath + spiral hatch -->
+              <path class="hb-wire" style="stroke:#dcdcd8;stroke-width:24" d="M690,330 H790"/>
+              <g class="hb-wrap">
+                <line x1="694" y1="317" x2="703" y2="343"/><line x1="705" y1="317" x2="714" y2="343"/>
+                <line x1="716" y1="317" x2="725" y2="343"/><line x1="727" y1="317" x2="736" y2="343"/>
+                <line x1="738" y1="317" x2="747" y2="343"/><line x1="749" y1="317" x2="758" y2="343"/>
+                <line x1="760" y1="317" x2="769" y2="343"/><line x1="771" y1="317" x2="780" y2="343"/>
+              </g>
 
-              <!-- breakout nodes -->
-              <circle class="fb-node" cx="300" cy="302" r="7"/>
-              <circle class="fb-node" cx="470" cy="302" r="7"/>
-              <circle class="fb-node" cx="620" cy="302" r="7"/>
-              <circle class="fb-node" cx="760" cy="302" r="7"/>
+              <!-- cable ties -->
+              <g><rect class="hb-tie" x="244" y="303" width="12" height="30" rx="5"/><path class="hb-tie" d="M255,331 q8,3 4,12"/></g>
+              <g><rect class="hb-tie" x="560" y="315" width="12" height="30" rx="5"/><path class="hb-tie" d="M571,343 q8,3 4,12"/></g>
+              <g><rect class="hb-tie" x="471" y="404" width="30" height="12" rx="5"/><path class="hb-tie" d="M499,415 q3,8 12,4"/></g>
 
-              <!-- connectors -->
-              <g><rect class="fb-conn" x="48" y="250" width="120" height="104" rx="12"/><rect class="fb-conn-cap" x="48" y="250" width="120" height="28" rx="12"/>
-                <circle class="fb-pin" cx="166" cy="278" r="3.6"/><circle class="fb-pin" cx="166" cy="296" r="3.6"/><circle class="fb-pin" cx="166" cy="314" r="3.6"/><circle class="fb-pin" cx="166" cy="332" r="3.6"/></g>
-              <g><rect class="fb-conn" x="872" y="266" width="80" height="72" rx="11"/><rect class="fb-conn-cap" x="872" y="266" width="80" height="22" rx="11"/>
-                <circle class="fb-pin" cx="874" cy="288" r="3.4"/><circle class="fb-pin" cx="874" cy="302" r="3.4"/><circle class="fb-pin" cx="874" cy="316" r="3.4"/></g>
-              <g><rect class="fb-conn" x="266" y="96" width="68" height="54" rx="9"/>
-                <circle class="fb-pin" cx="286" cy="150" r="3.2"/><circle class="fb-pin" cx="300" cy="150" r="3.2"/><circle class="fb-pin" cx="314" cy="150" r="3.2"/></g>
-              <g><rect class="fb-conn" x="436" y="452" width="68" height="54" rx="9"/>
-                <circle class="fb-pin" cx="456" cy="452" r="3.2"/><circle class="fb-pin" cx="470" cy="452" r="3.2"/><circle class="fb-pin" cx="484" cy="452" r="3.2"/></g>
-              <g><rect class="fb-conn" x="586" y="96" width="68" height="54" rx="9"/>
-                <circle class="fb-pin" cx="606" cy="150" r="3.2"/><circle class="fb-pin" cx="620" cy="150" r="3.2"/><circle class="fb-pin" cx="634" cy="150" r="3.2"/></g>
-              <g><rect class="fb-conn" x="726" y="452" width="68" height="54" rx="9"/>
-                <circle class="fb-pin" cx="746" cy="452" r="3.2"/><circle class="fb-pin" cx="760" cy="452" r="3.2"/><circle class="fb-pin" cx="774" cy="452" r="3.2"/></g>
+              <!-- branching point -->
+              <circle class="hb-node" cx="470" cy="328" r="6"/>
 
-              <text class="fb-label" x="80" y="528">HARNESS ASSEMBLY BOARD</text>
+              <!-- connector housing (top) -->
+              <rect class="hb-boot" x="356" y="168" width="94" height="20" rx="6"/>
+              <rect class="hb-housing" x="342" y="104" width="120" height="68" rx="10"/>
+              <rect class="hb-face" x="342" y="92" width="120" height="26" rx="9"/>
+              <rect class="hb-housing-2" x="392" y="80" width="20" height="14" rx="3"/>
+              <g class="hb-pin"><circle cx="366" cy="105" r="3.4"/><circle cx="390" cy="105" r="3.4"/><circle cx="414" cy="105" r="3.4"/><circle cx="438" cy="105" r="3.4"/></g>
+
+              <!-- assembly connector (right) -->
+              <rect class="hb-boot" x="790" y="320" width="20" height="22" rx="5"/>
+              <rect class="hb-housing" x="806" y="300" width="80" height="60" rx="9"/>
+              <rect class="hb-housing-2" x="806" y="300" width="16" height="60" rx="9"/>
+              <g class="hb-pin"><circle cx="890" cy="316" r="3.2"/><circle cx="890" cy="330" r="3.2"/><circle cx="890" cy="344" r="3.2"/></g>
+
+              <!-- loose terminals -->
+              <rect class="hb-blade" x="62" y="290" width="16" height="14" rx="3"/><rect class="hb-blade" x="40" y="293" width="24" height="8" rx="1.5"/>
+              <rect class="hb-blade" x="62" y="344" width="16" height="14" rx="3"/><rect class="hb-blade" x="40" y="347" width="24" height="8" rx="1.5"/>
+
+              <!-- ring terminals -->
+              <g><path class="hb-lug" d="M452,514 l-8,7"/><circle class="hb-ring" cx="440" cy="528" r="11"/><circle class="hb-ring-h" cx="440" cy="528" r="4.5"/></g>
+              <g><path class="hb-lug" d="M520,514 l8,7"/><circle class="hb-ring" cx="532" cy="528" r="11"/><circle class="hb-ring-h" cx="532" cy="528" r="4.5"/></g>
+
+              <!-- labels + leaders -->
+              <g class="hb-leader">
+                <path d="M402,80 V64 H470"/>
+                <path d="M366,250 V214"/>
+                <path d="M250,301 V274 H222"/>
+                <path d="M740,315 V300 H712"/>
+                <path d="M848,298 V272 H812"/>
+                <path d="M330,333 V420 H302"/>
+                <path d="M474,336 V426 H520"/>
+                <path d="M532,540 V556 H556"/>
+                <path d="M50,296 H30 V250"/>
+              </g>
+              <text class="hb-label" x="476" y="60">Connector housing</text>
+              <text class="hb-label" x="366" y="256" text-anchor="middle">Branches</text>
+              <text class="hb-label" x="150" y="278">Cable ties</text>
+              <text class="hb-label" x="640" y="296">Wrapped wires</text>
+              <text class="hb-label" x="720" y="268">Assembly connector</text>
+              <text class="hb-label" x="228" y="425" text-anchor="end">Main trunk</text>
+              <text class="hb-label" x="524" y="430">Branching point</text>
+              <text class="hb-label" x="560" y="561">Ring terminal</text>
+              <text class="hb-label" x="18" y="245">Loose terminal</text>
             </svg>
           </div>
         </div>
@@ -469,6 +470,6 @@
       </div>
     </footer>
 
-    <script src="script.js?v=20260810d"></script>
+    <script src="script.js?v=20260810e"></script>
   </body>
 </html>

@@ -874,7 +874,7 @@ main { position: relative; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; transition: none; }
-  .rise-thread.rt-armed .rt-value { opacity: 1; }
+  .rise-coil.rc-armed .rc-value { opacity: 1; }
   .marquee-track { animation: none; }
   .card.reveal { transition: none; }
   .card::before { display: none; }
@@ -964,59 +964,38 @@ main { position: relative; }
 .value h3 { margin-top: 14px; }
 .value p { margin-top: 8px; color: var(--ink-soft); font-size: 0.92rem; }
 
-/* ── RISE — the copper thread (a wire rises through the values as you scroll) ─ */
-.rise-thread {
-  --gutter: clamp(58px, 8vw, 92px); --rail: clamp(22px, 3vw, 30px);
-  position: relative; padding-left: var(--gutter); max-width: 720px;
-  margin-top: clamp(12px, 2.4vw, 26px);
-}
-/* the wire itself — same vocabulary as the site's routed copper wirepath */
-.rt-rail { position: absolute; left: var(--rail); top: 8px; bottom: 8px; width: 2px; }
-.rt-track { position: absolute; inset: 0; background: var(--line); }
-.rt-fill {
-  position: absolute; left: 0; top: 0; width: 2px; height: 0;
-  background: linear-gradient(180deg, var(--copper), #e08a3c);
-  box-shadow: 0 0 8px rgba(194, 112, 44, 0.4);
-}
-.rt-dot {
-  position: absolute; left: 1px; top: 0; width: 10px; height: 10px;
-  margin: -5px 0 0 -5px; border-radius: 50%; background: var(--copper); opacity: 0;
-  box-shadow: 0 0 12px 2px rgba(194, 112, 44, 0.55); transition: opacity 0.3s var(--ease);
-}
-/* the values, strung along the wire */
-.rt-values { list-style: none; margin: 0; padding: 0;
-  display: flex; flex-direction: column; gap: clamp(32px, 5vw, 60px); }
-.rt-value {
-  position: relative; display: grid; grid-template-columns: auto 1fr;
-  gap: clamp(16px, 2.5vw, 30px); align-items: center;
-}
-/* node on the rail — lights copper as the wire's tip passes it */
-.rt-value::before {
-  content: ""; position: absolute; top: 50%; margin-top: -6px;
-  left: calc(var(--rail) - var(--gutter) - 5px); width: 12px; height: 12px;
-  border-radius: 50%; background: var(--bg); border: 2px solid var(--line-strong); z-index: 2;
-  transition: border-color 0.45s var(--ease), background 0.45s var(--ease), box-shadow 0.45s var(--ease);
-}
-.rt-value.lit::before {
-  border-color: var(--copper); background: var(--copper);
-  box-shadow: 0 0 10px 1px rgba(194, 112, 44, 0.5);
-}
-.rt-key {
-  font-family: var(--font-display); font-weight: 700; line-height: 1;
-  font-size: clamp(1.7rem, 3vw, 2.5rem); color: var(--line-strong);
-  transition: color 0.5s var(--ease);
-}
-.rt-value.lit .rt-key { color: var(--copper); }
-.rt-text h3 { font-size: clamp(1.05rem, 1.8vw, 1.32rem); }
-.rt-text p { margin-top: 5px; color: var(--ink-soft);
-  font-size: 0.95rem; line-height: 1.5; max-width: 46ch; }
-/* dim until the wire reaches each value — only once JS arms it (graceful without JS) */
-.rise-thread.rt-armed .rt-value { opacity: 0.32; transition: opacity 0.6s var(--ease); }
-.rise-thread.rt-armed .rt-value.lit { opacity: 1; }
-@media (max-width: 560px) {
-  .rise-thread { --gutter: 46px; --rail: 15px; }
-  .rt-value { grid-template-columns: 1fr; gap: 4px; }
-  .rt-key { font-size: 1.5rem; }
+/* ── RISE — the wound coil (a copper coil winds as you scroll past the values) ─ */
+.rise-coil { display: grid; grid-template-columns: clamp(92px, 13vw, 148px) 1fr;
+  gap: clamp(26px, 5vw, 66px); align-items: center; max-width: 760px;
+  margin-top: clamp(16px, 3vw, 34px); }
+.rc-emblem { align-self: stretch; display: flex; }
+.rc-svg { width: 100%; height: auto; overflow: visible; }
+/* faint bobbin flanges frame the coil as a cylinder */
+.rc-frame { stroke: var(--line-strong); stroke-width: 1; }
+/* each turn: a faint back-ring + a bold copper front arc → depth */
+.rc-turn { opacity: 0; }
+.rc-turn ellipse { fill: none; stroke: var(--copper); stroke-width: 1.4; opacity: 0.32; }
+.rc-front { fill: none; stroke: var(--copper); stroke-width: 2.4; stroke-linecap: round; }
+.rc-feeder { fill: var(--copper); opacity: 0;
+  filter: drop-shadow(0 0 6px rgba(194, 112, 44, 0.7)); }
+/* the values, read beside the winding */
+.rc-values { list-style: none; margin: 0; padding: 0;
+  display: flex; flex-direction: column; gap: clamp(22px, 4vw, 42px); }
+.rc-value { display: grid; grid-template-columns: auto 1fr; gap: clamp(14px, 2vw, 24px);
+  align-items: center; }
+.rc-key { font-family: var(--font-display); font-weight: 700; line-height: 1;
+  font-size: clamp(1.5rem, 2.6vw, 2.2rem); color: var(--line-strong);
+  transition: color 0.5s var(--ease); }
+.rc-value.lit .rc-key { color: var(--copper); }
+.rc-text h3 { font-size: clamp(1.02rem, 1.7vw, 1.28rem); }
+.rc-text p { margin-top: 4px; color: var(--ink-soft);
+  font-size: 0.93rem; line-height: 1.5; max-width: 44ch; }
+/* dim until the winding reaches each value — armed by JS so no-JS stays readable */
+.rise-coil.rc-armed .rc-value { opacity: 0.32; transition: opacity 0.6s var(--ease); }
+.rise-coil.rc-armed .rc-value.lit { opacity: 1; }
+@media (max-width: 620px) {
+  .rise-coil { grid-template-columns: 72px 1fr; gap: 22px; }
+  .rc-value { grid-template-columns: auto 1fr; gap: 14px; }
 }
 
 /* ── spec list (division capability points) ──────────────────────────────── */

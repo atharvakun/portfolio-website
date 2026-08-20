@@ -186,6 +186,18 @@ function setupShowcase() {
     w.style.strokeDasharray = L; w.style.strokeDashoffset = L; w.dataset.len = L;
   });
 
+  // Act 3 (anatomy) — collect parts so the harness BUILDS in stages, not all at once
+  const anaWires = anatomyG ? [...anatomyG.querySelectorAll(".hb-wire, .hb-core")] : [];
+  anaWires.forEach((w) => {
+    const L = w.getTotalLength();
+    w.style.strokeDasharray = L; w.style.strokeDashoffset = L; w.dataset.len = L;
+  });
+  const anaParts = anatomyG ? [...anatomyG.querySelectorAll(
+    ".hb-blade, .hb-boot, .hb-housing, .hb-housing-2, .hb-face, .hb-pin, .hb-lug, .hb-ring, .hb-ring-h, .hb-node, .hb-tie, .hb-wrap")] : [];
+  const anaFlow = anatomyG ? [...anatomyG.querySelectorAll(".hb-flow")] : [];
+  const anaLeaders = anatomyG ? [...anatomyG.querySelectorAll(".hb-leader > path")] : [];
+  const anaLabels = anatomyG ? [...anatomyG.querySelectorAll(".hb-label")] : [];
+
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const seg = (p, a, b) => clamp((p - a) / (b - a || 1e-6), 0, 1);
   const ease = (t) => t * t * (3 - 2 * t);
@@ -217,12 +229,37 @@ function setupShowcase() {
     ticks.forEach((g) => { const [a, b] = sv(g); g.style.opacity = ease(seg(hp, a, b)); });
     if (grid)  grid.style.backgroundPosition = `0 ${-p * 46}px, ${-p * 46}px 0`;
 
-    // ACT 3 — Anatomy: the schematic gives way to a detailed, labelled harness.
+    // ACT 3 — Anatomy: the harness BUILDS in stages as you scroll — wires draw,
+    // parts pop in one by one, current lights, then each callout labels itself —
+    // instead of the whole diagram arriving at once.
     if (anatomyG) {
-      const aIn = ease(seg(p, 0.73, 0.83));
-      const aRise = ease(seg(p, 0.73, 0.91));
-      anatomyG.style.opacity = aIn;
-      anatomyG.setAttribute("transform", `translate(170, ${22 + 46 * (1 - aRise)}) scale(0.86)`);
+      const aShow = ease(seg(p, 0.72, 0.77));
+      const aRise = ease(seg(p, 0.72, 0.90));
+      anatomyG.style.opacity = aShow;
+      anatomyG.setAttribute("transform", `translate(170, ${22 + 40 * (1 - aRise)}) scale(0.86)`);
+
+      const ap = seg(p, 0.74, 0.97); // local build progress within Act 3
+      // 1) wires self-draw — trunk first, then the branches fan out
+      anaWires.forEach((w, i) => {
+        const a = (i / Math.max(anaWires.length, 1)) * 0.42;
+        w.style.strokeDashoffset = w.dataset.len * (1 - ease(seg(ap, a, a + 0.2)));
+      });
+      // 2) terminals, connectors and ties pop in one after another
+      anaParts.forEach((el, i) => {
+        const a = 0.26 + (i / Math.max(anaParts.length, 1)) * 0.34;
+        el.style.opacity = ease(seg(ap, a, a + 0.14));
+      });
+      // 3) copper current lights along the trunk
+      anaFlow.forEach((f) => { f.style.opacity = 0.9 * ease(seg(ap, 0.58, 0.72)); });
+      // 4) leaders + labels annotate the finished harness, one by one
+      anaLeaders.forEach((el, i) => {
+        const a = 0.6 + (i / Math.max(anaLeaders.length, 1)) * 0.34;
+        el.style.opacity = ease(seg(ap, a, a + 0.1));
+      });
+      anaLabels.forEach((el, i) => {
+        const a = 0.64 + (i / Math.max(anaLabels.length, 1)) * 0.34;
+        el.style.opacity = ease(seg(ap, a, a + 0.12));
+      });
     }
 
     // overlay copy
@@ -494,35 +531,59 @@ function setupWirePath() {
   layout();
 }
 
-/* ─── RISE THREAD (about) — copper wire rises through the core values ─────── */
-function setupRiseThread() {
-  const thread = document.getElementById("rise-thread");
-  if (!thread) return;
-  const rail = thread.querySelector(".rt-rail");
-  const fill = document.getElementById("rt-fill");
-  const dot = document.getElementById("rt-dot");
-  const values = [...thread.querySelectorAll(".rt-value")];
+/* ─── RISE COIL (about) — a copper coil winds as you scroll past the values ── */
+function setupRiseCoil() {
+  const root = document.getElementById("rise-coil");
+  if (!root) return;
+  const turnsG = root.querySelector(".rc-turns");
+  const feeder = root.querySelector(".rc-feeder");
+  const values = [...root.querySelectorAll(".rc-value")];
   const clampN = (v, a, b) => Math.max(a, Math.min(b, v));
+  const NS = "http://www.w3.org/2000/svg";
 
-  // reduced motion: skip the draw, just present the thread fully lit
+  // build the coil: N elliptical turns stacked down a bobbin
+  const N = 15, cx = 70, rx = 48, ry = 13, yTop = 26, yBot = 274;
+  const dy = (yBot - yTop) / (N - 1);
+  const turns = [];
+  for (let i = 0; i < N; i++) {
+    const cy = yTop + i * dy;
+    const g = document.createElementNS(NS, "g");
+    g.setAttribute("class", "rc-turn");
+    const el = document.createElementNS(NS, "ellipse");
+    el.setAttribute("cx", cx); el.setAttribute("cy", cy);
+    el.setAttribute("rx", rx); el.setAttribute("ry", ry);
+    const fr = document.createElementNS(NS, "path");
+    fr.setAttribute("class", "rc-front");
+    fr.setAttribute("d", `M${cx - rx} ${cy} A ${rx} ${ry} 0 0 0 ${cx + rx} ${cy}`);
+    g.appendChild(el); g.appendChild(fr); turnsG.appendChild(g);
+    turns.push({ g, cy });
+  }
+
+  // reduced motion: present the finished coil, values lit, no winding
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    turns.forEach((t) => { t.g.style.opacity = "1"; });
     values.forEach((v) => v.classList.add("lit"));
-    fill.style.height = "100%"; if (dot) dot.style.opacity = "1";
     return;
   }
-  thread.classList.add("rt-armed");
+  root.classList.add("rc-armed");
 
-  function update() {
-    const r = rail.getBoundingClientRect();
-    if (r.height <= 0) return;
-    // copper tip = how far the 62%-viewport line has travelled down the rail
-    const tip = clampN(window.innerHeight * 0.62 - r.top, 0, r.height);
-    fill.style.height = `${tip}px`;
-    if (dot) { dot.style.top = `${tip}px`; dot.style.opacity = tip > 2 ? "1" : "0"; }
-    values.forEach((v) => {
-      const vr = v.getBoundingClientRect();
-      const y = vr.top - r.top + vr.height / 2; // node sits at the value's centre
-      v.classList.toggle("lit", tip >= y);
+  function render() {
+    const r = root.getBoundingClientRect();
+    const vh = window.innerHeight;
+    const p = clampN((0.82 * vh - r.top) / (0.62 * vh), 0, 1);
+    const wound = p * N;
+    turns.forEach((t, i) => { t.g.style.opacity = clampN(wound - i, 0, 1); });
+    // glowing feeder rides the winding tip on the wire's feed side
+    if (feeder) {
+      if (p > 0.005 && p < 0.995) {
+        feeder.setAttribute("cx", cx + rx);
+        feeder.setAttribute("cy", yTop + clampN(wound, 0, N - 0.001) * dy);
+        feeder.style.opacity = "1";
+      } else { feeder.style.opacity = "0"; }
+    }
+    // each value lights as the winding descends past its zone
+    values.forEach((v, j) => {
+      v.classList.toggle("lit", p >= ((j + 0.5) / values.length) * 0.9);
     });
   }
 
@@ -530,11 +591,11 @@ function setupRiseThread() {
   window.addEventListener("scroll", () => {
     if (ticking) return;
     ticking = true;
-    requestAnimationFrame(() => { ticking = false; update(); });
+    requestAnimationFrame(() => { ticking = false; render(); });
   }, { passive: true });
-  window.addEventListener("resize", update);
-  window.addEventListener("load", update);
-  update();
+  window.addEventListener("resize", render);
+  window.addEventListener("load", render);
+  render();
 }
 
 /* ─── DEBUG: ?top=<px> jumps the page; ?flat=1 hides the hero (screenshots) ── */
@@ -567,5 +628,5 @@ setupVisTabs();
 setupHarnessTabs();
 setupStatCounters();
 setupWirePath();
-setupRiseThread();
+setupRiseCoil();
 setupDebugScroll();

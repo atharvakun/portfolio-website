@@ -870,6 +870,7 @@ main { position: relative; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; transition: none; }
+  .value-step::after { opacity: 1; transform: none; transition: none; }
   .marquee-track { animation: none; }
   .card.reveal { transition: none; }
   .card::before { display: none; }
@@ -958,6 +959,32 @@ main { position: relative; }
   line-height: 1; display: block; }
 .value h3 { margin-top: 14px; }
 .value p { margin-top: 8px; color: var(--ink-soft); font-size: 0.92rem; }
+
+/* ── RISE — rising staircase (layout climbs left → right) ─────────────────── */
+.value-stair { --stair: clamp(26px, 4.4vw, 58px); align-items: start; }
+.value-step { position: relative; }
+/* equal card heights so the climb is the ONLY thing that varies — a label
+   wrapping to two lines can't knock the treads out of even steps */
+.value-stair .value { min-height: 152px; display: flex; flex-direction: column; }
+.value-stair .value h3 { margin-top: auto; }
+/* copper tread under each card — the steps of the climb, ascending with them */
+.value-step::after {
+  content: ""; position: absolute; left: 4px; bottom: -14px; height: 2px; width: 40px;
+  background: linear-gradient(90deg, var(--copper), #e08a3c); border-radius: 2px;
+  opacity: 0; transform: scaleX(0); transform-origin: left;
+  transition: opacity 0.5s var(--ease) 0.15s, transform 0.6s var(--ease) 0.15s;
+}
+.value-step.is-visible::after { opacity: 1; transform: scaleX(1); }
+/* staggered rise-in — each riser lifts into place a beat after the last */
+.value-stair .value-step:nth-child(2) { transition-delay: 0.09s; }
+.value-stair .value-step:nth-child(3) { transition-delay: 0.18s; }
+.value-stair .value-step:nth-child(4) { transition-delay: 0.27s; }
+/* the staircase itself — only where all four sit in one row */
+@media (min-width: 981px) {
+  .value-stair .value-step:nth-child(1) { margin-top: calc(var(--stair) * 3); }
+  .value-stair .value-step:nth-child(2) { margin-top: calc(var(--stair) * 2); }
+  .value-stair .value-step:nth-child(3) { margin-top: calc(var(--stair) * 1); }
+}
 
 /* ── spec list (division capability points) ──────────────────────────────── */
 .spec-list { display: grid; gap: 0; border-top: 1px solid var(--line); margin-top: 8px; }

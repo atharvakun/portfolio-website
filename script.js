@@ -206,10 +206,10 @@ function setupShowcase() {
   function render(p) {
     // ACT 1 — Winding (division 01): builds first, then clears for the harness.
     const windingIn = ease(seg(p, 0.12, 0.20));
-    const windingOut = ease(seg(p, 0.38, 0.46));
+    const windingOut = ease(seg(p, 0.44, 0.52));
     windingG.style.opacity = windingIn * (1 - windingOut);
     leads.forEach((l) => { l.style.opacity = ease(seg(p, 0.14, 0.22)) * (1 - windingOut); });
-    const wound = ease(seg(p, 0.16, 0.40));
+    const wound = ease(seg(p, 0.16, 0.42));
     const lit = wound * NRING;
     rings.forEach((r, i) => { r.style.opacity = clamp(lit - i, 0, 1) * (1 - windingOut); });
     if (turnsN) turnsN.textContent = Math.round(wound * 54);
@@ -218,27 +218,20 @@ function setupShowcase() {
       feeder.style.opacity = ease(seg(p, 0.16, 0.20)) * (1 - ease(seg(p, 0.38, 0.42))) * (1 - windingOut);
     }
 
-    // ACT 2 — Wiring harness (division 02): self-draws second (schematic).
-    const hp = seg(p, 0.44, 0.66);
-    harnessG.style.opacity = ease(seg(p, 0.44, 0.51)) * (1 - ease(seg(p, 0.66, 0.72)));
-    wires.forEach((w) => { const [a, b] = sv(w);
-      w.style.strokeDashoffset = w.dataset.len * (1 - ease(seg(hp, a, b))); });
-    nodes.forEach((n) => { const [a, b] = sv(n); const d = ease(seg(hp, a, b));
-      n.style.opacity = d; n.style.transform = `scale(${0.82 + 0.18 * d})`; });
-    flows.forEach((f) => { f.style.opacity = 0.9 * ease(seg(hp, 0.46, 0.58)); });
-    ticks.forEach((g) => { const [a, b] = sv(g); g.style.opacity = ease(seg(hp, a, b)); });
-    if (grid)  grid.style.backgroundPosition = `0 ${-p * 46}px, ${-p * 46}px 0`;
+    // (legacy Act 2 schematic retired — the harness is now shown as the anatomy)
+    if (harnessG) harnessG.style.opacity = 0;
+    if (grid) grid.style.backgroundPosition = `0 ${-p * 46}px, ${-p * 46}px 0`;
 
-    // ACT 3 — Anatomy: the harness BUILDS in stages as you scroll — wires draw,
-    // parts pop in one by one, current lights, then each callout labels itself —
-    // instead of the whole diagram arriving at once.
+    // ACT 2 — Wiring harness (division 02): BUILDS in stages as you scroll — wires
+    // self-draw, parts pop in one by one, current lights, then each callout labels
+    // itself — instead of the whole diagram arriving at once.
     if (anatomyG) {
-      const aShow = ease(seg(p, 0.72, 0.77));
-      const aRise = ease(seg(p, 0.72, 0.90));
+      const aShow = ease(seg(p, 0.50, 0.56));
+      const aRise = ease(seg(p, 0.50, 0.72));
       anatomyG.style.opacity = aShow;
       anatomyG.setAttribute("transform", `translate(170, ${22 + 40 * (1 - aRise)}) scale(0.86)`);
 
-      const ap = seg(p, 0.74, 0.97); // local build progress within Act 3
+      const ap = seg(p, 0.52, 0.95); // local build progress within the act
       // 1) wires self-draw — trunk first, then the branches fan out
       anaWires.forEach((w, i) => {
         const a = (i / Math.max(anaWires.length, 1)) * 0.42;
@@ -264,10 +257,11 @@ function setupShowcase() {
 
     // overlay copy
     if (pHero) pHero.style.opacity = 1 - ease(seg(p, 0.06, 0.16));
-    // harness card carries through the harness + anatomy acts
-    const mh = ease(seg(p, 0.50, 0.58)) * (1 - ease(seg(p, 0.90, 0.96)));
+    // 02 — Wiring Harness card rides with the anatomy build
+    const mh = ease(seg(p, 0.56, 0.64)) * (1 - ease(seg(p, 0.92, 0.98)));
     if (pHarn) { pHarn.style.opacity = mh; pHarn.style.transform = `translateY(${10 - 10 * mh}px)`; }
-    const mw = ease(seg(p, 0.22, 0.30)) * (1 - ease(seg(p, 0.38, 0.45)));
+    // 01 — Fine Wire Winding card
+    const mw = ease(seg(p, 0.20, 0.28)) * (1 - ease(seg(p, 0.44, 0.50)));
     if (pWind) { pWind.style.opacity = mw; pWind.style.transform = `translateY(${10 - 10 * mw}px)`; }
     if (cue) cue.style.opacity = 1 - ease(seg(p, 0.02, 0.10));
     if (progFill) progFill.style.height = `${p * 100}%`;

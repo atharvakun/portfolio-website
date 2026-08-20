@@ -171,7 +171,7 @@ h3 { font-size: clamp(1.05rem, 1.6vw, 1.3rem); letter-spacing: -0.01em; }
 /* ============================================================================
    PINNED BIKE SHOWCASE
    ========================================================================= */
-.showcase { position: relative; height: 700vh; background: var(--bg-stage); }
+.showcase { position: relative; height: 500vh; background: var(--bg-stage); }
 :root { --copper: #c2702c; }   /* current / copper accent */
 
 /* ── one copper wire routed down the page ────────────────────────────────── */
@@ -801,7 +801,7 @@ main { position: relative; }
   .menu-toggle.is-open span:nth-child(2) { opacity: 0; }
   .menu-toggle.is-open span:nth-child(3) { transform: translateY(-6.6px) rotate(-45deg); }
 
-  .showcase { height: 500vh; }
+  .showcase { height: 380vh; }
   .showcase-sticky { min-height: 100svh; height: 100svh; }
   .phase-hero { align-items: flex-start; }
   .phase-hero .container { padding-top: 13vh; }
@@ -968,10 +968,8 @@ main { position: relative; }
 .rise-coil { display: grid; grid-template-columns: clamp(92px, 13vw, 148px) 1fr;
   gap: clamp(26px, 5vw, 66px); align-items: center; max-width: 760px;
   margin-top: clamp(16px, 3vw, 34px); }
-.rc-emblem { align-self: stretch; display: flex; }
+.rc-emblem { align-self: center; display: flex; }
 .rc-svg { width: 100%; height: auto; overflow: visible; }
-/* faint bobbin flanges frame the coil as a cylinder */
-.rc-frame { stroke: var(--line-strong); stroke-width: 1; }
 /* each turn: a faint back-ring + a bold copper front arc → depth */
 .rc-turn { opacity: 0; }
 .rc-turn ellipse { fill: none; stroke: var(--copper); stroke-width: 1.4; opacity: 0.32; }

@@ -870,7 +870,7 @@ main { position: relative; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; transition: none; }
-  .value-step::after { opacity: 1; transform: none; transition: none; }
+  .rise-thread.rt-armed .rt-value { opacity: 1; }
   .marquee-track { animation: none; }
   .card.reveal { transition: none; }
   .card::before { display: none; }
@@ -960,36 +960,68 @@ main { position: relative; }
 .value h3 { margin-top: 14px; }
 .value p { margin-top: 8px; color: var(--ink-soft); font-size: 0.92rem; }
 
-/* ── RISE — rising staircase (layout climbs left → right) ─────────────────── */
-.value-stair { --stair: clamp(26px, 4.4vw, 58px); align-items: start; }
-.value-step { position: relative; }
-/* equal card heights so the climb is the ONLY thing that varies — a label
-   wrapping to two lines can't knock the treads out of even steps */
-.value-stair .value { min-height: 152px; display: flex; flex-direction: column; }
-.value-stair .value h3 { margin-top: auto; }
-/* copper tread under each card — the steps of the climb, ascending with them */
-.value-step::after {
-  content: ""; position: absolute; left: 4px; bottom: -14px; height: 2px; width: 40px;
-  background: linear-gradient(90deg, var(--copper), #e08a3c); border-radius: 2px;
-  opacity: 0; transform: scaleX(0); transform-origin: left;
-  transition: opacity 0.5s var(--ease) 0.15s, transform 0.6s var(--ease) 0.15s;
+/* ── RISE — the copper thread (a wire rises through the values as you scroll) ─ */
+.rise-thread {
+  --gutter: clamp(58px, 8vw, 92px); --rail: clamp(22px, 3vw, 30px);
+  position: relative; padding-left: var(--gutter); max-width: 720px;
+  margin-top: clamp(12px, 2.4vw, 26px);
 }
-.value-step.is-visible::after { opacity: 1; transform: scaleX(1); }
-/* staggered rise-in — each riser lifts into place a beat after the last */
-.value-stair .value-step:nth-child(2) { transition-delay: 0.09s; }
-.value-stair .value-step:nth-child(3) { transition-delay: 0.18s; }
-.value-stair .value-step:nth-child(4) { transition-delay: 0.27s; }
-/* the staircase itself — only where all four sit in one row */
-@media (min-width: 981px) {
-  .value-stair .value-step:nth-child(1) { margin-top: calc(var(--stair) * 3); }
-  .value-stair .value-step:nth-child(2) { margin-top: calc(var(--stair) * 2); }
-  .value-stair .value-step:nth-child(3) { margin-top: calc(var(--stair) * 1); }
+/* the wire itself — same vocabulary as the site's routed copper wirepath */
+.rt-rail { position: absolute; left: var(--rail); top: 8px; bottom: 8px; width: 2px; }
+.rt-track { position: absolute; inset: 0; background: var(--line); }
+.rt-fill {
+  position: absolute; left: 0; top: 0; width: 2px; height: 0;
+  background: linear-gradient(180deg, var(--copper), #e08a3c);
+  box-shadow: 0 0 8px rgba(194, 112, 44, 0.4);
+}
+.rt-dot {
+  position: absolute; left: 1px; top: 0; width: 10px; height: 10px;
+  margin: -5px 0 0 -5px; border-radius: 50%; background: var(--copper); opacity: 0;
+  box-shadow: 0 0 12px 2px rgba(194, 112, 44, 0.55); transition: opacity 0.3s var(--ease);
+}
+/* the values, strung along the wire */
+.rt-values { list-style: none; margin: 0; padding: 0;
+  display: flex; flex-direction: column; gap: clamp(32px, 5vw, 60px); }
+.rt-value {
+  position: relative; display: grid; grid-template-columns: auto 1fr;
+  gap: clamp(16px, 2.5vw, 30px); align-items: center;
+}
+/* node on the rail — lights copper as the wire's tip passes it */
+.rt-value::before {
+  content: ""; position: absolute; top: 50%; margin-top: -6px;
+  left: calc(var(--rail) - var(--gutter) - 5px); width: 12px; height: 12px;
+  border-radius: 50%; background: var(--bg); border: 2px solid var(--line-strong); z-index: 2;
+  transition: border-color 0.45s var(--ease), background 0.45s var(--ease), box-shadow 0.45s var(--ease);
+}
+.rt-value.lit::before {
+  border-color: var(--copper); background: var(--copper);
+  box-shadow: 0 0 10px 1px rgba(194, 112, 44, 0.5);
+}
+.rt-key {
+  font-family: var(--font-display); font-weight: 700; line-height: 1;
+  font-size: clamp(1.7rem, 3vw, 2.5rem); color: var(--line-strong);
+  transition: color 0.5s var(--ease);
+}
+.rt-value.lit .rt-key { color: var(--copper); }
+.rt-text h3 { font-size: clamp(1.05rem, 1.8vw, 1.32rem); }
+.rt-text p { margin-top: 5px; color: var(--ink-soft);
+  font-size: 0.95rem; line-height: 1.5; max-width: 46ch; }
+/* dim until the wire reaches each value — only once JS arms it (graceful without JS) */
+.rise-thread.rt-armed .rt-value { opacity: 0.32; transition: opacity 0.6s var(--ease); }
+.rise-thread.rt-armed .rt-value.lit { opacity: 1; }
+@media (max-width: 560px) {
+  .rise-thread { --gutter: 46px; --rail: 15px; }
+  .rt-value { grid-template-columns: 1fr; gap: 4px; }
+  .rt-key { font-size: 1.5rem; }
 }
 
 /* ── spec list (division capability points) ──────────────────────────────── */
-.spec-list { display: grid; gap: 0; border-top: 1px solid var(--line); margin-top: 8px; }
-.spec-list li { display: grid; grid-template-columns: auto 1fr; gap: 18px; align-items: baseline;
-  padding: 18px 2px; border-bottom: 1px solid var(--line); }
+/* one shared 2-col track (subgrid) so every row's description lines up on the
+   same edge — the label column sizes to this list's longest label */
+.spec-list { display: grid; grid-template-columns: max-content 1fr; column-gap: 28px;
+  border-top: 1px solid var(--line); margin-top: 8px; }
+.spec-list li { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid;
+  align-items: baseline; padding: 18px 2px; border-bottom: 1px solid var(--line); }
 .spec-list li b { font-family: var(--font-display); font-weight: 600; font-size: 1.02rem; min-width: 12ch; }
 .spec-list li span { color: var(--ink-soft); font-size: 0.98rem; }
 
@@ -1073,6 +1105,7 @@ main { position: relative; }
   .value-grid { grid-template-columns: 1fr 1fr; }
   .team-grid { grid-template-columns: 1fr; }
   .cta-band { flex-direction: column; align-items: flex-start; }
+  .spec-list { grid-template-columns: 1fr; }
   .spec-list li { grid-template-columns: 1fr; gap: 4px; }
   .spec-list li b { min-width: 0; }
   /* dropdown becomes an inline stacked group inside the mobile menu */

@@ -494,6 +494,49 @@ function setupWirePath() {
   layout();
 }
 
+/* ─── RISE THREAD (about) — copper wire rises through the core values ─────── */
+function setupRiseThread() {
+  const thread = document.getElementById("rise-thread");
+  if (!thread) return;
+  const rail = thread.querySelector(".rt-rail");
+  const fill = document.getElementById("rt-fill");
+  const dot = document.getElementById("rt-dot");
+  const values = [...thread.querySelectorAll(".rt-value")];
+  const clampN = (v, a, b) => Math.max(a, Math.min(b, v));
+
+  // reduced motion: skip the draw, just present the thread fully lit
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    values.forEach((v) => v.classList.add("lit"));
+    fill.style.height = "100%"; if (dot) dot.style.opacity = "1";
+    return;
+  }
+  thread.classList.add("rt-armed");
+
+  function update() {
+    const r = rail.getBoundingClientRect();
+    if (r.height <= 0) return;
+    // copper tip = how far the 62%-viewport line has travelled down the rail
+    const tip = clampN(window.innerHeight * 0.62 - r.top, 0, r.height);
+    fill.style.height = `${tip}px`;
+    if (dot) { dot.style.top = `${tip}px`; dot.style.opacity = tip > 2 ? "1" : "0"; }
+    values.forEach((v) => {
+      const vr = v.getBoundingClientRect();
+      const y = vr.top - r.top + vr.height / 2; // node sits at the value's centre
+      v.classList.toggle("lit", tip >= y);
+    });
+  }
+
+  let ticking = false;
+  window.addEventListener("scroll", () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { ticking = false; update(); });
+  }, { passive: true });
+  window.addEventListener("resize", update);
+  window.addEventListener("load", update);
+  update();
+}
+
 /* ─── DEBUG: ?top=<px> jumps the page; ?flat=1 hides the hero (screenshots) ── */
 function setupDebugScroll() {
   const params = new URLSearchParams(location.search);
@@ -524,4 +567,5 @@ setupVisTabs();
 setupHarnessTabs();
 setupStatCounters();
 setupWirePath();
+setupRiseThread();
 setupDebugScroll();

@@ -747,7 +747,11 @@ main { position: relative; }
 .footer-nav { display: flex; flex-direction: column; gap: 10px; }
 .footer-nav a { color: var(--ink-soft); font-size: 0.95rem; transition: color 0.2s var(--ease); }
 .footer-nav a:hover { color: var(--ink); }
+.footer-contact { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
 .footer-email { font-family: var(--font-display); font-weight: 500; }
+.footer-phone { font-family: var(--font-display); font-weight: 500; color: var(--ink-soft);
+  transition: color 0.2s var(--ease); }
+.footer-phone:hover { color: var(--ink); }
 .footer-base { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
   margin-top: clamp(40px, 6vw, 64px); padding-top: 26px; border-top: 1px solid var(--line);
   color: var(--ink-faint); font-size: 0.85rem; }

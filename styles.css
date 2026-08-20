@@ -983,6 +983,9 @@ main { position: relative; }
   align-items: center; }
 .rc-key { font-family: var(--font-display); font-weight: 700; line-height: 1;
   font-size: clamp(1.5rem, 2.6vw, 2.2rem); color: var(--line-strong);
+  /* fixed width so every letter shares one column — the narrow "I" no longer
+     pulls its text left of the others */
+  width: 1.05em; text-align: center;
   transition: color 0.5s var(--ease); }
 .rc-value.lit .rc-key { color: var(--copper); }
 .rc-text h3 { font-size: clamp(1.02rem, 1.7vw, 1.28rem); }

@@ -1064,6 +1064,23 @@ main { position: relative; }
 .trait p { color: var(--ink-soft); font-size: 0.95rem; line-height: 1.55; max-width: 40ch; }
 @media (max-width: 760px) { .trait-grid { grid-template-columns: 1fr; gap: 24px; } }
 
+/* ── How We Work — numbered process steps, audit note, MD pull-quote ──────── */
+.worksteps { counter-reset: step; }
+.worksteps li b::before { counter-increment: step;
+  content: counter(step, decimal-leading-zero) "  "; color: var(--copper);
+  font-variant-numeric: tabular-nums; }
+.work-note { margin-top: clamp(30px, 4vw, 46px); padding-left: 16px;
+  border-left: 2px solid var(--copper); font-family: var(--font-display);
+  font-weight: 500; font-size: 1.02rem; color: var(--ink); }
+.pullquote { margin: clamp(46px, 7vw, 88px) 0 0; max-width: 640px; }
+.pullquote::before { content: "\201C"; display: block; font-family: var(--font-display);
+  font-weight: 700; font-size: 3.4rem; line-height: 0.7; color: var(--copper); margin-bottom: 10px; }
+.pullquote blockquote { margin: 0; font-family: var(--font-display); font-weight: 500;
+  font-size: clamp(1.3rem, 2.5vw, 1.9rem); line-height: 1.32; letter-spacing: -0.01em; color: var(--ink); }
+.pullquote figcaption { margin-top: 22px; }
+.pullquote figcaption strong { font-family: var(--font-display); font-size: 1rem; display: block; }
+.pullquote figcaption span { color: var(--ink-soft); font-size: 0.9rem; }
+
 /* ── CTA band ────────────────────────────────────────────────────────────── */
 .cta-band { background: var(--ink); color: #fff; border-radius: var(--radius);
   padding: clamp(40px, 6vw, 72px) clamp(28px, 5vw, 64px);

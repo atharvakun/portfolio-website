@@ -197,6 +197,11 @@ function setupShowcase() {
   const anaFlow = anatomyG ? [...anatomyG.querySelectorAll(".hb-flow")] : [];
   const anaLeaders = anatomyG ? [...anatomyG.querySelectorAll(".hb-leader > path")] : [];
   const anaLabels = anatomyG ? [...anatomyG.querySelectorAll(".hb-label")] : [];
+  // on phones the SVG is zoomed hard for legibility, so fit + centre the wide
+  // harness (scale down a touch, shift right) to keep every label on-screen
+  const anaNarrow = window.matchMedia("(max-width: 760px)").matches;
+  const anaScale = anaNarrow ? 0.72 : 0.86;
+  const anaX = anaNarrow ? 250 : 170;
 
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const seg = (p, a, b) => clamp((p - a) / (b - a || 1e-6), 0, 1);
@@ -229,7 +234,7 @@ function setupShowcase() {
       const aShow = ease(seg(p, 0.50, 0.56));
       const aRise = ease(seg(p, 0.50, 0.72));
       anatomyG.style.opacity = aShow;
-      anatomyG.setAttribute("transform", `translate(170, ${22 + 40 * (1 - aRise)}) scale(0.86)`);
+      anatomyG.setAttribute("transform", `translate(${anaX}, ${22 + 40 * (1 - aRise)}) scale(${anaScale})`);
 
       const ap = seg(p, 0.52, 0.95); // local build progress within the act
       // 1) wires self-draw — trunk first, then the branches fan out

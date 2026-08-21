@@ -608,6 +608,9 @@ main { position: relative; }
 
 .card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
   background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+/* 3-up variant (QA / detail grids) — a class, so the mobile media queries below
+   can still collapse it (an inline style could not be overridden) */
+.card-grid-3 { grid-template-columns: repeat(3, 1fr); }
 .card { background: var(--bg); padding: 32px 28px; display: flex; flex-direction: column;
   transition: background 0.3s var(--ease), transform 0.3s var(--ease); }
 .card:hover { background: var(--bg-soft); }
@@ -816,7 +819,10 @@ main { position: relative; }
   .hero-brand-lockup small { font-size: .55rem; }
   .hx-hero .hero-title { max-width: 12ch; white-space: normal; }
   .hx-hero .eyebrow { white-space: normal; }
-  .hx-art { width: 155%; left: 50%; top: 57%; transform: translate(-50%, -50%); }
+  /* zoom the animation up on phones — the SVG must fill the widened frame
+     (it was capped at 92vw, so the earlier 155% never actually took effect) */
+  .hx-art { width: 182%; left: 50%; top: 55%; transform: translate(-50%, -50%); height: auto; }
+  .hx-art svg { width: 100%; max-height: none; }
   .hx-card { left: 16px; right: 16px; bottom: 6vh; width: auto; max-width: none; }
   .hx-card.hx-left { left: 16px; right: 16px; }
   /* captions sit at the bottom on phones so the bike stays visible above */

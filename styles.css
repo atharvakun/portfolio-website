@@ -1050,6 +1050,14 @@ main { position: relative; }
 .team-member strong { font-family: var(--font-display); font-size: 1.05rem; display: block; }
 .team-member span { color: var(--ink-soft); font-size: 0.9rem; }
 
+/* team traits — editorial top-rule cards (no named individuals) */
+.trait-grid { display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: clamp(22px, 3vw, 44px); margin-top: clamp(30px, 4vw, 52px); }
+.trait { padding-top: 22px; border-top: 1.5px solid var(--ink); }
+.trait strong { font-family: var(--font-display); font-size: 1.1rem; display: block; margin-bottom: 9px; }
+.trait p { color: var(--ink-soft); font-size: 0.95rem; line-height: 1.55; max-width: 40ch; }
+@media (max-width: 760px) { .trait-grid { grid-template-columns: 1fr; gap: 24px; } }
+
 /* ── CTA band ────────────────────────────────────────────────────────────── */
 .cta-band { background: var(--ink); color: #fff; border-radius: var(--radius);
   padding: clamp(40px, 6vw, 72px) clamp(28px, 5vw, 64px);

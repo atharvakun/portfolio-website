@@ -577,9 +577,11 @@ function setupRiseCoil() {
         feeder.style.opacity = "1";
       } else { feeder.style.opacity = "0"; }
     }
-    // each value lights as the winding descends past its zone
+    // values light bottom-up (E → S → I → R) so the highlight RISES with the
+    // coil; at rest all four stay lit and read normally top-to-bottom
     values.forEach((v, j) => {
-      v.classList.toggle("lit", p >= ((j + 0.5) / values.length) * 0.9);
+      const k = values.length - 1 - j; // E=0 (lights first) … R=last
+      v.classList.toggle("lit", p >= ((k + 0.5) / values.length) * 0.9);
     });
   }
 

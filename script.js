@@ -566,12 +566,14 @@ function setupRiseCoil() {
     const vh = window.innerHeight;
     const p = clampN((0.82 * vh - r.top) / (0.62 * vh), 0, 1);
     const wound = p * N;
-    turns.forEach((t, i) => { t.g.style.opacity = clampN(wound - i, 0, 1); });
-    // glowing feeder rides the winding tip on the wire's feed side
+    // wind UPWARD — turns fill from the bottom up so the coil "rises" (matches
+    // "The RISE we build on"): bottom turn (i = N-1) lights first, top last
+    turns.forEach((t, i) => { t.g.style.opacity = clampN(wound - (N - 1 - i), 0, 1); });
+    // glowing feeder rides the rising winding tip (the top of the wound stack)
     if (feeder) {
       if (p > 0.005 && p < 0.995) {
         feeder.setAttribute("cx", cx + rx);
-        feeder.setAttribute("cy", yTop + clampN(wound, 0, N - 0.001) * dy);
+        feeder.setAttribute("cy", yTop + clampN(N - wound, 0, N - 1) * dy);
         feeder.style.opacity = "1";
       } else { feeder.style.opacity = "0"; }
     }

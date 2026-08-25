@@ -1073,10 +1073,11 @@ main { position: relative; }
   border-left: 2px solid var(--copper); font-family: var(--font-display);
   font-weight: 500; font-size: 1.02rem; color: var(--ink); }
 .pullquote { margin: clamp(46px, 7vw, 88px) 0 0; max-width: 640px; }
-.pullquote::before { content: "\201C"; display: block; font-family: var(--font-display);
-  font-weight: 700; font-size: 3.4rem; line-height: 0.7; color: var(--copper); margin-bottom: 10px; }
 .pullquote blockquote { margin: 0; font-family: var(--font-display); font-weight: 500;
   font-size: clamp(1.3rem, 2.5vw, 1.9rem); line-height: 1.32; letter-spacing: -0.01em; color: var(--ink); }
+/* matched pair of copper quotation marks — opens and closes the quote */
+.pullquote blockquote::before { content: "\201C"; color: var(--copper); }
+.pullquote blockquote::after { content: "\201D"; color: var(--copper); }
 .pullquote figcaption { margin-top: 22px; }
 .pullquote figcaption strong { font-family: var(--font-display); font-size: 1rem; display: block; }
 .pullquote figcaption span { color: var(--ink-soft); font-size: 0.9rem; }

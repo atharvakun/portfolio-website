@@ -65,6 +65,13 @@ function setupDropdowns() {
       const open = dd.classList.toggle("is-open");
       btn.setAttribute("aria-expanded", String(open));
     });
+    // hover handles opening on desktop; clear any click-pinned state once the
+    // pointer actually leaves, so the menu never gets "stuck" open
+    dd.addEventListener("mouseleave", () => {
+      if (!dd.classList.contains("is-open")) return;
+      dd.classList.remove("is-open");
+      btn.setAttribute("aria-expanded", "false");
+    });
   });
   document.addEventListener("click", () => {
     document.querySelectorAll(".has-dropdown.is-open").forEach((dd) => {

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://supplar.in/sitemap.xml

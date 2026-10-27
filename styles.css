@@ -745,6 +745,10 @@ main { position: relative; }
 .media-frame { margin: clamp(22px, 3vw, 30px) 0 0; }
 .media-frame img { width: 100%; height: clamp(200px, 26vw, 320px); object-fit: cover;
   border-radius: var(--radius); border: 1px solid var(--line); display: block; background: var(--bg-soft); }
+/* two-up image pair (e.g. moulding granules) */
+.granule-pair { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(10px, 1.2vw, 14px); margin-top: clamp(22px, 3vw, 30px); }
+.granule-pair img { width: 100%; height: clamp(140px, 16vw, 210px); object-fit: cover;
+  border-radius: var(--radius); border: 1px solid var(--line); display: block; background: var(--bg-soft); }
 
 /* ============================================================================
    CONTACT

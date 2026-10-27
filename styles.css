@@ -624,6 +624,11 @@ main { position: relative; }
 .card-icon svg { width: 100%; height: 100%; }
 .card h3 { margin-bottom: 12px; }
 .card > p { color: var(--ink-soft); font-size: 0.96rem; }
+/* division cards: flush photo at the top */
+.card-grid-3 .card-media { margin: -32px -28px 24px; border-radius: var(--radius) var(--radius) 0 0; overflow: hidden; }
+.card-grid-3 .card-media img { width: 100%; height: clamp(150px, 14vw, 194px); object-fit: cover;
+  display: block; background: var(--bg-soft); transition: transform 0.5s var(--ease); }
+.card-grid-3 .card:hover .card-media img { transform: scale(1.05); }
 .card-list { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--line);
   display: flex; flex-direction: column; gap: 9px; }
 .card-list li { position: relative; padding-left: 18px; font-size: 0.9rem; color: var(--ink-soft); }
@@ -703,6 +708,43 @@ main { position: relative; }
   color: var(--ink-soft); transition: all 0.25s var(--ease);
 }
 .industry-tags li:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+/* ── wound-component photo gallery (labelled) ────────────────────────────── */
+.wind-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: clamp(14px, 1.6vw, 22px); margin-top: clamp(34px, 4.5vw, 56px); }
+.wg-item { margin: 0; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
+  background: var(--bg); transition: border-color 0.3s var(--ease), transform 0.3s var(--ease), box-shadow 0.3s var(--ease); }
+.wg-item:hover { border-color: var(--line-strong); transform: translateY(-3px);
+  box-shadow: 0 22px 44px -26px rgba(17, 17, 19, 0.24); }
+.wg-item img { width: 100%; height: clamp(190px, 19vw, 248px); object-fit: cover; display: block;
+  background: var(--bg-soft); transition: transform 0.5s var(--ease); }
+.wg-item:hover img { transform: scale(1.04); }
+.wg-item figcaption { font-family: var(--font-display); font-weight: 600; font-size: 0.92rem;
+  padding: 13px 16px; color: var(--ink); transition: color 0.3s var(--ease); }
+.wg-item:hover figcaption { color: var(--copper); }
+.wg-note { margin-top: 20px; font-size: 0.9rem; color: var(--ink-soft); font-style: italic; }
+.wg-strip { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 760px) { .wg-strip { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 460px) { .wg-strip { grid-template-columns: 1fr; } }
+.comp-group { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+  letter-spacing: -0.01em; color: var(--ink); margin: clamp(42px, 5vw, 64px) 0 20px; }
+.comp-group:first-of-type { margin-top: clamp(28px, 3vw, 38px); }
+.wg-all { display: inline-flex; align-items: center; gap: 9px; margin-top: clamp(24px, 3vw, 34px);
+  font-family: var(--font-display); font-weight: 600; font-size: 0.95rem; color: var(--copper); }
+.wg-all svg { width: 16px; height: 16px; transition: transform 0.25s var(--ease); }
+.wg-all:hover svg { transform: translateX(4px); }
+
+/* page hero banner image */
+.page-banner { margin-top: clamp(28px, 4vw, 48px); }
+.page-banner img { width: 100%; height: clamp(220px, 34vw, 420px); object-fit: cover;
+  border-radius: var(--radius); display: block; background: var(--bg-soft); border: 1px solid var(--line); }
+/* full-bleed photo band */
+.photo-band { margin-block: clamp(42px, 6vw, 84px); }
+.photo-band img { width: 100%; height: clamp(240px, 30vw, 420px); object-fit: cover; display: block; background: var(--bg-soft); }
+/* in-section framed image */
+.media-frame { margin: clamp(22px, 3vw, 30px) 0 0; }
+.media-frame img { width: 100%; height: clamp(200px, 26vw, 320px); object-fit: cover;
+  border-radius: var(--radius); border: 1px solid var(--line); display: block; background: var(--bg-soft); }
 
 /* ============================================================================
    CONTACT

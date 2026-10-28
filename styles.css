@@ -753,7 +753,7 @@ main { position: relative; }
 .media-split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 4.5vw, 72px); align-items: center; }
 .media-split .ms-media { margin: 0; }
 .media-split .ms-media img { width: 100%; height: clamp(260px, 32vw, 430px); object-fit: cover;
-  border-radius: var(--radius); border: 1px solid var(--line); display: block; background: var(--bg-soft); }
+  border-radius: var(--radius); display: block; background: var(--bg-soft); }
 .media-split .ms-body .prose { margin-top: 18px; }
 .media-split.reverse .ms-media { order: 2; }
 @media (max-width: 760px) {

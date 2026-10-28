@@ -723,6 +723,14 @@ main { position: relative; }
   padding: 13px 16px; color: var(--ink); transition: color 0.3s var(--ease); }
 .wg-item:hover figcaption { color: var(--copper); }
 .wg-note { margin-top: 20px; font-size: 0.9rem; color: var(--ink-soft); font-style: italic; }
+.float-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: clamp(18px, 2.4vw, 34px); }
+.float-gallery figure { margin: 0; }
+.float-gallery img { width: 100%; height: clamp(220px, 24vw, 320px); object-fit: contain; display: block;
+  background: var(--bg); transition: transform 0.4s var(--ease); }
+.float-gallery figure:hover img { transform: translateY(-5px) scale(1.02); }
+.float-gallery figcaption { font-family: var(--font-display); font-weight: 600; font-size: 0.9rem;
+  text-align: center; padding-top: 12px; color: var(--ink-soft); }
 .wg-strip { grid-template-columns: repeat(3, 1fr); }
 @media (max-width: 760px) { .wg-strip { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 460px) { .wg-strip { grid-template-columns: 1fr; } }

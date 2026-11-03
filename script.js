@@ -88,9 +88,9 @@ function setupCardTilt() {
   if (window.matchMedia("(hover: none)").matches ||
       window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   const MAX = 7; // max tilt in degrees
-  document.querySelectorAll(".card, .value, .tile, .team-member, .wg-item, .ms-media").forEach((card) => {
+  document.querySelectorAll(".card, .value, .tile, .team-member").forEach((card) => {
     let raf = 0, d = null;
-    const max = card.matches(".ms-media") ? 3.5 : card.matches(".wg-item") ? 5 : MAX;
+    const max = MAX;
     const apply = () => {
       raf = 0; if (!d) return;
       card.style.setProperty("--rx", `${d.rx}deg`);
@@ -688,13 +688,13 @@ function setupStacking() {
 }
 
 
-/* ─── PHOTO MOTION ────────────────────────────────────────────────────────── */
-/* Wraps every framed photo in .ph > .ph__in > img, then drives: a copper +
-   charcoal curtain reveal on scroll, a depth parallax on feature photos, a
-   cursor glare, and a FLIP lightbox. Markup stays untouched in the HTML. */
+/* ─── PHOTOGRAPHS ─────────────────────────────────────────────────────────── */
+/* Wraps every framed photo in .ph > .ph__in > img and drives: a one-time
+   shutter reveal (clip-path + scale settle), one scroll-locked drifting
+   picture per page (.ms-media--drift), and a FLIP lightbox. Markup in the
+   HTML stays plain <img>, so nothing depends on JS to be visible. */
 function setupPhotoMotion() {
   const reduce = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-  const hoverable = !(window.matchMedia && window.matchMedia("(hover: none)").matches);
   const frames = [];
 
   document.querySelectorAll(".ms-media > img, .media-frame > img, .granule-pair > img, .wg-item > img").forEach((img) => {
@@ -702,6 +702,8 @@ function setupPhotoMotion() {
     const inr = document.createElement("div"); inr.className = "ph__in";
     img.parentNode.insertBefore(ph, img);
     inr.appendChild(img); ph.appendChild(inr);
+    if (img.closest(".media-split.reverse")) ph.classList.add("ph--from-right");
+    if (img.closest(".ms-media--drift")) ph.classList.add("ph--drift");
     frames.push(ph);
   });
   document.querySelectorAll(".stack__media").forEach((m) => {
@@ -712,52 +714,37 @@ function setupPhotoMotion() {
   });
   if (!frames.length) return;
 
-  frames.forEach((f) => {
-    const px = f.closest(".ms-media, .media-frame") ||
-      (f.classList.contains("stack__media") && !f.classList.contains("stack__media--contain"));
-    if (px) f.classList.add("ph--px");
-  });
-  // stagger siblings inside grids so a gallery wipes in as a wave
+  // grids open as a wave: 70ms per item
   document.querySelectorAll(".wind-gallery, .granule-pair").forEach((grid) => {
     Array.from(grid.children).forEach((c, i) => {
       const ph = c.classList.contains("ph") ? c : c.querySelector(".ph");
-      if (ph) ph.style.setProperty("--d", `${(i % 4) * 0.11}s`);
+      if (ph) ph.style.setProperty("--d", `${(i % 4) * 0.07}s`);
     });
   });
   document.documentElement.classList.add("ph-ready");
 
-  const show = (f) => {
-    f.classList.add("is-shown");
-    const ms = f.closest(".ms-media"); if (ms) ms.classList.add("is-framed");
-  };
-  if (!("IntersectionObserver" in window) || reduce) {
-    frames.forEach(show);
+  // reveal once, when the top of the picture is ~88% down the viewport
+  if (!("IntersectionObserver" in window)) {
+    frames.forEach((f) => f.classList.add("is-shown"));
   } else {
     const io = new IntersectionObserver((entries, obs) => {
-      entries.forEach((e) => { if (e.isIntersecting) { show(e.target); obs.unobserve(e.target); } });
-    }, { threshold: 0.18, rootMargin: "0px 0px -6% 0px" });
+      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("is-shown"); obs.unobserve(e.target); } });
+    }, { threshold: 0, rootMargin: "0px 0px -12% 0px" });
     frames.forEach((f) => io.observe(f));
   }
 
-  // depth parallax: feature photos drift against the scroll
-  const px = frames.filter((f) => f.classList.contains("ph--px"));
-  if (px.length && !reduce) {
+  // the one moving picture: locked to scroll, no smoothing, reads batched before writes
+  const drift = frames.filter((f) => f.classList.contains("ph--drift"));
+  if (drift.length && !reduce) {
     let raf = 0;
     const run = () => {
       raf = 0;
       const vh = window.innerHeight;
-      px.forEach((f) => {
-        const r = f.getBoundingClientRect();
+      const reads = drift.map((f) => f.getBoundingClientRect());
+      reads.forEach((r, i) => {
         if (r.bottom < 0 || r.top > vh) return;
-        const p = ((r.top + r.height / 2) - vh / 2) / vh;
-        if (f.classList.contains("stack__media")) {
-          // cover-fitted card photo: shift the (slightly zoomed) image inside its frame
-          const inr = f.querySelector(":scope > .ph__in");
-          if (inr) inr.style.transform = `translateY(${(-p * 4.4).toFixed(2)}%)`;
-        } else {
-          // feature photo: drift the whole frame against the copper outline, never crop
-          f.style.transform = `translateY(${(-p * 34).toFixed(1)}px)`;
-        }
+        const p = Math.max(-1, Math.min(1, ((r.top + r.height / 2) - vh / 2) / vh));
+        drift[i].style.setProperty("--py", `${(-p * 3.2).toFixed(2)}%`);
       });
     };
     const tick = () => { if (!raf) raf = requestAnimationFrame(run); };
@@ -766,28 +753,18 @@ function setupPhotoMotion() {
     tick();
   }
 
-  // cursor glare
-  if (hoverable) {
-    frames.forEach((f) => {
-      f.addEventListener("pointermove", (e) => {
-        if (e.pointerType === "touch") return;
-        const r = f.getBoundingClientRect();
-        f.style.setProperty("--gx", `${(((e.clientX - r.left) / r.width) * 100).toFixed(1)}%`);
-        f.style.setProperty("--gy", `${(((e.clientY - r.top) / r.height) * 100).toFixed(1)}%`);
-      });
-    });
-  }
-
-  // lightbox (FLIP: the thumbnail flies out to a centred, fitted frame)
+  // lightbox (FLIP: the picture flies out to a centred, fitted frame)
   const zoomable = frames.filter((f) => f.classList.contains("ph--zoom"));
   if (!zoomable.length) return;
   const lb = document.createElement("div");
-  lb.className = "lb"; lb.setAttribute("aria-hidden", "true");
+  lb.className = "lb"; lb.setAttribute("role", "dialog"); lb.setAttribute("aria-modal", "true");
+  lb.setAttribute("aria-label", "Photo"); lb.setAttribute("aria-hidden", "true");
   lb.innerHTML = '<div class="lb__bg"></div><figure class="lb__fig"><img class="lb__img" alt="" /><figcaption class="lb__cap"></figcaption></figure>' +
-                 '<button type="button" class="lb__x" aria-label="Close">&times;</button>';
+                 '<button type="button" class="lb__x" aria-label="Close photo"><span aria-hidden="true">&times;</span></button>';
   document.body.appendChild(lb);
   const lbImg = lb.querySelector(".lb__img"), lbCap = lb.querySelector(".lb__cap"), lbX = lb.querySelector(".lb__x");
-  let openFrom = null, to = null, busy = false;
+  let openFrom = null, to = null, busy = false, timer = 0;
+  const T_OPEN = reduce ? 0 : 800, T_CLOSE = reduce ? 0 : 560;
 
   const fit = (w, h) => {
     const maxW = Math.min(window.innerWidth * 0.92, 1380), maxH = window.innerHeight * 0.8;
@@ -800,8 +777,9 @@ function setupPhotoMotion() {
     return `translate(${(r.left - to.x).toFixed(1)}px, ${(r.top - to.y).toFixed(1)}px) scale(${(r.width / to.w).toFixed(4)}, ${(r.height / to.h).toFixed(4)})`;
   };
   const open = (f) => {
-    if (busy || openFrom) return;
+    if (openFrom) return;
     const img = f.querySelector("img"); if (!img) return;
+    clearTimeout(timer);
     openFrom = f; busy = true;
     const nw = img.naturalWidth || +img.getAttribute("width") || 800;
     const nh = img.naturalHeight || +img.getAttribute("height") || 800;
@@ -814,26 +792,27 @@ function setupPhotoMotion() {
     const sbw = window.innerWidth - document.documentElement.clientWidth;
     document.body.style.paddingRight = sbw > 0 ? `${sbw}px` : "";
     document.body.classList.add("lb-lock");
-    lb.classList.add("is-open"); lb.setAttribute("aria-hidden", "false");
+    lb.classList.remove("is-closing"); lb.classList.add("is-open"); lb.setAttribute("aria-hidden", "false");
     f.classList.add("is-lifted");
-    void lbImg.getBoundingClientRect(); // flush the start state so the fly-out actually transitions
+    void lbImg.getBoundingClientRect(); // flush the start state so the fly-out transitions
     lbImg.style.transition = ""; lbImg.style.transform = "";
     lb.classList.add("is-in");
-    setTimeout(() => { busy = false; lbX.focus({ preventScroll: true }); }, reduce ? 0 : 620);
+    timer = setTimeout(() => { busy = false; lbX.focus({ preventScroll: true }); }, T_OPEN);
   };
   const close = () => {
-    if (!openFrom || busy) return;
-    busy = true;
+    if (!openFrom) return;
+    clearTimeout(timer); busy = true; // interruptible: closing mid-open is fine
     const f = openFrom, img = f.querySelector("img");
+    lb.classList.add("is-closing");
     lbImg.style.transform = flyTransform(img);
     lb.classList.remove("is-in");
-    setTimeout(() => {
-      lb.classList.remove("is-open"); lb.setAttribute("aria-hidden", "true");
+    timer = setTimeout(() => {
+      lb.classList.remove("is-open", "is-closing"); lb.setAttribute("aria-hidden", "true");
       document.body.classList.remove("lb-lock"); document.body.style.paddingRight = "";
       f.classList.remove("is-lifted");
       openFrom = null; busy = false;
       f.focus({ preventScroll: true });
-    }, reduce ? 0 : 560);
+    }, T_CLOSE);
   };
 
   zoomable.forEach((f) => {
@@ -846,7 +825,11 @@ function setupPhotoMotion() {
   lb.querySelector(".lb__bg").addEventListener("click", close);
   lbImg.addEventListener("click", close);
   lbX.addEventListener("click", close);
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+  document.addEventListener("keydown", (e) => {
+    if (!openFrom) return;
+    if (e.key === "Escape") { e.preventDefault(); close(); }
+    else if (e.key === "Tab") { e.preventDefault(); lbX.focus(); } // the close button is the only control
+  });
   window.addEventListener("resize", () => {
     if (!openFrom || busy) return;
     const img = openFrom.querySelector("img");

@@ -88,8 +88,9 @@ function setupCardTilt() {
   if (window.matchMedia("(hover: none)").matches ||
       window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   const MAX = 7; // max tilt in degrees
-  document.querySelectorAll(".card, .value, .tile, .team-member").forEach((card) => {
+  document.querySelectorAll(".card, .value, .tile, .team-member, .wg-item, .ms-media").forEach((card) => {
     let raf = 0, d = null;
+    const max = card.matches(".ms-media") ? 3.5 : card.matches(".wg-item") ? 5 : MAX;
     const apply = () => {
       raf = 0; if (!d) return;
       card.style.setProperty("--rx", `${d.rx}deg`);
@@ -103,7 +104,7 @@ function setupCardTilt() {
       const r = card.getBoundingClientRect();
       const nx = (e.clientX - r.left) / r.width - 0.5;
       const ny = (e.clientY - r.top) / r.height - 0.5;
-      d = { rx: (-ny * MAX).toFixed(2), ry: (nx * MAX).toFixed(2), mx: e.clientX - r.left, my: e.clientY - r.top };
+      d = { rx: (-ny * max).toFixed(2), ry: (nx * max).toFixed(2), mx: e.clientX - r.left, my: e.clientY - r.top };
       card.classList.remove("tilt-return");
       if (!raf) raf = requestAnimationFrame(apply);
     });
@@ -631,6 +632,7 @@ setupProductCards();
 setupCardTilt();
 setupReveals();
 setupStacking();
+setupPhotoMotion();
 setupPageProgress();
 setupShowcase();
 setupEnquiryForm();
@@ -683,4 +685,172 @@ function setupStacking() {
     });
   }, { threshold: 0.1 });
   lines.forEach((l) => lio.observe(l));
+}
+
+
+/* ─── PHOTO MOTION ────────────────────────────────────────────────────────── */
+/* Wraps every framed photo in .ph > .ph__in > img, then drives: a copper +
+   charcoal curtain reveal on scroll, a depth parallax on feature photos, a
+   cursor glare, and a FLIP lightbox. Markup stays untouched in the HTML. */
+function setupPhotoMotion() {
+  const reduce = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  const hoverable = !(window.matchMedia && window.matchMedia("(hover: none)").matches);
+  const frames = [];
+
+  document.querySelectorAll(".ms-media > img, .media-frame > img, .granule-pair > img, .wg-item > img").forEach((img) => {
+    const ph = document.createElement("div"); ph.className = "ph ph--zoom";
+    const inr = document.createElement("div"); inr.className = "ph__in";
+    img.parentNode.insertBefore(ph, img);
+    inr.appendChild(img); ph.appendChild(inr);
+    frames.push(ph);
+  });
+  document.querySelectorAll(".stack__media").forEach((m) => {
+    const img = m.querySelector("img"); if (!img) return;
+    const inr = document.createElement("div"); inr.className = "ph__in";
+    inr.appendChild(img); m.appendChild(inr);
+    m.classList.add("ph"); frames.push(m);
+  });
+  if (!frames.length) return;
+
+  frames.forEach((f) => {
+    const px = f.closest(".ms-media, .media-frame") ||
+      (f.classList.contains("stack__media") && !f.classList.contains("stack__media--contain"));
+    if (px) f.classList.add("ph--px");
+  });
+  // stagger siblings inside grids so a gallery wipes in as a wave
+  document.querySelectorAll(".wind-gallery, .granule-pair").forEach((grid) => {
+    Array.from(grid.children).forEach((c, i) => {
+      const ph = c.classList.contains("ph") ? c : c.querySelector(".ph");
+      if (ph) ph.style.setProperty("--d", `${(i % 4) * 0.11}s`);
+    });
+  });
+  document.documentElement.classList.add("ph-ready");
+
+  const show = (f) => {
+    f.classList.add("is-shown");
+    const ms = f.closest(".ms-media"); if (ms) ms.classList.add("is-framed");
+  };
+  if (!("IntersectionObserver" in window) || reduce) {
+    frames.forEach(show);
+  } else {
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach((e) => { if (e.isIntersecting) { show(e.target); obs.unobserve(e.target); } });
+    }, { threshold: 0.18, rootMargin: "0px 0px -6% 0px" });
+    frames.forEach((f) => io.observe(f));
+  }
+
+  // depth parallax: feature photos drift against the scroll
+  const px = frames.filter((f) => f.classList.contains("ph--px"));
+  if (px.length && !reduce) {
+    let raf = 0;
+    const run = () => {
+      raf = 0;
+      const vh = window.innerHeight;
+      px.forEach((f) => {
+        const r = f.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > vh) return;
+        const p = ((r.top + r.height / 2) - vh / 2) / vh;
+        if (f.classList.contains("stack__media")) {
+          // cover-fitted card photo: shift the (slightly zoomed) image inside its frame
+          const inr = f.querySelector(":scope > .ph__in");
+          if (inr) inr.style.transform = `translateY(${(-p * 4.4).toFixed(2)}%)`;
+        } else {
+          // feature photo: drift the whole frame against the copper outline, never crop
+          f.style.transform = `translateY(${(-p * 34).toFixed(1)}px)`;
+        }
+      });
+    };
+    const tick = () => { if (!raf) raf = requestAnimationFrame(run); };
+    window.addEventListener("scroll", tick, { passive: true });
+    window.addEventListener("resize", tick);
+    tick();
+  }
+
+  // cursor glare
+  if (hoverable) {
+    frames.forEach((f) => {
+      f.addEventListener("pointermove", (e) => {
+        if (e.pointerType === "touch") return;
+        const r = f.getBoundingClientRect();
+        f.style.setProperty("--gx", `${(((e.clientX - r.left) / r.width) * 100).toFixed(1)}%`);
+        f.style.setProperty("--gy", `${(((e.clientY - r.top) / r.height) * 100).toFixed(1)}%`);
+      });
+    });
+  }
+
+  // lightbox (FLIP: the thumbnail flies out to a centred, fitted frame)
+  const zoomable = frames.filter((f) => f.classList.contains("ph--zoom"));
+  if (!zoomable.length) return;
+  const lb = document.createElement("div");
+  lb.className = "lb"; lb.setAttribute("aria-hidden", "true");
+  lb.innerHTML = '<div class="lb__bg"></div><figure class="lb__fig"><img class="lb__img" alt="" /><figcaption class="lb__cap"></figcaption></figure>' +
+                 '<button type="button" class="lb__x" aria-label="Close">&times;</button>';
+  document.body.appendChild(lb);
+  const lbImg = lb.querySelector(".lb__img"), lbCap = lb.querySelector(".lb__cap"), lbX = lb.querySelector(".lb__x");
+  let openFrom = null, to = null, busy = false;
+
+  const fit = (w, h) => {
+    const maxW = Math.min(window.innerWidth * 0.92, 1380), maxH = window.innerHeight * 0.8;
+    const s = Math.min(maxW / w, maxH / h);
+    const fw = w * s, fh = h * s;
+    return { w: fw, h: fh, x: (window.innerWidth - fw) / 2, y: (window.innerHeight - fh) / 2 - window.innerHeight * 0.025 };
+  };
+  const flyTransform = (img) => {
+    const r = img.getBoundingClientRect();
+    return `translate(${(r.left - to.x).toFixed(1)}px, ${(r.top - to.y).toFixed(1)}px) scale(${(r.width / to.w).toFixed(4)}, ${(r.height / to.h).toFixed(4)})`;
+  };
+  const open = (f) => {
+    if (busy || openFrom) return;
+    const img = f.querySelector("img"); if (!img) return;
+    openFrom = f; busy = true;
+    const nw = img.naturalWidth || +img.getAttribute("width") || 800;
+    const nh = img.naturalHeight || +img.getAttribute("height") || 800;
+    to = fit(nw, nh);
+    lbImg.src = img.currentSrc || img.src; lbImg.alt = img.alt || "";
+    const fig = f.closest("figure"); const cap = fig && fig.querySelector("figcaption");
+    lbCap.textContent = cap ? cap.textContent.trim() : (img.alt || "");
+    lbImg.style.cssText = `width:${to.w}px;height:${to.h}px;left:${to.x}px;top:${to.y}px;transition:none;`;
+    lbImg.style.transform = flyTransform(img);
+    const sbw = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.paddingRight = sbw > 0 ? `${sbw}px` : "";
+    document.body.classList.add("lb-lock");
+    lb.classList.add("is-open"); lb.setAttribute("aria-hidden", "false");
+    f.classList.add("is-lifted");
+    void lbImg.getBoundingClientRect(); // flush the start state so the fly-out actually transitions
+    lbImg.style.transition = ""; lbImg.style.transform = "";
+    lb.classList.add("is-in");
+    setTimeout(() => { busy = false; lbX.focus({ preventScroll: true }); }, reduce ? 0 : 620);
+  };
+  const close = () => {
+    if (!openFrom || busy) return;
+    busy = true;
+    const f = openFrom, img = f.querySelector("img");
+    lbImg.style.transform = flyTransform(img);
+    lb.classList.remove("is-in");
+    setTimeout(() => {
+      lb.classList.remove("is-open"); lb.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("lb-lock"); document.body.style.paddingRight = "";
+      f.classList.remove("is-lifted");
+      openFrom = null; busy = false;
+      f.focus({ preventScroll: true });
+    }, reduce ? 0 : 560);
+  };
+
+  zoomable.forEach((f) => {
+    const img = f.querySelector("img");
+    f.setAttribute("tabindex", "0"); f.setAttribute("role", "button");
+    f.setAttribute("aria-label", `View larger: ${img && img.alt ? img.alt : "photo"}`);
+    f.addEventListener("click", () => open(f));
+    f.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(f); } });
+  });
+  lb.querySelector(".lb__bg").addEventListener("click", close);
+  lbImg.addEventListener("click", close);
+  lbX.addEventListener("click", close);
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+  window.addEventListener("resize", () => {
+    if (!openFrom || busy) return;
+    const img = openFrom.querySelector("img");
+    to = fit(img.naturalWidth || 800, img.naturalHeight || 800);
+    lbImg.style.cssText = `width:${to.w}px;height:${to.h}px;left:${to.x}px;top:${to.y}px;transition:none;`;
+  });
 }

@@ -630,6 +630,7 @@ setupDropdowns();
 setupProductCards();
 setupCardTilt();
 setupReveals();
+setupStacking();
 setupPageProgress();
 setupShowcase();
 setupEnquiryForm();
@@ -640,3 +641,46 @@ setupStatCounters();
 setupWirePath();
 setupRiseCoil();
 setupDebugScroll();
+
+/* ─── STACKING DIVISIONS (letter-by-letter title, hairlines that draw in) ── */
+function setupStacking() {
+  const title = document.querySelector(".stack__title");
+  if (!title) return;
+  const text = title.getAttribute("aria-label") || "";
+  let i = 0;
+  text.split(" ").forEach((word) => {
+    const w = document.createElement("span");
+    w.className = "stack__word";
+    w.setAttribute("aria-hidden", "true");
+    Array.from(word).forEach((ch) => {
+      const s = document.createElement("span");
+      s.className = "stack__letter";
+      s.textContent = ch;
+      s.style.transitionDelay = `${i++ * 45}ms`;
+      w.appendChild(s);
+    });
+    title.appendChild(w);
+  });
+  const lines = document.querySelectorAll(".stack__hairline");
+  if (!("IntersectionObserver" in window)) {
+    title.classList.add("is-in");
+    lines.forEach((l) => l.classList.add("is-in"));
+    return;
+  }
+  // title reveals once 60% of it is on screen; the stacking itself is pure CSS sticky
+  new IntersectionObserver((entries, obs) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      title.classList.add("is-in");
+      obs.disconnect();
+    });
+  }, { threshold: 0.6 }).observe(title);
+  const lio = new IntersectionObserver((entries, obs) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add("is-in");
+      obs.unobserve(e.target);
+    });
+  }, { threshold: 0.1 });
+  lines.forEach((l) => lio.observe(l));
+}

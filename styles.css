@@ -1273,3 +1273,58 @@ a.card { text-decoration: none; color: inherit; cursor: pointer; }
 @media (hover: none), (prefers-reduced-motion: reduce) {
   .card, .value, .tile, .team-member { transform: none; }
 }
+
+/* ─── STACKING DIVISIONS: sticky full-screen title, cards pile up over it ── */
+.stack { position: relative; background: var(--bg-soft); padding: 0 clamp(16px, 2.78vw, 40px);
+  --stack-top: calc(64px + 4vh); }
+/* The title owns one screen and stays pinned while the cards slide over it. */
+.stack__title { position: sticky; top: 0; z-index: 0; display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  height: 100vh; height: 100svh; margin: 0; text-align: center; font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(44px, 10vw, 150px); line-height: 0.92; letter-spacing: -0.045em; text-transform: uppercase; color: var(--ink); }
+.stack__word { display: inline-block; white-space: nowrap; margin: 0 0.12em; }
+.stack__letter { display: inline-block; opacity: 0; transform: translateY(0.3em);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+.stack__title.is-in .stack__letter { opacity: 1; transform: none; }
+.stack__cards { position: relative; z-index: 1; display: flex; flex-direction: column; max-width: 1129px; margin: 0 auto; padding: 0; list-style: none; }
+/* Each card sticks 24px lower than the one before (--i is set inline). */
+.stack__card { position: sticky; top: calc(var(--stack-top) + var(--i, 0) * 24px); background: var(--bg-soft); padding-bottom: clamp(80px, 11vw, 160px); }
+.stack__link { display: block; background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: clamp(14px, 1.6vw, 22px); color: inherit; text-decoration: none; box-shadow: 0 30px 60px -40px rgba(17, 17, 19, 0.35); }
+.stack__media { position: relative; aspect-ratio: 1129 / 577; overflow: hidden; border-radius: calc(var(--radius) - 6px);
+  background: linear-gradient(142deg, #2b2b2b 5%, #0a0a0a 104%); }
+.stack__img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; filter: grayscale(1);
+  transition: transform 700ms var(--ease), filter 700ms var(--ease); }
+.stack__link:hover .stack__img { transform: scale(1.03); filter: grayscale(0); }
+.stack__media--contain .stack__img { object-fit: contain; background: var(--bg); }
+.stack__meta { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 18px; font-size: 13px; line-height: 1;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-faint); }
+.stack__foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: clamp(22px, 4vw, 48px); }
+.stack__name { margin: 0; font-family: var(--font-display); font-size: clamp(22px, 2.4vw, 36px); font-weight: 600; line-height: 1;
+  letter-spacing: -0.02em; transition: color 400ms; }
+.stack__link:hover .stack__name { color: var(--copper); }
+.stack__arrow { width: 38px; height: 38px; flex-shrink: 0; transition: transform 500ms, color 400ms; }
+.stack__arrow--small { width: 24px; height: 24px; justify-self: end; }
+.stack__link:hover .stack__arrow, .stack__row:hover .stack__arrow { transform: translate(4px, -4px); color: var(--copper); }
+/* index of component families below the pile */
+.stack__index { position: relative; z-index: 1; max-width: 1129px; margin: 0 auto; padding: 16px 0 clamp(96px, 11vw, 160px); background: var(--bg-soft); }
+.stack__index-head { display: flex; justify-content: space-between; padding-bottom: 24px; font-size: 12px; line-height: 1;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); }
+.stack__rows { margin: 0; padding: 0; list-style: none; }
+.stack__hairline { border-top: 1px solid var(--line-strong); transform-origin: left; transform: scaleX(0); transition: transform 1.2s var(--ease); }
+.stack__hairline.is-in { transform: scaleX(1); }
+.stack__row { display: grid; grid-template-columns: auto 1fr auto; align-items: center; column-gap: 24px; padding: 26px 0; color: inherit; text-decoration: none; }
+.stack__num { font-size: 13px; color: var(--ink-faint); }
+.stack__row-name { font-family: var(--font-display); font-size: clamp(18px, 1.7vw, 24px); font-weight: 600; line-height: 1;
+  letter-spacing: -0.015em; transition: transform 500ms, color 400ms; }
+.stack__row:hover .stack__row-name { transform: translateX(8px); color: var(--copper); }
+.stack__row-meta { display: none; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-faint); }
+@media (min-width: 768px) {
+  .stack__meta { justify-content: space-between; }
+  .stack__row { grid-template-columns: 3rem 1fr 1fr 9rem 2.5rem; }
+  .stack__row-meta { display: block; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stack__letter { opacity: 1; transform: none; transition: none; }
+  .stack__hairline { transform: none; transition: none; }
+  .stack__img, .stack__arrow, .stack__row-name { transition: none; }
+}

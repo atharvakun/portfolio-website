@@ -837,3 +837,59 @@ function setupPhotoMotion() {
     lbImg.style.cssText = `width:${to.w}px;height:${to.h}px;left:${to.x}px;top:${to.y}px;transition:none;`;
   });
 }
+
+/* ─── ART DIRECTION PREVIEW (hero zoom-on-scroll, process reveal) ─────────── */
+function setupArtDirection() {
+  const hero = document.querySelector(".ad-hero");
+  const stage = document.querySelector(".ad-process__stage");
+  if (!hero && !stage) return;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const clamp01 = (v) => Math.max(0, Math.min(1, v));
+
+  if (hero) {
+    // entrance: one frame after first paint so the transitions actually run
+    requestAnimationFrame(() => requestAnimationFrame(() => hero.classList.add("is-ready")));
+    setTimeout(() => hero.classList.add("is-ready"), 120); // headless / throttled-rAF fallback
+  }
+
+  if (stage) {
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach((e) => { if (e.isIntersecting) { stage.classList.add("is-in"); obs.disconnect(); } });
+      }, { threshold: 0.35 });
+      io.observe(stage);
+    } else stage.classList.add("is-in");
+  }
+
+  if (reduce) return;
+  const img = hero && hero.querySelector(".ad-hero__img");
+  const inner = hero && hero.querySelector(".ad-hero__inner");
+  const pimg = stage && stage.querySelector(".ad-process__img");
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    if (hero && img) {
+      const h = hero.offsetHeight || window.innerHeight;
+      const p = clamp01(window.scrollY / h);           // 0 at top, 1 once the hero has scrolled away
+      img.style.setProperty("--hz", (1 + p * 0.14).toFixed(4));   // subtle zoom on scroll
+      img.style.setProperty("--hy", (p * 6).toFixed(2) + "%");    // image lags the scroll a little
+      if (inner) {
+        inner.style.setProperty("--hf", clamp01(1 - p * 1.6).toFixed(3));
+        inner.style.setProperty("--ht", (p * -40).toFixed(1) + "px");
+      }
+    }
+    if (pimg) {
+      const r = stage.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const t = clamp01((vh - r.top) / (vh + r.height));            // 0 entering → 1 leaving
+      pimg.style.setProperty("--pz", (1.06 - t * 0.06).toFixed(4));  // settles from 1.06 to 1.00
+      pimg.style.setProperty("--pyy", ((t - 0.5) * -5).toFixed(2) + "%");
+    }
+  };
+  const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+  update();
+}
+setupArtDirection();
+

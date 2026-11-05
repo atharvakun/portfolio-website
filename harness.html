@@ -15,7 +15,7 @@
       rel="stylesheet"
     />
     <link rel="icon" type="image/png" href="logo-mark.png" />
-    <link rel="stylesheet" href="styles.css?v=20261103c" />
+    <link rel="stylesheet" href="styles.css?v=20261105a" />
     <link rel="canonical" href="https://supplar.in/harness.html" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Supplar Engineering" />
@@ -70,13 +70,22 @@
         </div>
       </section>
 
-      <!-- SPLIT FEATURE -->
-      <section class="section" style="padding-top:clamp(40px,6vw,72px);">
-        <div class="container media-split reveal">
-          <figure class="ms-media ms-media--drift">
-            <img src="images/automotive-wiring-harness-ecu-1600.webp" alt="Automotive wiring harness routed to an ECU" width="1600" height="1067" loading="lazy" />
+      <!-- SHOWROOM · harness hero: zoom-out, parallax, glowing cable path -->
+      <section class="sr-trace-hero" aria-label="Automotive wiring harness">
+        <div class="sr-trace-hero__sticky">
+          <figure class="sr-trace sr-trace--scroll" id="harness-trace">
+            <img src="images/automotive-wiring-harness-ecu-2000.webp" alt="Automotive wiring harness routed to an ECU" width="2000" height="1250" fetchpriority="high" decoding="async" />
+            <svg viewBox="0 0 1600 1000" preserveAspectRatio="none" aria-hidden="true">
+              <path class="sr-trace__glow" d="M300 580 C180 560 120 480 160 400 S260 300 430 262 S700 205 960 222 S1110 260 1150 360 S1120 520 1060 580 S880 660 700 650 S540 610 500 520 S420 400 470 350 S600 300 760 290"/>
+              <path class="sr-trace__p" d="M300 580 C180 560 120 480 160 400 S260 300 430 262 S700 205 960 222 S1110 260 1150 360 S1120 520 1060 580 S880 660 700 650 S540 610 500 520 S420 400 470 350 S600 300 760 290"/>
+              <path class="sr-trace__glow" d="M1000 240 C1100 250 1180 300 1250 340 S1400 420 1430 540 S1400 660 1350 690"/>
+              <path class="sr-trace__p" d="M1000 240 C1100 250 1180 300 1250 340 S1400 420 1430 540 S1400 660 1350 690"/>
+              <circle class="sr-trace__dot" cx="300" cy="580" r="9"/>
+              <circle class="sr-trace__dot" cx="760" cy="290" r="9"/>
+              <circle class="sr-trace__dot" cx="1350" cy="690" r="9"/>
+            </svg>
           </figure>
-          <div class="ms-body">
+          <div class="container sr-trace-hero__copy">
             <p class="eyebrow">Built to your drawing</p>
             <h2>Harnesses engineered to spec, tested in-house.</h2>
             <p class="prose">Cut, stripped, crimped and terminal-inserted to your connector list — then 100% continuity and polarity tested, with crimp force monitored at assembly.</p>
@@ -161,43 +170,52 @@
       </section>
 
       <!-- TERMINAL TESTING + APPLICATIONS -->
-      <section class="section section-soft">
+      <!-- SHOWROOM · harness in detail: branch tracing, connector callouts, lens, cable build -->
+      <section class="section section-soft" id="harness-detail" aria-label="Harness detail">
         <div class="container">
           <div class="section-heading reveal">
-            <p class="eyebrow">Terminal Testing</p>
-            <h2>Every terminal, proven.</h2>
-          </div>
-          <div class="card-grid card-grid-3 reveal">
-            <div class="card"><h3>Digital Push-Pull Tester</h3><p>Tensile strength testing of terminals, sleeves &amp; pins.</p></div>
-            <div class="card"><h3>Crimp Force Analyzer</h3><p>Crimp quality monitoring via force-curve analysis.</p></div>
-            <div class="card"><h3>Captive Polarity Checking</h3><p>Automated polarity &amp; continuity verification.</p></div>
+            <p class="eyebrow">In detail</p>
+            <h2>Every branch, every terminal.</h2>
           </div>
 
-          <div class="section-heading reveal" style="margin-top: clamp(56px,8vw,90px);">
-            <p class="eyebrow">Applications</p>
-            <h2>Where our harnesses go.</h2>
-          </div>
-          <ul class="industry-tags reveal">
-            <li>Automotive body &amp; lighting harnesses</li>
-            <li>Two-wheeler electrical harnesses</li>
-            <li>Sensor &amp; connector cable assemblies</li>
-            <li>Custom multi-pin harness assemblies</li>
-          </ul>
+          <figure class="sr-trace sr-trace--reveal sr-trace--frame reveal" aria-label="Multi-branch harness with each branch traced">
+            <img src="images/multi-branch-wiring-harness-1600.webp" alt="Multi-branch wiring harness assembly" width="1600" height="1000" loading="lazy" decoding="async" />
+            <svg viewBox="0 0 1600 1000" preserveAspectRatio="none" aria-hidden="true">
+              <path class="sr-trace__p" style="--i:0" d="M370 780 C330 700 300 600 260 540 S300 470 420 460 S540 380 560 260 S760 190 940 205 S1180 200 1290 340 S1350 420 1360 440"/>
+              <path class="sr-trace__p" style="--i:1" d="M900 250 C1000 280 1120 340 1230 420 S1270 560 1240 660"/>
+              <path class="sr-trace__p" style="--i:2" d="M300 480 C360 500 440 520 500 560 S540 620 530 640"/>
+              <circle class="sr-trace__dot" style="--i:0" cx="1360" cy="440" r="9"/>
+              <circle class="sr-trace__dot" style="--i:1" cx="1240" cy="660" r="9"/>
+              <circle class="sr-trace__dot" style="--i:2" cx="370" cy="780" r="9"/>
+            </svg>
+            <figcaption class="sr-figcap">Main trunk, sensor branch and loose terminals — each branch routed and tied to the drawing.</figcaption>
+          </figure>
 
-          <div class="section-heading reveal" style="margin-top: clamp(56px,8vw,90px);">
-            <p class="eyebrow">On the Bench</p>
-            <h2>Harness detail.</h2>
+          <div class="sr-two">
+            <figure class="sr-callouts reveal" aria-label="Harness connectors with callouts">
+              <div class="sr-callouts__stage">
+                <img src="images/automotive-harness-connectors-1600.webp" alt="Automotive harness with sealed connector and blade terminals" width="1600" height="1000" loading="lazy" decoding="async" />
+            <div class="sr-callout sr-callout--r" style="--x:27%;--y:13%;--dx:170px;--dy:-10px"><i class="sr-callout__dot"></i><i class="sr-callout__line"></i><span class="sr-callout__label"><b>Sealed multi-way connector</b>Terminal-inserted to the connector list</span></div>
+            <div class="sr-callout sr-callout--r" style="--x:22%;--y:48%;--dx:40px;--dy:130px"><i class="sr-callout__dot"></i><i class="sr-callout__line"></i><span class="sr-callout__label"><b>Panel clips</b>Fixed along the route</span></div>
+            <div class="sr-callout sr-callout--l" style="--x:82%;--y:28%;--dx:-30px;--dy:70px"><i class="sr-callout__dot"></i><i class="sr-callout__line"></i><span class="sr-callout__label"><b>Blade terminals</b>Crimp force monitored at assembly</span></div>
+              </div>
+              <figcaption class="sr-figcap">Connectors, clips and terminals specified by you, fitted by us.</figcaption>
+            </figure>
+            <figure class="media-frame reveal" style="margin-top:0">
+              <img src="images/stripped-multicore-cable-1600.webp" alt="Stripped multicore cable prepared for termination" width="1600" height="1000" loading="lazy" decoding="async" />
+              <figcaption class="sr-figcap">Cable construction: sheath, insulation, stranded copper — stripped to length before crimping.</figcaption>
+            </figure>
           </div>
-          <div class="wind-gallery reveal">
-            <figure class="wg-item"><img src="images/multi-branch-wiring-harness-800sq.webp" alt="Multi-branch wiring harness assembly" width="800" height="800" loading="lazy" /><figcaption>Multi-branch assembly</figcaption></figure>
-            <figure class="wg-item"><img src="images/automotive-harness-connectors-800sq.webp" alt="Automotive harness connectors" width="800" height="800" loading="lazy" /><figcaption>Connectorised harness</figcaption></figure>
-            <figure class="wg-item"><img src="images/harness-connector-close-up-800sq.webp" alt="Close-up of a crimped harness connector" width="800" height="800" loading="lazy" /><figcaption>Crimped termination</figcaption></figure>
-            <figure class="wg-item"><img src="images/stripped-multicore-cable-800sq.webp" alt="Stripped multicore cable prepared for termination" width="800" height="800" loading="lazy" /><figcaption>Prepared multicore cable</figcaption></figure>
-          </div>
+
+          <figure class="sr-lens reveal" aria-label="Crimped connector, magnified">
+            <img src="images/harness-connector-close-up-1600.webp" alt="Close-up of a crimped harness connector" width="1600" height="1000" loading="lazy" decoding="async" />
+            <div class="sr-lens__glass" aria-hidden="true"></div>
+            <span class="sr-lens__hint" aria-hidden="true">Move over the photo to magnify</span>
+            <figcaption class="sr-figcap">Every crimp inspected; every circuit continuity and polarity tested before dispatch.</figcaption>
+          </figure>
         </div>
       </section>
 
-      <!-- CTA -->
       <section class="section">
         <div class="container">
           <div class="cta-band reveal">
@@ -237,6 +255,6 @@
       </div>
     </footer>
 
-    <script src="script.js?v=20261103c"></script>
+    <script src="script.js?v=20261105a"></script>
   </body>
 </html>

@@ -15,7 +15,7 @@
       rel="stylesheet"
     />
     <link rel="icon" type="image/png" href="logo-mark.png" />
-    <link rel="stylesheet" href="styles.css?v=20261103c" />
+    <link rel="stylesheet" href="styles.css?v=20261105a" />
     <link rel="canonical" href="https://supplar.in/winding.html" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Supplar Engineering" />
@@ -71,17 +71,24 @@
         </div>
       </section>
 
-      <!-- SPLIT FEATURE -->
-      <section class="section" style="padding-top:clamp(40px,6vw,72px);">
-        <div class="container media-split reverse reveal">
-          <figure class="ms-media">
-            <img src="images/copper-coil-winding-laminated-core-1600.webp" alt="Copper coil wound on a laminated core" width="1600" height="1067" loading="lazy" />
-          </figure>
-          <div class="ms-body">
-            <p class="eyebrow">What we wind</p>
-            <h2>Coils wound to your spec.</h2>
-            <p class="prose">From single-spindle prototypes to multi-spindle production runs, each coil is wound turn by turn on AC servo-driven lines and electrically tested in-house — 29 SWG through to hair-fine 52 SWG.</p>
-            <a class="hx-idx" href="products.html#components" style="display:inline-block;margin-top:22px;">See wound components →</a>
+      <!-- SHOWROOM · layered reveal: laminated core first, then the winding -->
+      <section class="sr-seq sr-seq--light sr-seq--down" style="--n:2" aria-label="Laminated-core coil, revealed in layers">
+        <div class="sr-seq__sticky">
+          <div class="container sr-seq__grid">
+            <div class="sr-seq__stage">
+              <img class="sr-layer sr-layer--base" data-step="0" src="images/copper-coil-winding-laminated-core-cut.webp" alt="" aria-hidden="true" width="800" height="800" decoding="async" />
+              <img class="sr-layer" data-step="1" src="images/copper-coil-winding-laminated-core-cut.webp" alt="Copper coil wound on a laminated steel core" width="800" height="800" decoding="async" />
+            </div>
+            <div class="sr-seq__copy">
+              <p class="eyebrow">What we wind</p>
+              <h2>Coils wound to your spec.</h2>
+              <ol class="sr-seq__labels">
+                <li class="sr-label" data-step="0"><b>01</b><span>Laminated steel core</span><small>Stacked laminations carry the flux.</small></li>
+                <li class="sr-label" data-step="1"><b>02</b><span>Copper winding</span><small>29 SWG to hair-fine 52 SWG, wound turn by turn on AC servo-driven lines and electrically tested in-house.</small></li>
+              </ol>
+              <div class="sr-seq__bar" aria-hidden="true"><i></i></div>
+              <a class="hx-idx" href="products.html#components" style="display:inline-block;margin-top:22px;">See wound components →</a>
+            </div>
           </div>
         </div>
       </section>
@@ -165,6 +172,45 @@
       </section>
 
       <!-- GAUGE RANGE -->
+      <!-- SHOWROOM · relay cutaway sequence: sealed → open → the coil itself -->
+      <section class="sr-seq sr-seq--light" style="--n:3" aria-label="Relay coil, from sealed relay to the wound coil">
+        <div class="sr-seq__sticky">
+          <div class="container sr-seq__grid sr-seq__grid--rev">
+            <div class="sr-seq__stage">
+              <img class="sr-layer" data-step="0" src="images/sealed-relay-copper-coil-1600.webp" alt="Sealed relay with its copper coil visible through the cover" width="1600" height="1000" loading="lazy" decoding="async" />
+              <img class="sr-layer" data-step="1" src="images/automotive-relay-coil-open-cut.webp" alt="Automotive relay opened to show coil and armature" width="800" height="800" loading="lazy" decoding="async" />
+              <img class="sr-layer" data-step="2" src="images/relay-coil-inside-relay-cut.webp" alt="The wound copper coil inside a relay" width="800" height="800" loading="lazy" decoding="async" />
+            </div>
+            <div class="sr-seq__copy">
+              <p class="eyebrow">Inside the relay</p>
+              <h2>Where our coil does its work.</h2>
+              <ol class="sr-seq__labels">
+                <li class="sr-label" data-step="0"><b>01</b><span>Sealed relay</span><small>The finished part your line receives.</small></li>
+                <li class="sr-label" data-step="1"><b>02</b><span>Open: coil and armature</span><small>Cover off — the coil sits beneath the armature and contact set.</small></li>
+                <li class="sr-label" data-step="2"><b>03</b><span>The wound coil</span><small>Fine enamelled copper on a bobbin, wound and verified by Supplar.</small></li>
+              </ol>
+              <div class="sr-seq__bar" aria-hidden="true"><i></i></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SHOWROOM · product collection: staggered entrance, group tilt -->
+      <section class="section" aria-label="Transformer and inductor coils">
+        <div class="container">
+          <div class="section-heading reveal">
+            <p class="eyebrow">Magnetics</p>
+            <h2>Transformers, chokes and inductors.</h2>
+          </div>
+          <div class="sr-set sr-tilt">
+            <figure class="sr-set__item reveal" style="--rd:0s"><img src="images/transformer-coil-ferrite-core-cut.webp" alt="Ferrite-core transformer coil" width="800" height="800" loading="lazy" decoding="async" /><figcaption>Ferrite-core transformer</figcaption></figure>
+            <figure class="sr-set__item reveal" style="--rd:.12s"><img src="images/ferrite-core-inductors-cut.webp" alt="Ferrite-core inductors" width="800" height="800" loading="lazy" decoding="async" /><figcaption>Ferrite-core inductors</figcaption></figure>
+            <figure class="sr-set__item reveal" style="--rd:.24s"><img src="images/laminated-transformer-cut.webp" alt="Laminated EI-core transformers" width="800" height="800" loading="lazy" decoding="async" /><figcaption>Laminated EI-core transformers</figcaption></figure>
+          </div>
+          <p class="sr-note">Representative images — each type is wound to your specification.</p>
+        </div>
+      </section>
+
       <section class="section section-soft">
         <div class="container media-split reveal">
           <figure class="ms-media ms-media--drift">
@@ -231,6 +277,12 @@
       </section>
 
       <!-- TESTING + COMPONENTS -->
+      <!-- SHOWROOM · wide copper macro, slow horizontal camera move locked to scroll -->
+      <section class="sr-band" aria-label="Enamelled copper wire">
+        <figure class="sr-pan"><img src="images/enamelled-copper-wire-spools-banner-2400.webp" alt="Enamelled copper wire spools, close up" width="2400" height="1000" loading="lazy" decoding="async" /></figure>
+        <div class="container sr-band__cap"><span class="eyebrow">Raw material</span><p>Enamelled copper, 29 to 52 SWG, from the spool to your part.</p></div>
+      </section>
+
       <section class="section section-soft">
         <div class="container">
           <div class="section-heading reveal">
@@ -313,6 +365,6 @@
       </div>
     </footer>
 
-    <script src="script.js?v=20261103c"></script>
+    <script src="script.js?v=20261105a"></script>
   </body>
 </html>

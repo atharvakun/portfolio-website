@@ -15,7 +15,7 @@
       rel="stylesheet"
     />
     <link rel="icon" type="image/png" href="logo-mark.png" />
-    <link rel="stylesheet" href="styles.css?v=20261103c" />
+    <link rel="stylesheet" href="styles.css?v=20261105a" />
     <link rel="canonical" href="https://supplar.in/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Supplar Engineering" />
@@ -45,7 +45,7 @@
     }
     </script>
   </head>
-  <body>
+  <body class="sr-dark-top">
     <div id="page-progress" aria-hidden="true"></div>
 
     <!-- ─── HEADER ──────────────────────────────────────────────────────────── -->
@@ -97,181 +97,30 @@
         <div class="wp-dot"></div>
       </div>
 
-      <!-- ─── PINNED HERO SHOWCASE (harness → winding scroll animation) ──────── -->
-      <section class="showcase" id="showcase">
-        <div class="showcase-sticky">
-
-          <!-- Blueprint grid backdrop -->
-          <div class="hx-grid" aria-hidden="true"></div>
-
-          <!-- Scroll-driven engineering animation: harness → winding -->
-          <div class="hx-art" aria-hidden="true">
-            <svg id="hx-svg" viewBox="0 0 1200 560" fill="none">
-              <defs>
-                <linearGradient id="hx-core" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#43434a"/><stop offset="0.5" stop-color="#9a9aa2"/>
-                  <stop offset="1" stop-color="#3a3a40"/>
-                </linearGradient>
-              </defs>
-
-              <!-- ACT 1+2 : HARNESS -->
-              <g id="hx-harness-scene">
-                <g>
-                  <path class="hx-ghost" style="stroke-width:5" d="M214,286 C 420,272 600,300 1078,286"/>
-                  <path class="hx-ghost" style="stroke-width:3" d="M388,283 C388,210 388,190 388,132"/>
-                  <path class="hx-ghost" style="stroke-width:3" d="M556,290 C556,366 556,392 556,452"/>
-                  <path class="hx-ghost" style="stroke-width:3" d="M728,284 C728,210 728,190 728,132"/>
-                  <path class="hx-ghost" style="stroke-width:3" d="M880,288 C880,366 880,392 880,452"/>
-                </g>
-                <g class="hx-node hx-ecu" data-seg="0.24,0.34"><rect x="66" y="232" width="150" height="112" rx="11"/><text class="t" x="141" y="293">ECU</text></g>
-                <path class="hx-wire hx-trunk"  data-seg="0.05,0.34" d="M214,286 C 420,272 600,300 1078,286"/>
-                <path class="hx-wire hx-branch" data-seg="0.14,0.40" d="M388,283 C388,210 388,190 388,132"/>
-                <path class="hx-wire hx-branch" data-seg="0.18,0.44" d="M556,290 C556,366 556,392 556,452"/>
-                <path class="hx-wire hx-branch" data-seg="0.22,0.48" d="M728,284 C728,210 728,190 728,132"/>
-                <path class="hx-wire hx-branch" data-seg="0.26,0.52" d="M880,288 C880,366 880,392 880,452"/>
-                <path class="hx-flow hx-trunk"  d="M214,286 C 420,272 600,300 1078,286"/>
-                <path class="hx-flow hx-branch" d="M388,283 C388,210 388,190 388,132"/>
-                <path class="hx-flow hx-branch" d="M556,290 C556,366 556,392 556,452"/>
-                <path class="hx-flow hx-branch" d="M728,284 C728,210 728,190 728,132"/>
-                <path class="hx-flow hx-branch" d="M880,288 C880,366 880,392 880,452"/>
-                <g class="hx-node" data-seg="0.34,0.44"><rect x="346" y="78" width="84" height="52" rx="9"/><circle class="pin" cx="374" cy="104" r="3.4"/><circle class="pin" cx="388" cy="104" r="3.4"/><circle class="pin" cx="402" cy="104" r="3.4"/></g>
-                <g class="hx-node" data-seg="0.38,0.48"><rect x="514" y="452" width="84" height="52" rx="9"/><circle class="pin" cx="542" cy="478" r="3.4"/><circle class="pin" cx="556" cy="478" r="3.4"/><circle class="pin" cx="570" cy="478" r="3.4"/></g>
-                <g class="hx-node" data-seg="0.42,0.52"><rect x="686" y="78" width="84" height="52" rx="9"/><circle class="pin" cx="714" cy="104" r="3.4"/><circle class="pin" cx="728" cy="104" r="3.4"/><circle class="pin" cx="742" cy="104" r="3.4"/></g>
-                <g class="hx-node" data-seg="0.46,0.56"><rect x="838" y="452" width="84" height="52" rx="9"/><circle class="pin" cx="866" cy="478" r="3.4"/><circle class="pin" cx="880" cy="478" r="3.4"/><circle class="pin" cx="894" cy="478" r="3.4"/></g>
-                <g class="hx-node" data-seg="0.30,0.40"><rect x="1056" y="258" width="60" height="58" rx="9"/><circle class="pin" cx="1086" cy="278" r="3.6"/><circle class="pin" cx="1086" cy="296" r="3.6"/></g>
-
-                <!-- continuity check ticks (appear as current reaches each connector) -->
-                <g class="hx-tick" data-seg="0.46,0.50" transform="translate(444,70)"><circle r="9"/><path d="M-3.5,0.5 L-1,3 L4,-3"/></g>
-                <g class="hx-tick" data-seg="0.48,0.52" transform="translate(612,446)"><circle r="9"/><path d="M-3.5,0.5 L-1,3 L4,-3"/></g>
-                <g class="hx-tick" data-seg="0.50,0.54" transform="translate(786,70)"><circle r="9"/><path d="M-3.5,0.5 L-1,3 L4,-3"/></g>
-                <g class="hx-tick" data-seg="0.52,0.56" transform="translate(936,446)"><circle r="9"/><path d="M-3.5,0.5 L-1,3 L4,-3"/></g>
-                <g class="hx-tick" data-seg="0.54,0.58" transform="translate(1130,250)"><circle r="9"/><path d="M-3.5,0.5 L-1,3 L4,-3"/></g>
-              </g>
-
-              <!-- ACT 3 : WINDING -->
-              <g id="hx-winding-scene">
-                <path class="hx-lead" d="M392,280 C320,300 300,360 300,420"/>
-                <path class="hx-lead" d="M808,280 C880,300 900,360 900,420"/>
-                <rect x="382" y="222" width="436" height="116" rx="22" fill="url(#hx-core)"/>
-                <g id="hx-rings"></g>
-                <path class="hx-feed" id="hx-feeder" d="M-7,200 h14 l-7,11 z"/>
-                <text class="hx-turns" text-anchor="middle">
-                  <tspan class="n" id="hx-turns-n" x="600" y="150">0</tspan>
-                  <tspan class="k" x="600" y="178">TURNS WOUND</tspan>
-                </text>
-              </g>
-              <!-- ACT 4 : ANATOMY (detailed harness, scroll-revealed) -->
-              <g id="hx-anatomy-scene" opacity="0" transform="translate(170,22) scale(0.86)">
-<!-- MAIN TRUNK -->
-              <path class="hb-wire hb-trunk" d="M150,318 C 280,310 360,316 440,322 C 540,329 610,330 690,330 L 798,330"/>
-              <path class="hb-core" d="M156,318 C 280,311 360,317 440,323 C 540,330 610,331 690,331 L 792,331"/>
-              <!-- left loose wires -->
-              <path class="hb-wire hb-branch" d="M150,318 C 118,315 104,299 82,297"/>
-              <path class="hb-wire hb-branch" d="M150,322 C 118,325 104,347 82,351"/>
-              <!-- branches up to housing -->
-              <path class="hb-wire hb-branch" d="M352,320 C 352,252 366,206 372,182"/>
-              <path class="hb-wire hb-branch" d="M404,323 C 404,252 402,206 402,182"/>
-              <path class="hb-wire hb-branch" d="M452,326 C 452,252 440,206 432,182"/>
-              <!-- branch down to ring terminals -->
-              <path class="hb-wire hb-branch" d="M470,328 C 470,398 486,440 486,468"/>
-              <path class="hb-wire hb-branch" d="M486,468 C 486,494 468,504 452,514"/>
-              <path class="hb-wire hb-branch" d="M486,468 C 486,494 504,504 520,514"/>
-
-              <!-- copper current -->
-              <path class="hb-flow" d="M150,318 C 280,310 360,316 440,322 C 540,329 610,330 690,330 L 798,330"/>
-              <path class="hb-flow" d="M470,328 C 470,398 486,440 486,468"/>
-
-              <!-- wrapped wires: sheath + spiral hatch -->
-              <path class="hb-wire" style="stroke:#dcdcd8;stroke-width:24" d="M690,330 H790"/>
-              <g class="hb-wrap">
-                <line x1="694" y1="317" x2="703" y2="343"/><line x1="705" y1="317" x2="714" y2="343"/>
-                <line x1="716" y1="317" x2="725" y2="343"/><line x1="727" y1="317" x2="736" y2="343"/>
-                <line x1="738" y1="317" x2="747" y2="343"/><line x1="749" y1="317" x2="758" y2="343"/>
-                <line x1="760" y1="317" x2="769" y2="343"/><line x1="771" y1="317" x2="780" y2="343"/>
-              </g>
-
-              <!-- cable ties -->
-              <g><rect class="hb-tie" x="244" y="303" width="12" height="30" rx="5"/><path class="hb-tie" d="M255,331 q8,3 4,12"/></g>
-              <g><rect class="hb-tie" x="560" y="315" width="12" height="30" rx="5"/><path class="hb-tie" d="M571,343 q8,3 4,12"/></g>
-              <g><rect class="hb-tie" x="471" y="404" width="30" height="12" rx="5"/><path class="hb-tie" d="M499,415 q3,8 12,4"/></g>
-
-              <!-- branching point -->
-              <circle class="hb-node" cx="470" cy="328" r="6"/>
-
-              <!-- connector housing (top) -->
-              <rect class="hb-boot" x="356" y="168" width="94" height="20" rx="6"/>
-              <rect class="hb-housing" x="342" y="104" width="120" height="68" rx="10"/>
-              <rect class="hb-face" x="342" y="92" width="120" height="26" rx="9"/>
-              <rect class="hb-housing-2" x="392" y="80" width="20" height="14" rx="3"/>
-              <g class="hb-pin"><circle cx="366" cy="105" r="3.4"/><circle cx="390" cy="105" r="3.4"/><circle cx="414" cy="105" r="3.4"/><circle cx="438" cy="105" r="3.4"/></g>
-
-              <!-- assembly connector (right) -->
-              <rect class="hb-boot" x="790" y="320" width="20" height="22" rx="5"/>
-              <rect class="hb-housing" x="806" y="300" width="80" height="60" rx="9"/>
-              <rect class="hb-housing-2" x="806" y="300" width="16" height="60" rx="9"/>
-              <g class="hb-pin"><circle cx="890" cy="316" r="3.2"/><circle cx="890" cy="330" r="3.2"/><circle cx="890" cy="344" r="3.2"/></g>
-
-              <!-- loose terminals -->
-              <rect class="hb-blade" x="62" y="290" width="16" height="14" rx="3"/><rect class="hb-blade" x="40" y="293" width="24" height="8" rx="1.5"/>
-              <rect class="hb-blade" x="62" y="344" width="16" height="14" rx="3"/><rect class="hb-blade" x="40" y="347" width="24" height="8" rx="1.5"/>
-
-              <!-- ring terminals -->
-              <g><path class="hb-lug" d="M452,514 l-8,7"/><circle class="hb-ring" cx="440" cy="528" r="11"/><circle class="hb-ring-h" cx="440" cy="528" r="4.5"/></g>
-              <g><path class="hb-lug" d="M520,514 l8,7"/><circle class="hb-ring" cx="532" cy="528" r="11"/><circle class="hb-ring-h" cx="532" cy="528" r="4.5"/></g>
-
-              <!-- labels + leaders -->
-              <g class="hb-leader">
-                <path d="M402,80 V64 H470"/>
-                <path d="M366,250 V214"/>
-                <path d="M250,301 V274 H222"/>
-                <path d="M740,315 V300 H712"/>
-                <path d="M848,298 V272 H812"/>
-                <path d="M330,333 V420 H302"/>
-                <path d="M474,336 V426 H520"/>
-                <path d="M532,540 V556 H556"/>
-                <path d="M50,296 H30 V250"/>
-              </g>
-              <text class="hb-label" x="476" y="60">Connector housing</text>
-              <text class="hb-label" x="366" y="256" text-anchor="middle">Branches</text>
-              <text class="hb-label" x="150" y="278">Cable ties</text>
-              <text class="hb-label" x="640" y="296">Wrapped wires</text>
-              <text class="hb-label" x="720" y="268">Assembly connector</text>
-              <text class="hb-label" x="228" y="425" text-anchor="end">Main trunk</text>
-              <text class="hb-label" x="524" y="430">Branching point</text>
-              <text class="hb-label" x="560" y="561">Ring terminal</text>
-              <text class="hb-label" x="18" y="245">Loose terminal</text>
-              </g>
-            </svg>
-          </div>
-
-          <!-- Overlay copy -->
-          <div class="hx-hero" id="hx-hero">
-            <p class="eyebrow">Three disciplines · One integrated partner</p>
-            <h1 class="hero-title">Every circuit, <span class="hx-u">wound</span> &amp; <span class="hx-u">routed</span>.</h1>
-            <p class="hero-lead">
-              Fine wire winding, wiring harness assembly and injection moulding —
-              engineered, built and tested under one ISO 9001:2015 roof.
-            </p>
-            <div class="hero-cue" aria-hidden="true">
-              <span>Scroll</span><span class="cue-line"></span>
+      <!-- ─── SHOWROOM HERO — floating product, zoom-out on scroll, callouts ─── -->
+      <section class="sr-hero" id="hero" aria-label="Supplar — engineered for precision">
+        <div class="sr-hero__sticky">
+          <div class="sr-grid" aria-hidden="true"></div>
+          <div class="container sr-hero__grid">
+            <div class="sr-hero__copy">
+              <p class="eyebrow sr-rise" style="--r:0">Precision engineering · Chakan, Pune</p>
+              <h1 class="sr-hero__title"><span class="sr-line"><span style="--r:1">Engineered</span></span><span class="sr-line"><span style="--r:2">for precision.</span></span></h1>
+              <p class="sr-hero__lead sr-rise" style="--r:3">Every component. Every connection. Every detail. Fine wire winding, wiring harness and injection moulding under one ISO 9001:2015 roof.</p>
+              <div class="sr-hero__actions sr-rise" style="--r:4">
+                <a class="button button-solid" href="contact.html">Start an enquiry</a>
+                <a class="button sr-ghost" href="#divisions">What we make</a>
+              </div>
+            </div>
+            <div class="sr-hero__stage sr-tilt" id="sr-hero-stage">
+              <div class="sr-float"><img class="sr-float__img" src="images/fine-wire-coil-bobbin-cut.webp" alt="Fine-wire coil wound on a moulded bobbin" width="800" height="800" fetchpriority="high" decoding="async" /></div>
+            <div class="sr-callout sr-callout--l" style="--x:34%;--y:36%;--dx:-30px;--dy:-170px"><i class="sr-callout__dot"></i><i class="sr-callout__line"></i><span class="sr-callout__label"><b>Enamelled copper</b>29 – 52 SWG, laid turn by turn</span></div>
+            <div class="sr-callout sr-callout--r" style="--x:62%;--y:24%;--dx:80px;--dy:-80px"><i class="sr-callout__dot"></i><i class="sr-callout__line"></i><span class="sr-callout__label"><b>Moulded bobbin</b>Our own injection-moulded carrier</span></div>
+            <div class="sr-callout sr-callout--r" style="--x:70%;--y:58%;--dx:60px;--dy:110px"><i class="sr-callout__dot"></i><i class="sr-callout__line"></i><span class="sr-callout__label"><b>Flying leads</b>Terminated and tested in-house</span></div>
             </div>
           </div>
-
-          <div class="hx-card" id="hx-card-harness">
-            <span class="hx-idx">02 — Wiring Harness</span>
-            <h2>Engineered cable architecture.</h2>
-            <a class="button button-solid button-sm" href="harness.html">Explore harnesses</a>
-          </div>
-
-          <div class="hx-card hx-left" id="hx-card-winding">
-            <span class="hx-idx">01 — Fine Wire Winding</span>
-            <h2>Copper, turn by turn.</h2>
-            <a class="button button-solid button-sm" href="winding.html">See what we build</a>
-          </div>
-
-          <!-- Stage progress -->
-          <div class="stage-progress" aria-hidden="true">
-            <div class="stage-progress-fill" id="stage-progress-fill"></div>
+          <div class="container sr-hero__foot sr-rise" style="--r:5">
+            <div class="sr-hero__tag"><span>Fine wire winding</span><strong>Wound component</strong></div>
+            <div class="sr-hero__cue" aria-hidden="true"><span>Scroll</span><i></i></div>
           </div>
         </div>
       </section>
@@ -501,6 +350,6 @@
       </div>
     </footer>
 
-    <script src="script.js?v=20261103c"></script>
+    <script src="script.js?v=20261105a"></script>
   </body>
 </html>

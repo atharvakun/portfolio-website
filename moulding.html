@@ -15,7 +15,7 @@
       rel="stylesheet"
     />
     <link rel="icon" type="image/png" href="logo-mark.png" />
-    <link rel="stylesheet" href="styles.css?v=20261103c" />
+    <link rel="stylesheet" href="styles.css?v=20261105a" />
     <link rel="canonical" href="https://supplar.in/moulding.html" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Supplar Engineering" />
@@ -71,16 +71,16 @@
         </div>
       </section>
 
-      <!-- SPLIT FEATURE -->
-      <section class="section" style="padding-top:clamp(40px,6vw,72px);">
-        <div class="container media-split reverse reveal">
-          <figure class="ms-media">
-            <img src="images/horizontal-injection-moulding-machine-1600.webp" alt="Horizontal injection moulding machine on the Supplar floor" width="1600" height="1067" loading="lazy" />
-          </figure>
-          <div class="ms-body">
-            <p class="eyebrow">In-house, end to end</p>
-            <h2>Moulded from material to inspected part.</h2>
-            <p class="prose">Horizontal and vertical presses run engineering-grade thermoplastics — nylon, PBT, ABS and PP — into connector housings, bushes, grommets and structural parts, trimmed and inspected under the same ISO 9001:2015 system.</p>
+      <!-- SHOWROOM · moulding hero: full-width press, slow push-in on scroll -->
+      <section class="sr-push sr-push--light" aria-label="Injection moulding press">
+        <div class="sr-push__sticky">
+          <img class="sr-push__img" src="images/horizontal-injection-moulding-machine-2000.webp" alt="Horizontal injection moulding machine on the Supplar floor" width="2000" height="1250" fetchpriority="high" decoding="async" />
+          <div class="container sr-push__copy">
+            <div class="sr-push__panel">
+              <p class="eyebrow">In-house, end to end</p>
+              <h2>Moulded from material to inspected part.</h2>
+              <p class="prose">Horizontal and vertical presses run engineering-grade thermoplastics — nylon, PBT, ABS and PP — into connector housings, bushes, grommets and structural parts, trimmed and inspected under the same ISO 9001:2015 system.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -126,7 +126,7 @@
             <p class="eyebrow">Moulding Process Flow</p>
             <h2>Material to inspected part.</h2>
           </div>
-          <div class="chain reveal">
+          <div class="chain reveal sr-stagger">
             <div class="chain-step"><b>01</b><h3>Material Loading</h3></div>
             <div class="chain-step"><b>02</b><h3>Injection</h3></div>
             <div class="chain-step"><b>03</b><h3>Cooling</h3></div>
@@ -171,6 +171,33 @@
       </section>
 
       <!-- PRODUCT GALLERY -->
+      <!-- SHOWROOM · material transition: granules → the moulded bobbin -->
+      <section class="sr-seq sr-seq--soft" style="--n:2" aria-label="From raw granules to a moulded bobbin">
+        <div class="sr-seq__sticky">
+          <div class="container sr-seq__grid">
+            <div class="sr-seq__stage sr-seq__stage--wide">
+              <img class="sr-layer" data-step="0" src="images/thermoplastic-granules-1600.webp" alt="Engineering-grade thermoplastic granules" width="1600" height="1000" loading="lazy" decoding="async" />
+              <img class="sr-layer sr-layer--contain" data-step="1" src="images/fine-wire-coil-bobbin-cut.webp" alt="Moulded bobbin carrying a fine-wire coil" width="800" height="800" loading="lazy" decoding="async" />
+            </div>
+            <div class="sr-seq__copy">
+              <p class="eyebrow">Material to part</p>
+              <h2>Granule in, component out.</h2>
+              <ol class="sr-seq__labels">
+                <li class="sr-label" data-step="0"><b>01</b><span>Raw thermoplastic</span><small>Nylon, PBT, ABS or PP, dried and loaded to the press.</small></li>
+                <li class="sr-label" data-step="1"><b>02</b><span>Moulded bobbin</span><small>The carrier our own fine-wire coils are wound on — moulded, trimmed and inspected in-house.</small></li>
+              </ol>
+              <div class="sr-seq__bar" aria-hidden="true"><i></i></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SHOWROOM · pigmented granules, slow pan -->
+      <section class="sr-band" aria-label="Pigmented moulding granules">
+        <figure class="sr-pan"><img src="images/blue-plastic-granules-1600.webp" alt="Pigmented polypropylene moulding granules" width="1600" height="1000" loading="lazy" decoding="async" /></figure>
+        <div class="container sr-band__cap"><span class="eyebrow">Colour-matched</span><p>Pigmented and natural grades, selected to the application.</p></div>
+      </section>
+
       <section class="section section-soft">
         <div class="container">
           <div class="section-heading reveal">
@@ -234,6 +261,6 @@
       </div>
     </footer>
 
-    <script src="script.js?v=20261103c"></script>
+    <script src="script.js?v=20261105a"></script>
   </body>
 </html>

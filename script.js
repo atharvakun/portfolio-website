@@ -837,3 +837,190 @@ function setupPhotoMotion() {
     lbImg.style.cssText = `width:${to.w}px;height:${to.h}px;left:${to.x}px;top:${to.y}px;transition:none;`;
   });
 }
+
+/* ─── SHOWROOM: scroll-controlled product imagery ─────────────────────────── */
+function setupShowroom() {
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  const clamp01 = (v) => Math.max(0, Math.min(1, v));
+  const vh = () => window.innerHeight;
+  const jobs = [];
+  let io = null;
+  const observe = (el, cb, opts) => {
+    if (!("IntersectionObserver" in window)) { cb(); return; }
+    const o = new IntersectionObserver((es, obs) => { es.forEach((e) => { if (e.isIntersecting) { cb(); obs.disconnect(); } }); }, opts || { threshold: 0.3 });
+    o.observe(el);
+  };
+
+  /* callouts: compute leader length/angle from the label offset */
+  document.querySelectorAll(".sr-callout").forEach((c) => {
+    const dx = parseFloat(getComputedStyle(c).getPropertyValue("--dx")) || 0;
+    const dy = parseFloat(getComputedStyle(c).getPropertyValue("--dy")) || 0;
+    c.style.setProperty("--len", Math.hypot(dx, dy).toFixed(1) + "px");
+    c.style.setProperty("--ang", (Math.atan2(dy, dx) * 180 / Math.PI).toFixed(2) + "deg");
+  });
+
+  /* home hero: entrance, zoom-out on scroll, callouts once settled */
+  const hero = document.querySelector(".sr-hero");
+  if (hero) {
+    requestAnimationFrame(() => requestAnimationFrame(() => hero.classList.add("is-ready")));
+    setTimeout(() => hero.classList.add("is-ready"), 120);
+    const img = hero.querySelector(".sr-float__img");
+    const copy = hero.querySelector(".sr-hero__copy");
+    const stage = hero.querySelector(".sr-hero__stage");
+    if (reduce || window.innerWidth <= 760) { stage.classList.add("is-settled"); img.style.setProperty("--z", "1"); }
+    else jobs.push(() => {
+      const p = clamp01(window.scrollY / (hero.offsetHeight - vh()));
+      const z = 1.7 - Math.min(p / 0.55, 1) * 0.7;                 // macro crop → whole component
+      img.style.setProperty("--z", z.toFixed(4));
+      stage.classList.toggle("is-settled", p > 0.5);
+      copy.style.setProperty("--hf", clamp01(1 - Math.max(0, p - 0.7) * 4).toFixed(3));
+    });
+  }
+
+  /* cursor tilt on floating products / sets */
+  if (fine && !reduce) {
+    document.querySelectorAll(".sr-tilt").forEach((el) => {
+      const kids = el.querySelectorAll(":scope > .sr-float, :scope > .sr-set__item");
+      el.addEventListener("pointermove", (e) => {
+        const r = el.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+        kids.forEach((k) => { k.style.setProperty("--ry", (x * 10).toFixed(2) + "deg"); k.style.setProperty("--rx", (-y * 8).toFixed(2) + "deg"); });
+      });
+      el.addEventListener("pointerleave", () => kids.forEach((k) => { k.style.setProperty("--ry", "0deg"); k.style.setProperty("--rx", "0deg"); }));
+    });
+  }
+
+  /* layered sequences: scroll progress → wipe between layers, labels follow */
+  document.querySelectorAll(".sr-seq").forEach((seq) => {
+    const layers = [...seq.querySelectorAll(".sr-layer:not(.sr-layer--base)")];
+    const labels = [...seq.querySelectorAll(".sr-label")];
+    const bar = seq.querySelector(".sr-seq__bar i");
+    const down = seq.classList.contains("sr-seq--down");
+    const n = layers.length; if (n < 2) return;
+    const mobile = () => window.innerWidth <= 760;
+    const setLabels = (i) => labels.forEach((l) => l.classList.toggle("is-on", +l.dataset.step === i));
+    const setLayerOn = (i) => layers.forEach((l) => l.classList.toggle("is-on", +l.dataset.step <= i));
+    if (mobile() || reduce) {
+      // no sticky on phones: step through the states as the stage scrolls past
+      let step = 0; setLabels(0); setLayerOn(0);
+      jobs.push(() => {
+        const r = seq.getBoundingClientRect();
+        const t = clamp01((vh() * 0.6 - r.top) / Math.max(1, r.height - vh() * 0.2));
+        const s = Math.min(n - 1, Math.floor(t * n));
+        if (s !== step) { step = s; setLabels(s); setLayerOn(s); if (bar) bar.style.setProperty("--p", ((s + 1) / n).toFixed(3)); }
+      });
+      return;
+    }
+    jobs.push(() => {
+      const top = seq.getBoundingClientRect().top + window.scrollY;
+      const p = clamp01((window.scrollY - top) / (seq.offsetHeight - vh()));
+      const x = p * (n - 1), idx = Math.min(n - 2, Math.floor(x)), f = x - idx;
+      layers.forEach((l, i) => {
+        let v;
+        if (i <= idx) v = "inset(0)";
+        else if (i === idx + 1) v = down ? `inset(0 0 ${((1 - f) * 100).toFixed(2)}% 0)` : `inset(0 ${((1 - f) * 100).toFixed(2)}% 0 0)`;
+        else v = down ? "inset(0 0 100% 0)" : "inset(0 100% 0 0)";
+        l.style.clipPath = v;
+      });
+      setLabels(f > 0.5 ? idx + 1 : idx);
+      if (bar) bar.style.setProperty("--p", p.toFixed(3));
+    });
+  });
+
+  /* horizontal pan locked to scroll */
+  document.querySelectorAll(".sr-pan").forEach((fig) => {
+    const img = fig.querySelector("img"); if (!img || reduce) return;
+    jobs.push(() => {
+      const r = fig.getBoundingClientRect();
+      const t = clamp01((vh() - r.top) / (vh() + r.height));
+      const over = Math.max(0, img.offsetWidth - fig.offsetWidth);
+      img.style.setProperty("--px", (-over * t).toFixed(1) + "px");
+    });
+  });
+
+  /* push-in: scale with scroll while pinned */
+  document.querySelectorAll(".sr-push").forEach((sec) => {
+    const img = sec.querySelector(".sr-push__img"); if (!img || reduce) return;
+    jobs.push(() => {
+      if (window.innerWidth <= 760) return;
+      const top = sec.getBoundingClientRect().top + window.scrollY;
+      const p = clamp01((window.scrollY - top + vh() * 0.5) / sec.offsetHeight);
+      img.style.setProperty("--pz", (1 + p * 0.14).toFixed(4));
+    });
+  });
+
+  /* cable tracing */
+  document.querySelectorAll(".sr-trace").forEach((fig) => {
+    const paths = [...fig.querySelectorAll(".sr-trace__p, .sr-trace__glow")];
+    const dots = [...fig.querySelectorAll(".sr-trace__dot")];
+    const svg = fig.querySelector("svg"), img = fig.querySelector("img");
+    if (!paths.length || !svg) return;
+    paths.forEach((p) => { const L = p.getTotalLength(); p.style.strokeDasharray = L; p.style.strokeDashoffset = L; });
+    const hero = fig.closest(".sr-trace-hero");
+    const fit = () => { // keep the svg exactly over the (possibly letterboxed) image
+      if (!hero || window.innerWidth <= 760) return;
+      svg.style.width = img.offsetWidth + "px"; svg.style.height = img.offsetHeight + "px";
+      svg.style.left = img.offsetLeft + "px"; svg.style.top = img.offsetTop + "px";
+    };
+    fit(); window.addEventListener("resize", fit);
+    if (fig.classList.contains("sr-trace--reveal")) {
+      observe(fig, () => { fig.classList.add("is-visible"); paths.forEach((p) => { p.style.strokeDashoffset = 0; }); }, { threshold: 0.35 });
+      return;
+    }
+    // scroll-driven: hero zooms out while the current runs along the loom
+    const copy = hero && hero.querySelector(".sr-trace-hero__copy");
+    const main = paths.filter((p) => p.classList.contains("sr-trace__p"));
+    jobs.push(() => {
+      const mobile = window.innerWidth <= 760;
+      const r = hero ? hero.getBoundingClientRect() : fig.getBoundingClientRect();
+      const p = hero && !mobile ? clamp01(-r.top / (hero.offsetHeight - vh())) : clamp01((vh() * 0.8 - r.top) / (vh() * 0.8));
+      if (hero && !mobile && !reduce) {
+        img.style.setProperty("--hz", (1.22 - Math.min(p / 0.5, 1) * 0.22).toFixed(4));
+        if (copy) { copy.style.setProperty("--cf", clamp01((p - 0.25) * 3).toFixed(3)); copy.style.setProperty("--ct", ((1 - clamp01((p - 0.25) * 3)) * 20).toFixed(1) + "px"); }
+      }
+      const t = reduce ? 1 : clamp01((p - 0.1) / 0.8);
+      const per = 1 / main.length;
+      main.forEach((pt, i) => {
+        const f = clamp01((t - i * per) / per);
+        const L = pt.getTotalLength();
+        pt.style.strokeDashoffset = (L * (1 - f)).toFixed(1);
+        const g = paths[paths.indexOf(pt) - 1]; if (g && g.classList.contains("sr-trace__glow")) g.style.strokeDashoffset = (L * (1 - f)).toFixed(1);
+      });
+      dots.forEach((d, i) => d.classList.toggle("is-on", t > (i === 0 ? 0.02 : i / dots.length + 0.3)));
+    });
+  });
+
+  /* magnifier lens */
+  document.querySelectorAll(".sr-lens").forEach((fig) => {
+    const img = fig.querySelector("img"), glass = fig.querySelector(".sr-lens__glass"); if (!img || !glass) return;
+    const Z = 2.4;
+    const move = (e) => {
+      const r = img.getBoundingClientRect();
+      const x = e.clientX - r.left, y = e.clientY - r.top;
+      if (x < 0 || y < 0 || x > r.width || y > r.height) { fig.classList.remove("is-active"); return; }
+      fig.classList.add("is-active", "was-active");
+      glass.style.left = (x + img.offsetLeft) + "px"; glass.style.top = (y + img.offsetTop) + "px";
+      glass.style.backgroundImage = `url("${img.currentSrc || img.src}")`;
+      glass.style.backgroundSize = `${r.width * Z}px ${r.height * Z}px`;
+      glass.style.backgroundPosition = `${-(x * Z - glass.offsetWidth / 2)}px ${-(y * Z - glass.offsetHeight / 2)}px`;
+    };
+    fig.addEventListener("pointermove", move);
+    fig.addEventListener("pointerdown", move);
+    fig.addEventListener("pointerleave", () => fig.classList.remove("is-active"));
+  });
+
+  /* callout figures reveal with the photo */
+  document.querySelectorAll(".sr-callouts").forEach((fig) => observe(fig, () => fig.classList.add("is-visible"), { threshold: 0.45 }));
+
+  if (!jobs.length) return;
+  let ticking = false;
+  const run = () => { ticking = false; jobs.forEach((j) => j()); };
+  const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(run); } };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+  window.addEventListener("load", run);
+  run();
+}
+setupShowroom();
+

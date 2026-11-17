@@ -15,7 +15,7 @@
       rel="stylesheet"
     />
     <link rel="icon" type="image/png" href="logo-mark.png" />
-    <link rel="stylesheet" href="styles.css?v=20261117a" />
+    <link rel="stylesheet" href="styles.css?v=20261105a" />
     <link rel="canonical" href="https://supplar.in/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Supplar Engineering" />
@@ -108,7 +108,7 @@
               <p class="sr-hero__lead sr-rise" style="--r:3">Every component. Every connection. Every detail. Fine wire winding, wiring harness and injection moulding under one ISO 9001:2015 roof.</p>
               <div class="sr-hero__actions sr-rise" style="--r:4">
                 <a class="button button-solid" href="contact.html">Start an enquiry</a>
-                <a class="button sr-ghost" href="#capabilities">What we make</a>
+                <a class="button sr-ghost" href="#divisions">What we make</a>
               </div>
             </div>
             <div class="sr-hero__stage sr-tilt" id="sr-hero-stage">
@@ -194,46 +194,54 @@
         </div>
       </div>
 
-      <!-- ─── 02 THREE CAPABILITIES — editorial image cards ───────────────────── -->
-      <section class="section ad-caps" id="capabilities">
-        <div class="container">
-          <div class="ad-caps__head reveal">
-            <p class="eyebrow">Capabilities</p>
-            <h2>Three disciplines. One standard.</h2>
-            <p class="section-sub">Each division runs on its own line with its own people — and all three answer to the same ISO 9001:2015 quality system.</p>
-          </div>
-          <div class="ad-caps__grid">
-          <a class="ad-cap reveal" style="--rd:0s" href="winding.html">
-            <div class="ad-cap__plate"><img src="images/copper-coil-on-bobbin-1600.webp" alt="Copper coil wound on a plastic bobbin" width="1600" height="1000" loading="lazy" decoding="async" /></div>
-            <div class="ad-cap__body">
-              <span class="ad-cap__idx">01</span>
-              <h3>Fine Wire Winding</h3>
-              <span class="ad-cap__meta">29 – 52 SWG · Servo-wound</span>
-              <p>Relay, solenoid, sensor and ignition coils wound turn by turn and electrically verified in-house.</p>
-              <span class="ad-cap__cta">Explore <svg viewBox="0 0 38 38" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9.5 30.08 30.08 9.5M10.32 9.5h19.76v19.76"/></svg></span>
-            </div>
-          </a>
-          <a class="ad-cap reveal" style="--rd:.1s" href="harness.html">
-            <div class="ad-cap__plate"><img src="images/automotive-wiring-harness-ecu-1600.webp" alt="Automotive wiring harness routed to an ECU connector" width="1600" height="1067" loading="lazy" decoding="async" /></div>
-            <div class="ad-cap__body">
-              <span class="ad-cap__idx">02</span>
-              <h3>Wiring Harness</h3>
-              <span class="ad-cap__meta">Automotive &amp; appliance</span>
-              <p>Cut, crimped, routed and continuity-tested assemblies, from a two-wire lead to a multi-branch loom.</p>
-              <span class="ad-cap__cta">Explore <svg viewBox="0 0 38 38" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9.5 30.08 30.08 9.5M10.32 9.5h19.76v19.76"/></svg></span>
-            </div>
-          </a>
-          <a class="ad-cap reveal" style="--rd:.2s" href="moulding.html">
-            <div class="ad-cap__plate"><img src="images/horizontal-injection-moulding-machine-1600.webp" alt="Horizontal injection moulding machine" width="1600" height="1000" loading="lazy" decoding="async" /></div>
-            <div class="ad-cap__body">
-              <span class="ad-cap__idx">03</span>
-              <h3>Injection Moulding</h3>
-              <span class="ad-cap__meta">Engineering plastics</span>
-              <p>Bobbins, housings and connector bodies moulded to drawing — and over-moulded onto our own windings.</p>
-              <span class="ad-cap__cta">Explore <svg viewBox="0 0 38 38" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9.5 30.08 30.08 9.5M10.32 9.5h19.76v19.76"/></svg></span>
-            </div>
-          </a>
-          </div>
+      <!-- ─── THREE DIVISIONS (sticky title + stacking cards) ─────────────────── -->
+      <section class="stack" id="divisions" aria-labelledby="stack-title">
+        <h2 class="stack__title" id="stack-title" aria-label="What we make"></h2>
+        <ul class="stack__cards">
+            <li class="stack__card" style="--i:0;">
+              <a href="winding.html" class="stack__link">
+                <div class="stack__media"><img class="stack__img" src="images/enamelled-copper-wire-spools-1600.webp" alt="Enamelled copper wire spools" width="1600" height="1067" loading="lazy" /></div>
+                <div class="stack__meta"><span>Division 01</span><span>Fine wire winding</span><span>29 – 52 SWG</span></div>
+                <div class="stack__foot"><h3 class="stack__name">Fine Wire Winding</h3><svg class="stack__arrow" viewBox="0 0 38 38" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9.5 30.08 30.08 9.5M10.32 9.5h19.76v19.76"/></svg></div>
+              </a>
+            </li>
+            <li class="stack__card" style="--i:1;">
+              <a href="harness.html" class="stack__link">
+                <div class="stack__media"><img class="stack__img" src="images/automotive-wiring-harness-ecu-1600.webp" alt="Automotive wiring harness routed to an ECU" width="1600" height="1067" loading="lazy" /></div>
+                <div class="stack__meta"><span>Division 02</span><span>Wiring harness</span><span>Automotive &amp; appliance</span></div>
+                <div class="stack__foot"><h3 class="stack__name">Wiring Harness</h3><svg class="stack__arrow" viewBox="0 0 38 38" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9.5 30.08 30.08 9.5M10.32 9.5h19.76v19.76"/></svg></div>
+              </a>
+            </li>
+            <li class="stack__card" style="--i:2;">
+              <a href="moulding.html" class="stack__link">
+                <div class="stack__media"><img class="stack__img" src="images/horizontal-injection-moulding-machine-1600.webp" alt="Horizontal injection moulding machine" width="1600" height="1067" loading="lazy" /></div>
+                <div class="stack__meta"><span>Division 03</span><span>Injection moulding</span><span>Engineering plastics</span></div>
+                <div class="stack__foot"><h3 class="stack__name">Injection Moulding</h3><svg class="stack__arrow" viewBox="0 0 38 38" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9.5 30.08 30.08 9.5M10.32 9.5h19.76v19.76"/></svg></div>
+              </a>
+            </li>
+            <li class="stack__card" style="--i:3;">
+              <a href="products.html" class="stack__link">
+                <div class="stack__media stack__media--contain"><img class="stack__img" src="images/fine-wire-coil-bobbin-1600.webp" alt="Fine-wire coil on a bobbin" width="1600" height="1067" loading="lazy" /></div>
+                <div class="stack__meta"><span>Products</span><span>Wound components</span><span>Built to the drawing</span></div>
+                <div class="stack__foot"><h3 class="stack__name">Wound Components</h3><svg class="stack__arrow" viewBox="0 0 38 38" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9.5 30.08 30.08 9.5M10.32 9.5h19.76v19.76"/></svg></div>
+              </a>
+            </li>
+        </ul>
+        <div class="stack__index">
+          <div class="stack__index-head"><span>[ Component families ]</span><span>05</span></div>
+          <ol class="stack__rows">
+              <li><div class="stack__hairline" aria-hidden="true"></div>
+                <a href="products.html#components" class="stack__row"><span class="stack__num">05</span><span class="stack__row-name">Relay &amp; Contactor Coils</span><span class="stack__row-meta">Winding</span><span class="stack__row-meta">Automotive · Switchgear</span><svg class="stack__arrow stack__arrow--small" viewBox="0 0 38 38" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9.5 30.08 30.08 9.5M10.32 9.5h19.76v19.76"/></svg></a></li>
+              <li><div class="stack__hairline" aria-hidden="true"></div>
+                <a href="products.html#components" class="stack__row"><span class="stack__num">06</span><span class="stack__row-name">Transformer, Ferrite-Core &amp; Inductors</span><span class="stack__row-meta">Winding</span><span class="stack__row-meta">Power · Electronics</span><svg class="stack__arrow stack__arrow--small" viewBox="0 0 38 38" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9.5 30.08 30.08 9.5M10.32 9.5h19.76v19.76"/></svg></a></li>
+              <li><div class="stack__hairline" aria-hidden="true"></div>
+                <a href="products.html#components" class="stack__row"><span class="stack__num">07</span><span class="stack__row-name">Motor &amp; Pump Windings</span><span class="stack__row-meta">Winding</span><span class="stack__row-meta">Appliance · Industrial</span><svg class="stack__arrow stack__arrow--small" viewBox="0 0 38 38" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9.5 30.08 30.08 9.5M10.32 9.5h19.76v19.76"/></svg></a></li>
+              <li><div class="stack__hairline" aria-hidden="true"></div>
+                <a href="products.html#components" class="stack__row"><span class="stack__num">08</span><span class="stack__row-name">Solenoid, MCB &amp; Defrost-Timer Coils</span><span class="stack__row-meta">Winding</span><span class="stack__row-meta">Switchgear · Appliance</span><svg class="stack__arrow stack__arrow--small" viewBox="0 0 38 38" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9.5 30.08 30.08 9.5M10.32 9.5h19.76v19.76"/></svg></a></li>
+              <li><div class="stack__hairline" aria-hidden="true"></div>
+                <a href="contact.html" class="stack__row"><span class="stack__num">09</span><span class="stack__row-name">Custom Engineered Assemblies</span><span class="stack__row-meta">All divisions</span><span class="stack__row-meta">To specification</span><svg class="stack__arrow stack__arrow--small" viewBox="0 0 38 38" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9.5 30.08 30.08 9.5M10.32 9.5h19.76v19.76"/></svg></a></li>
+          </ol>
+          <div class="stack__hairline" aria-hidden="true"></div>
         </div>
       </section>
 
@@ -342,6 +350,6 @@
       </div>
     </footer>
 
-    <script src="script.js?v=20261117a"></script>
+    <script src="script.js?v=20261105a"></script>
   </body>
 </html>

@@ -837,3 +837,16 @@ function setupPhotoMotion() {
     lbImg.style.cssText = `width:${to.w}px;height:${to.h}px;left:${to.x}px;top:${to.y}px;transition:none;`;
   });
 }
+
+/* ─── STACKING CARDS: colour arrives as each card scrolls into place ──────── */
+function setupStackColour() {
+  const cards = document.querySelectorAll(".stack__card");
+  if (!cards.length) return;
+  if (!("IntersectionObserver" in window)) { cards.forEach((c) => c.classList.add("is-in")); return; }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } });
+  }, { threshold: 0.45 });
+  cards.forEach((c) => io.observe(c));
+}
+setupStackColour();
+

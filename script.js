@@ -937,19 +937,26 @@ function setupShowroom() {
       return;
     }
     const zoom = seq.classList.contains("sr-seq--zoom");
+    const cards = [...seq.querySelectorAll(".sr-card")];
     jobs.push(() => {
       const top = seq.getBoundingClientRect().top + window.scrollY;
       const p = clamp01((window.scrollY - top) / (seq.offsetHeight - vh()));
       if (zoom) {
-        // one shot per step: it pushes in slowly while it holds, the next fades in over the last quarter
+        // one card per shot: slides in from below over the previous card, its photo pushes in while it holds,
+        // and it tucks back slightly once the next card covers it
         const seg = p * steps;
-        layers.forEach((l) => {
-          const s = stepOf(l);
-          const o = s === 0 ? 1 : clamp01((seg - (s - 0.18)) / 0.18);
-          const z = 1 + 0.14 * clamp01(seg - s);
-          l.style.setProperty("--o", o.toFixed(3)); l.style.setProperty("--z", z.toFixed(4));
+        const st = seq.querySelector(".sr-seq__stage").getBoundingClientRect();
+        const below = vh() - st.top + 60;                                        // parked fully under the viewport
+        cards.forEach((card) => {
+          const s = +card.dataset.step, img = card.querySelector(".sr-layer");
+          const e = s === 0 ? 1 : clamp01((seg - (s - 0.3)) / 0.3);            // entering
+          const ee = 1 - Math.pow(1 - e, 3);
+          const cov = s === steps - 1 ? 0 : clamp01((seg - (s + 0.7)) / 0.3);  // being covered
+          card.style.setProperty("--ty", ((1 - ee) * below - cov * 0.03 * st.height).toFixed(1) + "px");
+          card.style.setProperty("--s", (1 - cov * 0.05).toFixed(4));
+          if (img) img.style.setProperty("--z", (1 + 0.12 * clamp01(seg - s)).toFixed(4));
         });
-        setLabels(Math.min(steps - 1, Math.floor(seg + 0.09)));
+        setLabels(Math.min(steps - 1, Math.floor(seg + 0.15)));
         if (bar) bar.style.setProperty("--p", p.toFixed(3));
         return;
       }

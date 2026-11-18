@@ -914,33 +914,36 @@ function setupShowroom() {
 
   /* layered sequences: scroll progress → wipe between layers, labels follow */
   document.querySelectorAll(".sr-seq").forEach((seq) => {
+    const base = seq.querySelector(".sr-layer--base");            // optional: a cropped "before" state that counts as step 0
     const layers = [...seq.querySelectorAll(".sr-layer:not(.sr-layer--base)")];
     const labels = [...seq.querySelectorAll(".sr-label")];
     const bar = seq.querySelector(".sr-seq__bar i");
     const down = seq.classList.contains("sr-seq--down");
-    const n = layers.length; if (n < 2) return;
+    const steps = layers.length + (base ? 1 : 0); if (steps < 2) return;
+    const stepOf = (l) => +l.dataset.step;
     const mobile = () => window.innerWidth <= 760;
     const setLabels = (i) => labels.forEach((l) => l.classList.toggle("is-on", +l.dataset.step === i));
-    const setLayerOn = (i) => layers.forEach((l) => l.classList.toggle("is-on", +l.dataset.step <= i));
+    // on phones the base crop is hidden, so the first full photo is always on
+    const setLayerOn = (i) => layers.forEach((l) => l.classList.toggle("is-on", stepOf(l) <= Math.max(i, base ? 1 : 0)));
     if (mobile() || reduce) {
       // no sticky on phones: step through the states as the stage scrolls past
       let step = 0; setLabels(0); setLayerOn(0);
       jobs.push(() => {
         const r = seq.getBoundingClientRect();
         const t = clamp01((vh() * 0.6 - r.top) / Math.max(1, r.height - vh() * 0.2));
-        const s = Math.min(n - 1, Math.floor(t * n));
-        if (s !== step) { step = s; setLabels(s); setLayerOn(s); if (bar) bar.style.setProperty("--p", ((s + 1) / n).toFixed(3)); }
+        const s = Math.min(steps - 1, Math.floor(t * steps));
+        if (s !== step) { step = s; setLabels(s); setLayerOn(s); if (bar) bar.style.setProperty("--p", ((s + 1) / steps).toFixed(3)); }
       });
       return;
     }
     jobs.push(() => {
       const top = seq.getBoundingClientRect().top + window.scrollY;
       const p = clamp01((window.scrollY - top) / (seq.offsetHeight - vh()));
-      const x = p * (n - 1), idx = Math.min(n - 2, Math.floor(x)), f = x - idx;
-      layers.forEach((l, i) => {
-        let v;
-        if (i <= idx) v = "inset(0)";
-        else if (i === idx + 1) v = down ? `inset(0 0 ${((1 - f) * 100).toFixed(2)}% 0)` : `inset(0 ${((1 - f) * 100).toFixed(2)}% 0 0)`;
+      const x = p * (steps - 1), idx = Math.min(steps - 2, Math.floor(x)), f = x - idx;
+      layers.forEach((l) => {
+        const s = stepOf(l); let v;
+        if (s <= idx) v = "inset(0)";
+        else if (s === idx + 1) v = down ? `inset(0 0 ${((1 - f) * 100).toFixed(2)}% 0)` : `inset(0 ${((1 - f) * 100).toFixed(2)}% 0 0)`;
         else v = down ? "inset(0 0 100% 0)" : "inset(0 100% 0 0)";
         l.style.clipPath = v;
       });

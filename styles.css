@@ -1655,6 +1655,7 @@ body.lb-lock { overflow: hidden; }
   transform: scale(var(--z, 1)); transform-origin: 50% 50%; will-change: transform; }
 .sr-card .sr-layer--fill { inset: 0; width: 100%; height: 100%; object-fit: cover; }
 @media (max-width: 760px), (prefers-reduced-motion: reduce) {
+  .sr-seq--zoom .sr-seq__grid, .sr-seq--zoom .sr-seq__grid--rev { grid-template-columns: 1fr; }
   .sr-seq--zoom .sr-seq__stage { aspect-ratio: auto; max-width: none; max-height: none; display: grid; gap: 14px; }
   .sr-card { position: relative; inset: auto; aspect-ratio: 4 / 3; transform: none !important; --ty: 0px; }
   .sr-card .sr-layer { opacity: 1 !important; transform: none !important; }

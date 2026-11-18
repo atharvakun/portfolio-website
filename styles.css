@@ -1361,6 +1361,8 @@ a.card { text-decoration: none; color: inherit; cursor: pointer; }
 .ph-ready .ph.ph--from-right { clip-path: inset(0 0 0 100%); }
 .ph-ready .ph.is-shown { clip-path: inset(0 0 0 0); }
 .ph-ready .ph > .ph__in > img { --ps: 1.12; transition: transform 1.5s var(--ease-soft) var(--d, 0s), filter 0.2s var(--ease); }
+/* stacking photos keep their slow colour fade */
+.ph-ready .ph > .ph__in > img.stack__img { transition: transform 1.5s var(--ease-soft) var(--d, 0s), filter 700ms var(--ease); }
 .ph-ready .ph.is-shown > .ph__in > img { --ps: 1; }
 /* the one moving picture: held at 107% and drifted by scroll (JS sets --py, no smoothing) */
 .ph-ready .ph--drift.is-shown > .ph__in > img { --ps: 1.07; }

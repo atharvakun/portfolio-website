@@ -838,15 +838,24 @@ function setupPhotoMotion() {
   });
 }
 
-/* ─── STACKING CARDS: colour arrives as each card scrolls into place ──────── */
+/* ─── STACKING CARDS: black and white while a card slides up, colour once it docks ── */
 function setupStackColour() {
-  const cards = document.querySelectorAll(".stack__card");
+  const cards = Array.from(document.querySelectorAll(".stack__card"));
   if (!cards.length) return;
-  if (!("IntersectionObserver" in window)) { cards.forEach((c) => c.classList.add("is-in")); return; }
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } });
-  }, { threshold: 0.45 });
-  cards.forEach((c) => io.observe(c));
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { cards.forEach((c) => c.classList.add("is-in")); return; }
+  let raf = 0;
+  const update = () => {
+    raf = 0;
+    cards.forEach((c) => {
+      const pin = parseFloat(getComputedStyle(c).top) || 0;   // its sticky top
+      const r = c.getBoundingClientRect();
+      // colour arrives as the card reaches its pinned position; scrolling back up greys it again
+      c.classList.toggle("is-in", r.top <= pin + 16 && r.bottom > 0);
+    });
+  };
+  const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+  update();
 }
 setupStackColour();
-

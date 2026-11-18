@@ -936,9 +936,23 @@ function setupShowroom() {
       });
       return;
     }
+    const zoom = seq.classList.contains("sr-seq--zoom");
     jobs.push(() => {
       const top = seq.getBoundingClientRect().top + window.scrollY;
       const p = clamp01((window.scrollY - top) / (seq.offsetHeight - vh()));
+      if (zoom) {
+        // one shot per step: it pushes in slowly while it holds, the next fades in over the last quarter
+        const seg = p * steps;
+        layers.forEach((l) => {
+          const s = stepOf(l);
+          const o = s === 0 ? 1 : clamp01((seg - (s - 0.18)) / 0.18);
+          const z = 1 + 0.14 * clamp01(seg - s);
+          l.style.setProperty("--o", o.toFixed(3)); l.style.setProperty("--z", z.toFixed(4));
+        });
+        setLabels(Math.min(steps - 1, Math.floor(seg + 0.09)));
+        if (bar) bar.style.setProperty("--p", p.toFixed(3));
+        return;
+      }
       const x = p * (steps - 1), idx = Math.min(steps - 2, Math.floor(x)), f = x - idx;
       layers.forEach((l) => {
         const s = stepOf(l); let v;

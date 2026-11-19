@@ -1036,15 +1036,8 @@ function setupShowroom() {
   });
 
   /* callout figures reveal with the photo */
-  document.querySelectorAll(".sr-callouts").forEach((fig) => {
-    if (fine && !reduce) {
-      // the photo enlarges under the cursor, then the captions come
-      fig.addEventListener("mouseenter", () => fig.classList.add("is-visible"));
-      fig.addEventListener("mouseleave", () => fig.classList.remove("is-visible"));
-      fig.addEventListener("focusin", () => fig.classList.add("is-visible"));
-      fig.addEventListener("focusout", () => fig.classList.remove("is-visible"));
-    } else observe(fig, () => fig.classList.add("is-visible"), { threshold: 0.45 });
-  });
+  // markers and legend appear once the figure is on screen; hovering only enlarges the photo
+  document.querySelectorAll(".sr-callouts").forEach((fig) => observe(fig, () => fig.classList.add("is-visible"), { threshold: 0.3 }));
 
   if (!jobs.length) return;
   let ticking = false;

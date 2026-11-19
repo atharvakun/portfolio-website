@@ -959,8 +959,16 @@ function setupShowroom() {
   /* push-in: scale with scroll while pinned */
   document.querySelectorAll(".sr-push").forEach((sec) => {
     const img = sec.querySelector(".sr-push__img"); if (!img || reduce) return;
+    const split = sec.classList.contains("sr-push--split");
     jobs.push(() => {
       if (window.innerWidth <= 760) return;
+      if (split) {
+        // not pinned: push in gently while the card travels up the viewport
+        const r = sec.getBoundingClientRect();
+        const t = clamp01((vh() - r.top) / (vh() + r.height));
+        img.style.setProperty("--pz", (1 + t * 0.10).toFixed(4));
+        return;
+      }
       const top = sec.getBoundingClientRect().top + window.scrollY;
       const p = clamp01((window.scrollY - top + vh() * 0.5) / sec.offsetHeight);
       img.style.setProperty("--pz", (1 + p * 0.14).toFixed(4));

@@ -1663,3 +1663,21 @@ body.lb-lock { overflow: hidden; }
   .sr-callouts:hover .sr-callouts__stage { transform: scale(1.04); }
 }
 @media (prefers-reduced-motion: reduce) { .sr-callouts__stage { transition: none; } .sr-callouts:hover .sr-callouts__stage { transform: none; } }
+
+/* ── SHOWROOM · split push: copy beside the press, whole machine in a card, slow push-in while it is on screen ── */
+.sr-push--split { height: auto; padding: clamp(56px, 8vw, 96px) 0; }
+.sr-push__grid { display: grid; grid-template-columns: 1fr 1.45fr; gap: clamp(28px, 4.5vw, 72px); align-items: center; }
+.sr-push--split .sr-push__copy { z-index: auto; }
+.sr-push--split .sr-push__panel { max-width: 46ch; padding: 0; background: none; border: 0; backdrop-filter: none; border-radius: 0; }
+.sr-push__card { position: relative; margin: 0; aspect-ratio: 4 / 3; background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: 0 30px 60px -40px rgba(17, 17, 19, 0.35); }
+.sr-push__frame { position: absolute; inset: clamp(12px, 1.4vw, 18px); overflow: hidden; border-radius: calc(var(--radius) - 6px); background: var(--bg); }
+.sr-push--split .sr-push__img { position: absolute; inset: 5%; width: 90%; height: 90%; object-fit: contain; object-position: 50% 50%; padding: 0;
+  transform: scale(var(--pz, 1)); transform-origin: 50% 50%; }
+@media (max-width: 980px) { .sr-push__grid { grid-template-columns: 1fr 1.2fr; } }
+@media (max-width: 760px) {
+  .sr-push__grid { grid-template-columns: 1fr; gap: 24px; }
+  .sr-push__card { order: -1; }
+  .sr-push--split .sr-push__copy { padding-block: 0; }
+  .sr-push--split .sr-push__img { position: absolute; height: 90%; }
+}

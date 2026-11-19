@@ -1505,7 +1505,8 @@ body.lb-lock { overflow: hidden; }
 .sr-layer { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; clip-path: inset(0 100% 0 0); will-change: clip-path; }
 .sr-seq--down .sr-layer { clip-path: inset(0 0 100% 0); }
 .sr-layer[data-step="0"] { clip-path: inset(0); }
-.sr-layer--base { clip-path: inset(0 0 58% 0) !important; }
+/* the resting state: the whole photo, black and white and faded; the colour layer wipes down over it on scroll */
+.sr-layer--base { clip-path: none !important; filter: grayscale(1); opacity: .55; }
 .sr-seq__stage--wide .sr-layer { object-fit: cover; }
 .sr-seq__stage--wide .sr-layer--contain { object-fit: contain; padding: 6%; background: var(--bg); }
 .sr-seq__copy h2 { margin-top: 12px; }

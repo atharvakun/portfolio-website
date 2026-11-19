@@ -1297,9 +1297,7 @@ a.card { text-decoration: none; color: inherit; cursor: pointer; }
   background: linear-gradient(142deg, #2b2b2b 5%, #0a0a0a 104%); }
 .stack__img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; filter: grayscale(1);
   transition: transform 700ms var(--ease), filter 700ms var(--ease); }
-.stack__card.is-in .stack__img { filter: grayscale(0); }
-.stack__link:hover .stack__img { filter: grayscale(0); transform: scale(1.03); }
-@media (prefers-reduced-motion: reduce) { .stack__img { filter: grayscale(0); } .stack__link:hover .stack__img { transform: none; } }
+.stack__link:hover .stack__img { transform: scale(1.03); filter: grayscale(0); }
 .stack__media--contain .stack__img { object-fit: contain; background: var(--bg); }
 .stack__meta { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 18px; font-size: 13px; line-height: 1;
   letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-faint); }
@@ -1347,9 +1345,6 @@ a.card { text-decoration: none; color: inherit; cursor: pointer; }
 .ph__in { position: relative; display: block; will-change: transform; }
 .ph > .ph__in > img { display: block; width: 100%; height: auto; margin: 0; border: 0; border-radius: 0;
   transform: scale(var(--ps, 1)); transform-origin: 50% 50%; }
-.stack__media.ph { border-radius: calc(var(--radius) - 6px); background: linear-gradient(142deg, #2b2b2b 5%, #0a0a0a 104%); }
-.stack__media.ph > .ph__in { height: 100%; }
-.stack__media.ph > .ph__in > img { height: 100%; }
 .wg-item .ph { border-radius: 0; }
 .ph.ph--zoom { cursor: zoom-in; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 .ph.ph--zoom:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
@@ -1361,8 +1356,6 @@ a.card { text-decoration: none; color: inherit; cursor: pointer; }
 .ph-ready .ph.ph--from-right { clip-path: inset(0 0 0 100%); }
 .ph-ready .ph.is-shown { clip-path: inset(0 0 0 0); }
 .ph-ready .ph > .ph__in > img { --ps: 1.12; transition: transform 1.5s var(--ease-soft) var(--d, 0s), filter 0.2s var(--ease); }
-/* stacking photos keep their slow colour fade */
-.ph-ready .ph > .ph__in > img.stack__img { transition: transform 1.5s var(--ease-soft) var(--d, 0s), filter 700ms var(--ease); }
 .ph-ready .ph.is-shown > .ph__in > img { --ps: 1; }
 /* the one moving picture: held at 107% and drifted by scroll (JS sets --py, no smoothing) */
 .ph-ready .ph--drift.is-shown > .ph__in > img { --ps: 1.07; }

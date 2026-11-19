@@ -706,12 +706,6 @@ function setupPhotoMotion() {
     if (img.closest(".ms-media--drift")) ph.classList.add("ph--drift");
     frames.push(ph);
   });
-  document.querySelectorAll(".stack__media").forEach((m) => {
-    const img = m.querySelector("img"); if (!img) return;
-    const inr = document.createElement("div"); inr.className = "ph__in";
-    inr.appendChild(img); m.appendChild(inr);
-    m.classList.add("ph"); frames.push(m);
-  });
   if (!frames.length) return;
 
   // grids open as a wave: 70ms per item
@@ -837,28 +831,6 @@ function setupPhotoMotion() {
     lbImg.style.cssText = `width:${to.w}px;height:${to.h}px;left:${to.x}px;top:${to.y}px;transition:none;`;
   });
 }
-
-/* ─── STACKING CARDS: black and white while a card slides up, colour once it docks ── */
-function setupStackColour() {
-  const cards = Array.from(document.querySelectorAll(".stack__card"));
-  if (!cards.length) return;
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { cards.forEach((c) => c.classList.add("is-in")); return; }
-  let raf = 0;
-  const update = () => {
-    raf = 0;
-    cards.forEach((c) => {
-      const pin = parseFloat(getComputedStyle(c).top) || 0;   // its sticky top
-      const r = c.getBoundingClientRect();
-      // colour arrives as the card reaches its pinned position; scrolling back up greys it again
-      c.classList.toggle("is-in", r.top <= pin + 16 && r.bottom > 0);
-    });
-  };
-  const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
-  window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", onScroll);
-  update();
-}
-setupStackColour();
 /* ─── SHOWROOM: scroll-controlled product imagery ─────────────────────────── */
 function setupShowroom() {
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;

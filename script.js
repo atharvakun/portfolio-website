@@ -706,6 +706,12 @@ function setupPhotoMotion() {
     if (img.closest(".ms-media--drift")) ph.classList.add("ph--drift");
     frames.push(ph);
   });
+  document.querySelectorAll(".stack__media").forEach((m) => {
+    const img = m.querySelector("img"); if (!img) return;
+    const inr = document.createElement("div"); inr.className = "ph__in";
+    inr.appendChild(img); m.appendChild(inr);
+    m.classList.add("ph"); frames.push(m);
+  });
   if (!frames.length) return;
 
   // grids open as a wave: 70ms per item
